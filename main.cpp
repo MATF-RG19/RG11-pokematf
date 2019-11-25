@@ -3,6 +3,10 @@
 
 void display();
 
+void init()
+{
+    glClearColor(0.0, 0.0, 1.0, 1.0);
+}
 
 int main(int argc, char **argv)
 {
@@ -10,10 +14,11 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_RGB);
 
     glutInitWindowPosition(200, 100);
-    glutInitWindowSize(300, 300);
+    glutInitWindowSize(700, 700);
     glutCreateWindow("Window 1");
 
     glutDisplayFunc(display);
+    init();
 
 
     glutMainLoop();

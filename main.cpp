@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 }
 
 float x_position = -10;
+int state = 1;
 
 void display()
 {
@@ -76,6 +77,23 @@ void timer(int)
 {
     glutPostRedisplay();
     glutTimerFunc(1000/60, timer, 0);
+
+    switch(state)
+    {
+        case(1):
+            if(x_position<8)
+                x_position+=0.15;
+            else
+                state = -1;
+            break;
+        case(-1):
+            if(x_position>-10)
+                x_position-=0.15;
+            else
+                state = 1;
+            break;
+        
+    }
 }
 
 

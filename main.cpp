@@ -3,6 +3,7 @@
 
 void display();
 void reshape(int, int);
+void timer(int);
 
 void init()
 {
@@ -20,11 +21,14 @@ int main(int argc, char **argv)
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+    glutTimerFunc(0, timer, 0);
     init();
 
 
     glutMainLoop();
 }
+
+float x_position = -10;
 
 void display()
 {
@@ -37,10 +41,10 @@ void display()
 
     glBegin(GL_POLYGON);
 
-    glVertex2f(0, 5);
-    glVertex2f(-4, -3);
-    glVertex2f(4, -3);
-    glVertex2f(5, -2);
+    glVertex2f(x_position, 1);
+    glVertex2f(x_position, -1);
+    glVertex2f(x_position+2, -1);
+    glVertex2f(x_position+2, 1);
 
     glEnd();
 
@@ -66,6 +70,12 @@ void reshape(int w, int h)
 
     glMatrixMode(GL_MODELVIEW);
 
+}
+
+void timer(int)
+{
+    glutPostRedisplay();
+    glutTimerFunc(1000/60, timer, 0);
 }
 
 

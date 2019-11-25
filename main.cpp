@@ -2,6 +2,7 @@
 #include <iostream>
 
 void display();
+void reshape(int, int);
 
 void init()
 {
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
     glutCreateWindow("Window 1");
 
     glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
     init();
 
 
@@ -36,6 +38,21 @@ void display()
     glFlush();                     //crtam framebuffer
 }
 
+void reshape(int w, int h)
+{
+    glViewport(0, 0, w, h);
+
+    
+
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluOrtho2D(-10,10,-10,10);
+
+    glMatrixMode(GL_MODELVIEW);
+
+}
 
 
 

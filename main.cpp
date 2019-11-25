@@ -33,6 +33,20 @@ void display()
 
 
 
+    glPointSize(10.0);
+
+    glBegin(GL_POLYGON);
+
+    glVertex2f(0, 5);
+    glVertex2f(-4, -3);
+    glVertex2f(4, -3);
+    glVertex2f(5, -2);
+
+    glEnd();
+
+
+
+
 
 
     glFlush();                     //crtam framebuffer

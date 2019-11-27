@@ -36,20 +36,20 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);  //cistim framebuffer
     glLoadIdentity();              //resetujem matrice transformacija
 
-    glTranslatef(x_position,0,0);
+    //glTranslatef(x_position,x_position,0);
 
     glBegin(GL_POLYGON);
 
     glColor3f(1, 0, 0);
     glVertex2f(-1, 1);
 
-    glColor3f(1, 1, 0);
+    //glColor3f(1, 1, 0);
     glVertex2f(-1, -1);
 
-    glColor3f(0, 1, 0);
+    //glColor3f(0, 1, 0);
     glVertex2f(1, -1);
 
-    glColor3f(0, 0, 1);
+    //glColor3f(0, 0, 1);
     glVertex2f(1, 1);
 
     glEnd();
@@ -80,7 +80,7 @@ void timer(int)
     glutPostRedisplay();
     glutTimerFunc(1000/60, timer, 0);
 
-    switch(state)
+    /*switch(state)
     {
         case(1):
             if(x_position<9)
@@ -95,7 +95,7 @@ void timer(int)
                 state = 1;
             break;
         
-    }
+    }*/
 }
 
 

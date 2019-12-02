@@ -111,27 +111,36 @@ void keyboard(unsigned char key, int x, int y)
         break;
     case 'w':
     case 'W':
+        if(y_position+.1 <= 10 - player_size)
+        {
         y_position+=.1;
         glutPostRedisplay();
+        }
         break;
     case 's':
     case 'S':
+        if(y_position >= -10)
+        {
         y_position-=.1;
         glutPostRedisplay();
+        }
         break;
     case 'a':
     case 'A':
+        if(x_position >= -10)
+        {
         x_position-=.1;
         glutPostRedisplay();
+        }
         break;
     case 'd':
     case 'D':
+        if(x_position+.1 <= 10 - player_size)
+        {
         x_position+=.1;
         glutPostRedisplay();
+        }
         break;
-
-
-    
     }
 }
 

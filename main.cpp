@@ -4,6 +4,7 @@
 void display();
 void reshape(int, int);
 void timer(int);
+void keyboard(unsigned char key, int x, int y);
 
 void init()
 {
@@ -13,12 +14,13 @@ void init()
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGB);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 
     glutInitWindowPosition(200, 100);
     glutInitWindowSize(700, 700);
     glutCreateWindow("Window 1");
 
+    glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutTimerFunc(0, timer, 0);
@@ -28,7 +30,8 @@ int main(int argc, char **argv)
     glutMainLoop();
 }
 
-float x_position = 0;
+float x_position = 0, y_position = 0;
+float player_size = 2;
 int state = 1;
 
 void display()
@@ -36,27 +39,27 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);  //cistim framebuffer
     glLoadIdentity();              //resetujem matrice transformacija
 
-    //glTranslatef(x_position,x_position,0);
+    glTranslatef(x_position,y_position,0);
 
     glBegin(GL_POLYGON);
 
     glColor3f(1, 0, 0);
-    glVertex2f(-1, 1);
+    glVertex2f(0, 0);
 
-    //glColor3f(1, 1, 0);
-    glVertex2f(-1, -1);
+    glColor3f(1, 1, 0);
+    glVertex2f(player_size, 0);
 
-    //glColor3f(0, 1, 0);
-    glVertex2f(1, -1);
+    glColor3f(0, 1, 0);
+    glVertex2f(player_size, player_size);
 
-    //glColor3f(0, 0, 1);
-    glVertex2f(1, 1);
+    glColor3f(0, 0, 1);
+    glVertex2f(0, player_size);
 
     glEnd();
 
 
 
-    glFlush();                     //crtam framebuffer
+    glutSwapBuffers();                    //crtam framebuffer
 }
 
 void reshape(int w, int h)
@@ -96,6 +99,40 @@ void timer(int)
             break;
         
     }*/
+}
+
+
+void keyboard(unsigned char key, int x, int y)
+{
+    switch (key) {
+    case 27:
+        /* Zavrsava se program. */
+        exit(0);
+        break;
+    case 'w':
+    case 'W':
+        y_position+=.1;
+        glutPostRedisplay();
+        break;
+    case 's':
+    case 'S':
+        y_position-=.1;
+        glutPostRedisplay();
+        break;
+    case 'a':
+    case 'A':
+        x_position-=.1;
+        glutPostRedisplay();
+        break;
+    case 'd':
+    case 'D':
+        x_position+=.1;
+        glutPostRedisplay();
+        break;
+
+
+    
+    }
 }
 
 

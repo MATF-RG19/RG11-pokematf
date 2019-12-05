@@ -8,10 +8,11 @@ void keyboard(unsigned char key, int x, int y);
 
 void init()
 {
-    glClearColor(0.0, 0.0, 0, 1.0);
+    glClearColor(0.3, 0.7, 0.3, 1.0);
+    glShadeModel (GL_SMOOTH);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv) 
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
@@ -65,14 +66,10 @@ void display()
 void reshape(int w, int h)
 {
     glViewport(0, 0, w, h);
-
-    
-
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    gluOrtho2D(-10,10,-10,10);
+    glOrtho(-10,10,-10,10, -1, 1);
 
     glMatrixMode(GL_MODELVIEW);
 

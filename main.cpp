@@ -142,11 +142,32 @@ void timer(int)
 
 void keyboard(unsigned char key, int x, int y)
 {
-    switch (key) {
+    switch(key)
+    {
     case 27:
+    {
         /* Zavrsava se program. */
         exit(0);
-        break;
+    break;
+    }
+    case 'k':
+    case 'K':
+    {
+        window_select = WINDOW_FIELD;
+    break;
+    }
+    case 'l':
+    case 'L':
+    {
+        window_select = WINDOW_POKEBALL;
+    break;
+    } 
+    }
+
+    //move player only if in field window
+    if(window_select == WINDOW_FIELD)
+    {
+    switch (key) {
     case 'w':
     case 'W':
         if(y_position+.1 <= 10 - player_size)
@@ -179,14 +200,8 @@ void keyboard(unsigned char key, int x, int y)
         glutPostRedisplay();
         }
         break;
-    case 'k':
-    case 'K':
-        window_select = WINDOW_FIELD;
-        break;
-    case 'l':
-    case 'L':
-        window_select = WINDOW_POKEBALL;
-        break;    
+       
+    }
     }
 }
 

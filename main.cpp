@@ -88,12 +88,18 @@ void display2()
     glClear(GL_COLOR_BUFFER_BIT);  
     glLoadIdentity();
 
+    glColor3f(1, 0, 0);
+    glRotatef(60, 1, 1, 1);
+    glutWireSphere(2, 25, 25);
+
     glutSwapBuffers();                    
 }
 
 
 void display()
 {
+    gluLookAt(0, 0, 1000, 0, 0, 0, 0, 1, 0);
+
     if(window_select == WINDOW_FIELD)
     {
         display1();
@@ -110,7 +116,7 @@ void reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(-10,10,-10,10, -1, 1);
+    glOrtho(-10, 10, -10, 10, -10, 10);
 
     glMatrixMode(GL_MODELVIEW);
 

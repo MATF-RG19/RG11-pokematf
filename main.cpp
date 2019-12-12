@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 
 void display1()
 {
-    glClear(GL_COLOR_BUFFER_BIT);  //cistim framebuffer
-    glLoadIdentity();              //resetujem matrice transformacija
+    glClear(GL_COLOR_BUFFER_BIT);  
+    glLoadIdentity();              
 
     glTranslatef(x_position,y_position,0);
 
@@ -80,11 +80,16 @@ void display1()
 
 
 
-    glutSwapBuffers();                    //crtam framebuffer
+    glutSwapBuffers();                  
 }
 
 void display2()
-{}
+{
+    glClear(GL_COLOR_BUFFER_BIT);  
+    glLoadIdentity();
+
+    glutSwapBuffers();                    
+}
 
 
 void display()

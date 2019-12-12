@@ -1,12 +1,21 @@
 #include <GL/glut.h>
 #include <iostream>
 
+//MACROS
+#define WINDOW_FIELD 0
+#define WINDOW_POKEBALL 1
+
+
+
+//FUNCTION PROTOTYPES
 void display();
 void reshape(int, int);
 void timer(int);
 void keyboard(unsigned char key, int x, int y);
+void display1();
+void display2();
 
-
+//GLOBAL VARIABLES
 float x_position;
 float y_position;
 float player_size;
@@ -23,7 +32,7 @@ void init()
     y_position = 0;
     player_size = 2;
     state = 1;
-    window_select = 0;
+    window_select = WINDOW_FIELD;
 
 }
 
@@ -46,9 +55,7 @@ int main(int argc, char **argv)
     glutMainLoop();
 }
 
-
-
-void display()
+void display1()
 {
     glClear(GL_COLOR_BUFFER_BIT);  //cistim framebuffer
     glLoadIdentity();              //resetujem matrice transformacija
@@ -74,6 +81,22 @@ void display()
 
 
     glutSwapBuffers();                    //crtam framebuffer
+}
+
+void display2()
+{}
+
+
+void display()
+{
+    if(window_select == WINDOW_FIELD)
+    {
+        display1();
+    }
+    else if(window_select == WINDOW_POKEBALL)
+    {
+        display2();
+    }
 }
 
 void reshape(int w, int h)

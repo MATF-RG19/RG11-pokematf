@@ -174,6 +174,14 @@ void keyboard(unsigned char key, int x, int y)
         glutPostRedisplay();
         }
         break;
+    case 'k':
+    case 'K':
+        window_select = WINDOW_FIELD;
+        break;
+    case 'l':
+    case 'L':
+        window_select = WINDOW_POKEBALL;
+        break;    
     }
 }
 

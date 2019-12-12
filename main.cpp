@@ -6,10 +6,25 @@ void reshape(int, int);
 void timer(int);
 void keyboard(unsigned char key, int x, int y);
 
+
+float x_position;
+float y_position;
+float player_size;
+int state;
+bool window_select;
+
+
 void init()
 {
     glClearColor(0.3, 0.7, 0.3, 1.0);
     glShadeModel (GL_SMOOTH);
+
+    x_position = 0;
+    y_position = 0;
+    player_size = 2;
+    state = 1;
+    window_select = 0;
+
 }
 
 int main(int argc, char **argv) 
@@ -31,9 +46,7 @@ int main(int argc, char **argv)
     glutMainLoop();
 }
 
-float x_position = 0, y_position = 0;
-float player_size = 2;
-int state = 1;
+
 
 void display()
 {

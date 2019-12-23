@@ -8,6 +8,9 @@ float player_size;
 int state;
 bool window_select;
 
+int animation_parametar = 0;
+int animation_ongoing = 0;
+
 void draw_axes(float len) {
     glDisable(GL_LIGHTING);
 
@@ -73,6 +76,7 @@ void display2()
     draw_axes(5);
 
     glColor3f(1, 0, 0);
+    glTranslatef(0, 0, -10);
     glRotatef(60, 1, 1, 1);
     glutSolidSphere(2, 25, 25);
 
@@ -128,27 +132,17 @@ void reshape2(int w, int h)
 }
 
 
-void timer(int)
+void timer(int timer_id)
 {
-    glutPostRedisplay();
-    glutTimerFunc(1000/60, timer, 0);
-
-    /*switch(state)
+    if (timer_id == TIMER_ID) 
     {
-        case(1):
-            if(x_position<9)
-                x_position+=0.15;
-            else
-                state = -1;
-            break;
-        case(-1):
-            if(x_position>-9)
-                x_position-=0.15;
-            else
-                state = 1;
-            break;
-        
-    }*/
+        animation_parametar += 1;
+    }
+
+    glutPostRedisplay();
+
+    if(animation_ongoing)
+        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
 }
 
 
@@ -166,12 +160,16 @@ void keyboard(unsigned char key, int x, int y)
     case 'K':
     {
         window_select = WINDOW_FIELD;
+        //reshape1(GLUT_SCREEN_WIDTH, GLUT_SCREEN_HEIGHT);
+        glutPostRedisplay();
     break;
     }
     case 'l':
     case 'L':
     {
         window_select = WINDOW_POKEBALL;
+        //reshape2(GLUT_SCREEN_WIDTH, GLUT_SCREEN_HEIGHT);
+        glutPostRedisplay();
     break;
     } 
     }

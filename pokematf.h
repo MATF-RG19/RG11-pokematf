@@ -5,8 +5,11 @@
 #include <iostream>
 
 
-#define WINDOW_FIELD 0
-#define WINDOW_POKEBALL 1
+#define WINDOW_FIELD         0  
+#define WINDOW_POKEBALL      1
+
+#define TIMER_ID             1
+#define TIMER_INTERVAL       20
 
 extern float x_position;
 extern float y_position;

@@ -3,11 +3,11 @@
 #include "pokematf.h"
 #include <vector>
 
-float x_position;
-float y_position;
-float player_size;
-int state;
-bool window_select;
+float x_position = 0;
+float y_position = 0;
+float player_size = 2;
+int state = 1;
+bool window_select = WINDOW_FIELD;
 int window_width = 700;
 int window_height = 700;
 
@@ -47,6 +47,54 @@ void display1()
     glDisable(GL_LIGHTING); 
     draw_axes(50);    
 
+    if( CheckCollision( x_position, y_position, player_size, player_size,
+                        POKECENTAR_POSITION_X, POKECENTAR_POSITION_Y, player_size, player_size))
+        printf("touching!!!\n");
+
+    draw_player();
+    draw_pokecentar();
+
+
+    glEnable(GL_LIGHTING);
+    glutSwapBuffers();                  
+}
+
+void display2()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(10, 10, 10,
+              0, 0, 0,
+              0, 1, 0);
+
+    glDisable(GL_LIGHTING); 
+    draw_axes(50);
+    glEnable(GL_LIGHTING);
+
+    draw_pokeball();
+
+    glutSwapBuffers();                    
+}
+
+void draw_pokeball()
+{
+    glPushMatrix();
+
+    glColor3f(1, 0, 0);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
+}
+
+void draw_player()
+{
+    glPushMatrix();
+
     glTranslatef(x_position,y_position,0);
 
     glDisable(GL_LIGHTING); 
@@ -66,41 +114,42 @@ void display1()
 
     glEnd();
 
-    glEnable(GL_LIGHTING);
-
-    glutSwapBuffers();                  
+    glPopMatrix();
 }
 
-void display2()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    gluLookAt(10, 10, 10,
-              0, 0, 0,
-              0, 1, 0);
-
-    glDisable(GL_LIGHTING); 
-    draw_axes(50);
-    glEnable(GL_LIGHTING);
-
-    draw_player();
-
-    glutSwapBuffers();                    
-}
-
-void draw_player()
+void draw_pokecentar()
 {
     glPushMatrix();
 
-    glColor3f(1, 0, 0);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
+    glTranslatef( POKECENTAR_POSITION_X, POKECENTAR_POSITION_Y, 0 );
+
+    glDisable(GL_LIGHTING); 
+
+    glBegin(GL_POLYGON);
+
+    glColor3f(1, 1, 1);
+
+    glVertex2f(0, 0);
+    glVertex2f(player_size, 0);
+    glVertex2f(player_size, player_size);
+    glVertex2f(0, player_size);
+
+    glEnd();
 
     glPopMatrix();
+}
 
+GLboolean CheckCollision(int obj_1_x, int obj_1_y, int obj_1_w, int obj_1_h, 
+                        int obj_2_x, int obj_2_y, int obj_2_w, int obj_2_h) // AABB - AABB collision
+{
+    // Collision x-axis?
+    bool collisionX = obj_1_x + obj_1_w >= obj_2_x &&
+        obj_2_x + obj_2_w >= obj_1_x;
+    // Collision y-axis?
+    bool collisionY = obj_1_y + obj_1_h >= obj_2_y &&
+        obj_2_y + obj_2_h >= obj_1_y;
+    // Collision only if on both axes
+    return collisionX && collisionY;
 }
 
 void display()

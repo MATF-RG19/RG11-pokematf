@@ -5,11 +5,13 @@
 #include <iostream>
 
 
-#define WINDOW_FIELD         0  
-#define WINDOW_POKEBALL      1
+#define WINDOW_FIELD              0  
+#define WINDOW_POKEBALL           1
 
-#define TIMER_ID             1
-#define TIMER_INTERVAL       20
+#define TIMER_ID                  1
+#define TIMER_INTERVAL            20
+#define POKECENTAR_POSITION_X    -5
+#define POKECENTAR_POSITION_Y    -5
 
 extern float x_position;
 extern float y_position;
@@ -38,5 +40,12 @@ void timer(int);
 void keyboard(unsigned char key, int x, int y);
 
 void draw_player();
+
+void draw_pokeball();
+
+void draw_pokecentar();
+
+GLboolean CheckCollision( int obj_1_x, int obj_1_y, int obj_1_w, int obj_1_h, 
+                      int obj_2_x, int obj_2_y, int obj_2_w, int obj_2_h);
 
 #endif

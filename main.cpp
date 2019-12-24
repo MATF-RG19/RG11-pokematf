@@ -25,12 +25,6 @@ void init()
 
     glEnable(GL_COLOR_MATERIAL);
 
-    x_position = 0;
-    y_position = 0;
-    player_size = 2;
-    state = 1;
-    window_select = WINDOW_FIELD;
-
 }
 
 int main(int argc, char **argv) 

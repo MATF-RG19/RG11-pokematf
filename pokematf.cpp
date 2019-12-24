@@ -1,12 +1,15 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "pokematf.h"
+#include <vector>
 
 float x_position;
 float y_position;
 float player_size;
 int state;
 bool window_select;
+int window_width = 700;
+int window_height = 700;
 
 int animation_parametar = 0;
 int animation_ongoing = 0;
@@ -33,15 +36,20 @@ void draw_axes(float len) {
 
 void display1()
 {
-    gluLookAt(0, 0, 1000, 0, 0, 0, 0, 1, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    glDisable(GL_LIGHTING);
+    gluLookAt(0, 0, 5,
+             0, 0, 0,
+              0, 1, 0);
 
-    glClear(GL_COLOR_BUFFER_BIT);  
-    glLoadIdentity();              
+    glDisable(GL_LIGHTING); 
+    draw_axes(50);    
 
     glTranslatef(x_position,y_position,0);
 
+    glDisable(GL_LIGHTING); 
     glBegin(GL_POLYGON);
 
     glColor3f(1, 0, 0);
@@ -58,29 +66,41 @@ void display1()
 
     glEnd();
 
-
+    glEnable(GL_LIGHTING);
 
     glutSwapBuffers();                  
 }
 
 void display2()
 {
-    gluLookAt(4, 4, 4,
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(10, 10, 10,
               0, 0, 0,
               0, 1, 0);
 
+    glDisable(GL_LIGHTING); 
+    draw_axes(50);
     glEnable(GL_LIGHTING);
-    glClear(GL_COLOR_BUFFER_BIT);  
-    glLoadIdentity();
 
-    draw_axes(5);
-
-    glColor3f(1, 0, 0);
-    glTranslatef(0, 0, -10);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(2, 25, 25);
+    draw_player();
 
     glutSwapBuffers();                    
+}
+
+void draw_player()
+{
+    glPushMatrix();
+
+    glColor3f(1, 0, 0);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
 }
 
 void display()
@@ -97,6 +117,8 @@ void display()
 
 void reshape(int w, int h)
 {
+    window_width = w;
+    window_height = h;
 
     if(window_select == WINDOW_FIELD)
     {
@@ -106,7 +128,6 @@ void reshape(int w, int h)
     {
         reshape2(w, h);
     }
-
 }
 
 void reshape1(int w, int h)
@@ -116,8 +137,6 @@ void reshape1(int w, int h)
     glLoadIdentity();
 
     glOrtho(-10, 10, -10, 10, -10, 10);
-
-    glMatrixMode(GL_MODELVIEW);
 }
 
 void reshape2(int w, int h)
@@ -136,6 +155,8 @@ void timer(int timer_id)
 {
     if (timer_id == TIMER_ID) 
     {
+        if(animation_parametar >= 100)
+            animation_parametar = 0;
         animation_parametar += 1;
     }
 
@@ -159,17 +180,22 @@ void keyboard(unsigned char key, int x, int y)
     case 'k':
     case 'K':
     {
+        animation_ongoing = 0;
         window_select = WINDOW_FIELD;
-        //reshape1(GLUT_SCREEN_WIDTH, GLUT_SCREEN_HEIGHT);
+        reshape1(window_width, window_height);
         glutPostRedisplay();
     break;
     }
     case 'l':
     case 'L':
     {
-        window_select = WINDOW_POKEBALL;
-        //reshape2(GLUT_SCREEN_WIDTH, GLUT_SCREEN_HEIGHT);
-        glutPostRedisplay();
+        if(!animation_ongoing)
+        {
+            animation_ongoing = 1;
+            window_select = WINDOW_POKEBALL;
+            reshape2(window_width, window_height); 
+            glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
+        }
     break;
     } 
     }

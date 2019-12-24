@@ -13,7 +13,7 @@ void init()
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
-    float light_position[] = {-1, 3, 2, 1};
+    float light_position[] = {-1, 1, 1, 0};
     float light_ambient[] = {.3f, .3f, .3f, 1};
     float light_diffuse[] = {.7f, .7f, .7f, 1};
     float light_specular[] = {.7f, .7f, .7f, 1};
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 
     glutInitWindowPosition(200, 100);
-    glutInitWindowSize(700, 700);
+    glutInitWindowSize(window_width, window_height);
     glutCreateWindow("Window 1");
 
     glutKeyboardFunc(keyboard);

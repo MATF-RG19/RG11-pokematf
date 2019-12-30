@@ -3,154 +3,22 @@
 #include "pokematf.h"
 #include <vector>
 
-float x_position = 0;
-float y_position = 0;
-float player_size = 2;
-int state = 1;
-bool window_select = WINDOW_FIELD;
+static float player_x = 0;
+static float player_y = 0;
+static float pokemon_x = 0;
+static float pokemon_y = 0;
+static float player_size = 2;
+static float pokemon_size = 0.3;
+static int state = 1;
+static bool window_select = WINDOW_FIELD;
+static int animation_parametar = 0;
+static int animation_ongoing = 0;
+static bool move_pokemon = true;
+
 int window_width = 700;
 int window_height = 700;
 
-int animation_parametar = 0;
-int animation_ongoing = 0;
-
-void draw_axes(float len) {
-    glDisable(GL_LIGHTING);
-
-    glBegin(GL_LINES);
-        glColor3f(1,0,0);
-        glVertex3f(0,0,0);
-        glVertex3f(len,0,0);
-
-        glColor3f(0,1,0);
-        glVertex3f(0,0,0);
-        glVertex3f(0,len,0);
-
-        glColor3f(0,0,1);
-        glVertex3f(0,0,0);
-        glVertex3f(0,0,len);
-    glEnd();
-
-    glEnable(GL_LIGHTING);
-}
-
-void display1()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    gluLookAt(0, 0, 5,
-             0, 0, 0,
-              0, 1, 0);
-
-    glDisable(GL_LIGHTING); 
-    draw_axes(50);    
-
-    if( CheckCollision( x_position, y_position, player_size, player_size,
-                        POKECENTAR_POSITION_X, POKECENTAR_POSITION_Y, player_size, player_size))
-        printf("touching!!!\n");
-
-    draw_player();
-    draw_pokecentar();
-
-
-    glEnable(GL_LIGHTING);
-    glutSwapBuffers();                  
-}
-
-void display2()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    gluLookAt(10, 10, 10,
-              0, 0, 0,
-              0, 1, 0);
-
-    glDisable(GL_LIGHTING); 
-    draw_axes(50);
-    glEnable(GL_LIGHTING);
-
-    draw_pokeball();
-
-    glutSwapBuffers();                    
-}
-
-void draw_pokeball()
-{
-    glPushMatrix();
-
-    glColor3f(1, 0, 0);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
-
-    glPopMatrix();
-
-}
-
-void draw_player()
-{
-    glPushMatrix();
-
-    glTranslatef(x_position,y_position,0);
-
-    glDisable(GL_LIGHTING); 
-    glBegin(GL_POLYGON);
-
-    glColor3f(1, 0, 0);
-    glVertex2f(0, 0);
-
-    glColor3f(1, 1, 0);
-    glVertex2f(player_size, 0);
-
-    glColor3f(0, 1, 0);
-    glVertex2f(player_size, player_size);
-
-    glColor3f(0, 0, 1);
-    glVertex2f(0, player_size);
-
-    glEnd();
-
-    glPopMatrix();
-}
-
-void draw_pokecentar()
-{
-    glPushMatrix();
-
-    glTranslatef( POKECENTAR_POSITION_X, POKECENTAR_POSITION_Y, 0 );
-
-    glDisable(GL_LIGHTING); 
-
-    glBegin(GL_POLYGON);
-
-    glColor3f(1, 1, 1);
-
-    glVertex2f(0, 0);
-    glVertex2f(player_size, 0);
-    glVertex2f(player_size, player_size);
-    glVertex2f(0, player_size);
-
-    glEnd();
-
-    glPopMatrix();
-}
-
-GLboolean CheckCollision(int obj_1_x, int obj_1_y, int obj_1_w, int obj_1_h, 
-                        int obj_2_x, int obj_2_y, int obj_2_w, int obj_2_h) // AABB - AABB collision
-{
-    // Collision x-axis?
-    bool collisionX = obj_1_x + obj_1_w >= obj_2_x &&
-        obj_2_x + obj_2_w >= obj_1_x;
-    // Collision y-axis?
-    bool collisionY = obj_1_y + obj_1_h >= obj_2_y &&
-        obj_2_y + obj_2_h >= obj_1_y;
-    // Collision only if on both axes
-    return collisionX && collisionY;
-}
+//PUBLIC
 
 void display()
 {
@@ -178,27 +46,6 @@ void reshape(int w, int h)
         reshape2(w, h);
     }
 }
-
-void reshape1(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    glOrtho(-10, 10, -10, 10, -10, 10);
-}
-
-void reshape2(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    gluPerspective(30, (float) w/h, 1, 20);
-
-    glMatrixMode(GL_MODELVIEW);
-}
-
 
 void timer(int timer_id)
 {
@@ -249,39 +96,39 @@ void keyboard(unsigned char key, int x, int y)
     } 
     }
 
-    //move player only if in field window
     if(window_select == WINDOW_FIELD)
     {
     switch (key) {
     case 'w':
     case 'W':
-        if(y_position+.1 <= 10 - player_size)
+        if(player_y <= 10 )
         {
-        y_position+=.1;
+        player_y+=.1;
+        printf("%.2f\n", player_y);
         glutPostRedisplay();
         }
         break;
     case 's':
     case 'S':
-        if(y_position >= -10)
+        if(player_y - 0.1 >= -10 + player_size)
         {
-        y_position-=.1;
+        player_y-=.1;
         glutPostRedisplay();
         }
         break;
     case 'a':
     case 'A':
-        if(x_position >= -10)
+        if(player_x >= -10)
         {
-        x_position-=.1;
+        player_x-=.1;
         glutPostRedisplay();
         }
         break;
     case 'd':
     case 'D':
-        if(x_position+.1 <= 10 - player_size)
+        if(player_x+.1 <= 10 - player_size)
         {
-        x_position+=.1;
+        player_x+=.1;
         glutPostRedisplay();
         }
         break;
@@ -289,3 +136,174 @@ void keyboard(unsigned char key, int x, int y)
     }
     }
 }
+
+//PRIVATE
+
+
+static void draw_axes(float len) {
+    glDisable(GL_LIGHTING);
+
+    glBegin(GL_LINES);
+        glColor3f(1,0,0);
+        glVertex3f(0,0,0);
+        glVertex3f(len,0,0);
+
+        glColor3f(0,1,0);
+        glVertex3f(0,0,0);
+        glVertex3f(0,len,0);
+
+        glColor3f(0,0,1);
+        glVertex3f(0,0,0);
+        glVertex3f(0,0,len);
+    glEnd();
+
+    glEnable(GL_LIGHTING);
+}
+
+static void display1()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(0, 0, 5,
+             0, 0, 0,
+              0, 1, 0);
+
+
+    glPushMatrix();
+
+    glDisable(GL_LIGHTING); 
+    draw_axes(50);    
+
+    if( check_collision( player_x, player_y, player_size, player_size,
+                        pokemon_x, pokemon_y, pokemon_size, pokemon_size))
+        printf("touching!!!\n");
+
+    draw_player();
+    draw_wild_pokemon();
+
+    glPopMatrix();
+
+
+    glEnable(GL_LIGHTING);
+    glutSwapBuffers();                  
+}
+
+static void display2()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(10, 10, 10,
+              0, 0, 0,
+              0, 1, 0);
+
+    glDisable(GL_LIGHTING); 
+    draw_axes(50);
+    glEnable(GL_LIGHTING);
+
+    draw_pokeball();
+
+    glutSwapBuffers();                    
+}
+
+static void draw_pokeball()
+{
+    glPushMatrix();
+
+    glColor3f(1, 0, 0);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
+}
+
+static void draw_player()
+{
+    glPushMatrix();
+
+    glTranslatef(player_x,player_y,0);
+    glScalef( player_size, player_size, 0);
+
+    glDisable(GL_LIGHTING); 
+    glBegin(GL_POLYGON);
+
+    glColor3f(1, 0, 0);
+
+    glVertex2f(0, 0);
+    glVertex2f(0, -1);
+    glVertex2f(1, -1);
+    glVertex2f(1, 0);
+
+    glEnd();
+
+    glPopMatrix();
+}
+
+static void draw_wild_pokemon()
+{
+    glPushMatrix();
+    
+    if ( move_pokemon )
+    {
+        srand((unsigned)time(0));
+        pokemon_x = rand()%9;
+        pokemon_y = rand()%9;
+        move_pokemon = false;
+    }
+
+    glTranslatef( pokemon_x, pokemon_y, 0 );
+    glScalef( pokemon_size, pokemon_size, 0);
+
+    glDisable(GL_LIGHTING); 
+
+    glBegin(GL_POLYGON);
+
+    glColor3f(1, 1, 1);
+
+    glVertex2f(0, 0);
+    glVertex2f(0, -1);
+    glVertex2f(1, -1);
+    glVertex2f(1, 0);
+
+    glEnd();
+
+    glPopMatrix();
+}
+
+static GLboolean check_collision(float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
+                        float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h)
+{
+    return obj_1_x < obj_2_x + obj_2_w &&
+           obj_1_x + obj_1_w > obj_2_x &&
+           obj_1_y < obj_2_y + obj_2_h &&
+           obj_1_y + obj_1_h > obj_2_y;
+}
+
+
+static void reshape1(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(-10, 10, -10, 10, -10, 10);
+}
+
+static void reshape2(int w, int h)
+{
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluPerspective(30, (float) w/h, 1, 20);
+
+    glMatrixMode(GL_MODELVIEW);
+}
+
+
+

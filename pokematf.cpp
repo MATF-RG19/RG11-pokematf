@@ -16,170 +16,45 @@ static int animation_ongoing = 0;
 static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
+static int choose_pokemon;
 
 float matrix[16];
 int window_width = 700;
 int window_height = 700;
 GLuint names[2];
 
-//PUBLIC
+//PRIVATE FUNCTION DECLARATION
 
-void display()
-{
-    if(window_select == WINDOW_FIELD)
-    {
-        display1();
-    }
-    else if(window_select == WINDOW_POKEBALL)
-    {
-        display2();
-    }
-}
+static void draw_axes(float len);
 
-void reshape(int w, int h)
-{
-    window_width = w;
-    window_height = h;
+static void display1();
 
-    if(window_select == WINDOW_FIELD)
-    {
-        reshape1(w, h);
-    }
-    else if(window_select == WINDOW_POKEBALL)
-    {
-        reshape2(w, h);
-    }
-}
+static void display2();
 
-void timer(int timer_id)
-{
-    if (timer_id == TIMER_ID) 
-    {
-        if(animation_parametar >= 100)
-            animation_parametar = 0;
-        animation_parametar += 1;
-    }
+static void reshape1(int w, int h);
 
-    glutPostRedisplay();
+static void reshape2(int w, int h);
 
-    if(animation_ongoing)
-        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
-}
+static void draw_player();
 
+static void draw_pikachu();
 
-void keyboard(unsigned char key, int x, int y)
-{
-    switch(key)
-    {
-    case 27:
-    {
-        glDeleteTextures(2, names);
-        exit(0);
-    break;
-    }
-    case 'k':
-    case 'K':
-    {
-        animation_ongoing = 0;
-        window_select = WINDOW_FIELD;
-        reshape1(window_width, window_height);
-        glutPostRedisplay();
-    break;
-    }
-    case 'l':
-    case 'L':
-    {
-        if(!animation_ongoing)
-        {
-            animation_ongoing = 1;
-            window_select = WINDOW_POKEBALL;
-            /* Inicijalizujemo matricu rotacije. */
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
-            glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-            reshape2(window_width, window_height); 
-            glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
-        }
-    break;
-    } 
-    }
+static void draw_bulbasaur();
 
-    if(window_select == WINDOW_FIELD)
-    {
-    switch (key) {
-    case 'w':
-    case 'W':
-        if(player_y <= 10 )
-        {
-        player_y+=.1;
-        glutPostRedisplay();
-        }
-        break;
-    case 's':
-    case 'S':
-        if(player_y - 0.1 >= -10 + player_size)
-        {
-        player_y-=.1;
-        glutPostRedisplay();
-        }
-        break;
-    case 'a':
-    case 'A':
-        if(player_x >= -10)
-        {
-        player_x-=.1;
-        glutPostRedisplay();
-        }
-        break;
-    case 'd':
-    case 'D':
-        if(player_x+.1 <= 10 - player_size)
-        {
-        player_x+=.1;
-        glutPostRedisplay();
-        }
-        break;
-       
-    }
-    }
-}
+static void draw_squirtle();
 
-void mouse(int button, int state, int x, int y)
-{
-    /* Pamti se pozicija pokazivaca misa. */
-    mouse_x = x;
-    mouse_y = y;
-}
+static void draw_charmander();
 
-void motion(int x, int y)
-{
-    /* Promene pozicije pokazivaca misa. */
-    int delta_x, delta_y;
+static void draw_wild_pokemon();
 
-    /* Izracunavaju se promene pozicije pokazivaca misa. */
-    delta_x = x - mouse_x;
-    delta_y = y - mouse_y;
+static GLboolean check_collision( float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
+                      float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h);
 
-    /* Pamti se nova pozicija pokazivaca misa. */
-    mouse_x = x;
-    mouse_y = y;
+static void draw_textures();
 
-    /* Izracunava se nova matrica rotacije. */
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-        glLoadIdentity();
-        glRotatef(180 * (float) delta_x / window_width, 0, 1, 0);
-        glRotatef(180 * (float) delta_y / window_height, 1, 0, 0);
-        glMultMatrixf(matrix);
+static void pick_pokemon( int id );
 
-        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-    glPopMatrix();
-
-    /* Forsira se ponovno iscrtavanje prozora. */
-    glutPostRedisplay();
-}
-
-//PRIVATE
+//PRIVATE FUNCTION DEFINITION
 
 
 static void draw_axes(float len) {
@@ -250,12 +125,67 @@ static void display2()
     draw_axes(50);
     glEnable(GL_LIGHTING);
 
-    draw_pokeball();
+    switch( choose_pokemon )
+    {
+        case 1:
+            draw_pikachu();
+            break;
+        case 2:
+            draw_squirtle();
+            break;
+        case 3:
+            draw_bulbasaur();
+            break;
+        case 4:
+            draw_charmander();
+            break;
+        default:
+            break;
+    }
 
     glutSwapBuffers();                    
 }
 
-static void draw_pokeball()
+static void draw_pikachu()
+{
+    glPushMatrix();
+
+    glColor3f(1, 1, 0);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
+}
+
+static void draw_bulbasaur()
+{
+    glPushMatrix();
+
+    glColor3f(0, 1, 0);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
+}
+
+static void draw_squirtle()
+{
+    glPushMatrix();
+
+    glColor3f(0, 0, 1);
+    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
+    glRotatef(60, 1, 1, 1);
+    glutSolidSphere(1, 25, 25);
+
+    glPopMatrix();
+
+}
+
+static void draw_charmander()
 {
     glPushMatrix();
 
@@ -396,4 +326,184 @@ static void draw_textures()
     /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+static void pick_pokemon( int id )
+{
+    choose_pokemon = id;
+    if(!animation_ongoing)
+    {
+        animation_ongoing = 1;
+        window_select = WINDOW_POKEBALL;
+        /* Inicijalizujemo matricu rotacije. */
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+        reshape2(window_width, window_height); 
+        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
+    }
+}
+
+//PUBLIC
+
+void display()
+{
+    if(window_select == WINDOW_FIELD)
+    {
+        display1();
+    }
+    else if(window_select == WINDOW_POKEBALL)
+    {
+        display2();
+    }
+}
+
+void reshape(int w, int h)
+{
+    window_width = w;
+    window_height = h;
+
+    if(window_select == WINDOW_FIELD)
+    {
+        reshape1(w, h);
+    }
+    else if(window_select == WINDOW_POKEBALL)
+    {
+        reshape2(w, h);
+    }
+}
+
+void timer(int timer_id)
+{
+    if (timer_id == TIMER_ID) 
+    {
+        if(animation_parametar >= 100)
+            animation_parametar = 0;
+        animation_parametar += 1;
+    }
+
+    glutPostRedisplay();
+
+    if(animation_ongoing)
+        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
+}
+
+
+void keyboard(unsigned char key, int x, int y)
+{
+    switch(key)
+    {
+    case 27:
+    {
+        glDeleteTextures(2, names);
+        exit(0);
+    break;
+    }
+    case 'k':
+    case 'K':
+    {
+        animation_ongoing = 0;
+        window_select = WINDOW_FIELD;
+        reshape1(window_width, window_height);
+        glutPostRedisplay();
+    break;
+    }
+    case '1':
+    {
+        pick_pokemon( 1 );
+    break;
+    }
+    case '2':
+    {
+        pick_pokemon( 2 );
+    break;
+    }
+    case '3':
+    {
+        pick_pokemon( 3 );
+    break;
+    }
+    case '4':
+    {
+        pick_pokemon( 4 );
+    break;
+    }
+    }
+
+    if(window_select == WINDOW_FIELD)
+    {
+    switch (key) {
+    case 'w':
+    case 'W':
+        if(player_y <= 10 )
+        {
+        player_y+=.1;
+        glutPostRedisplay();
+        }
+        break;
+    case 's':
+    case 'S':
+        if(player_y - 0.1 >= -10 + player_size)
+        {
+        player_y-=.1;
+        glutPostRedisplay();
+        }
+        break;
+    case 'a':
+    case 'A':
+        if(player_x >= -10)
+        {
+        player_x-=.1;
+        glutPostRedisplay();
+        }
+        break;
+    case 'd':
+    case 'D':
+        if(player_x+.1 <= 10 - player_size)
+        {
+        player_x+=.1;
+        glutPostRedisplay();
+        }
+        break;
+       
+    }
+    }
+}
+
+
+void mouse(int button, int state, int x, int y)
+{
+    /* Pamti se pozicija pokazivaca misa. */
+    mouse_x = x;
+    mouse_y = y;
+}
+
+void motion(int x, int y)
+{
+    /* Promene pozicije pokazivaca misa. */
+    int delta_x, delta_y;
+
+    /* Izracunavaju se promene pozicije pokazivaca misa. */
+    delta_x = x - mouse_x;
+    delta_y = y - mouse_y;
+
+    /* Pamti se nova pozicija pokazivaca misa. */
+    mouse_x = x;
+    mouse_y = y;
+
+    /* Izracunava se nova matrica rotacije. */
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+        glLoadIdentity();
+        glRotatef(180 * (float) delta_x / window_width, 0, 1, 0);
+        glRotatef(180 * (float) delta_y / window_height, 1, 0, 0);
+        glMultMatrixf(matrix);
+
+        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+    glPopMatrix();
+
+    /* Forsira se ponovno iscrtavanje prozora. */
+    glutPostRedisplay();
+}
+
+
 

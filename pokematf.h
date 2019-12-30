@@ -22,6 +22,7 @@ extern GLuint names[2];
 
 extern int window_width;
 extern int window_height;
+extern float matrix[16];
 
 //PRIVATE
 
@@ -55,6 +56,10 @@ void reshape(int w, int h);
 void timer(int);
 
 void keyboard(unsigned char key, int x, int y);
+
+void mouse(int button, int state, int x, int y);
+
+void motion(int x, int y);
 
 
 #endif

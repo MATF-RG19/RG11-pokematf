@@ -83,7 +83,7 @@ void init()
     /* Unistava se objekat za citanje tekstura iz fajla. */
     image_done(image);
 
-    
+
 
 }
 
@@ -99,6 +99,8 @@ int main(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
     init();
 
     glutMainLoop();

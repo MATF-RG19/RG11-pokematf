@@ -13,6 +13,13 @@
 #define POKECENTAR_POSITION_X    -5
 #define POKECENTAR_POSITION_Y    -5
 
+/* Imena fajlova sa teksturama. */
+#define FILENAME0 "floor.bmp"
+#define FILENAME1 "grass.bmp"
+
+/* Identifikatori tekstura. */
+extern GLuint names[2];
+
 extern int window_width;
 extern int window_height;
 
@@ -36,6 +43,8 @@ static void draw_wild_pokemon();
 
 static GLboolean check_collision( float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
                       float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h);
+
+static void draw_textures();
 
 //PUBLIC
 

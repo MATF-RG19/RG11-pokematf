@@ -7,7 +7,7 @@ static float player_x = 0;
 static float player_y = 0;
 static float pokemon_x = 0;
 static float pokemon_y = 0;
-static float player_size = 2;
+static float player_size = 1;
 static float pokemon_size = 0.3;
 static int state = 1;
 static bool window_select = WINDOW_FIELD;
@@ -17,6 +17,7 @@ static bool move_pokemon = true;
 
 int window_width = 700;
 int window_height = 700;
+GLuint names[2];
 
 //PUBLIC
 
@@ -69,7 +70,6 @@ void keyboard(unsigned char key, int x, int y)
     {
     case 27:
     {
-        /* Zavrsava se program. */
         exit(0);
     break;
     }
@@ -104,7 +104,6 @@ void keyboard(unsigned char key, int x, int y)
         if(player_y <= 10 )
         {
         player_y+=.1;
-        printf("%.2f\n", player_y);
         glutPostRedisplay();
         }
         break;
@@ -167,14 +166,14 @@ static void display1()
     glLoadIdentity();
 
     gluLookAt(0, 0, 5,
-             0, 0, 0,
+              0, 0, 0,
               0, 1, 0);
 
 
     glPushMatrix();
 
     glDisable(GL_LIGHTING); 
-    draw_axes(50);    
+    //draw_axes(50);    
 
     if( check_collision( player_x, player_y, player_size, player_size,
                         pokemon_x, pokemon_y, pokemon_size, pokemon_size))
@@ -182,6 +181,8 @@ static void display1()
 
     draw_player();
     draw_wild_pokemon();
+
+    draw_textures();
 
     glPopMatrix();
 
@@ -234,10 +235,10 @@ static void draw_player()
 
     glColor3f(1, 0, 0);
 
-    glVertex2f(0, 0);
-    glVertex2f(0, -1);
-    glVertex2f(1, -1);
-    glVertex2f(1, 0);
+    glVertex3f(0, 0, 10);
+    glVertex3f(0, -1, 10);
+    glVertex3f(1, -1, 10);
+    glVertex3f(1, 0, 10);
 
     glEnd();
 
@@ -263,12 +264,12 @@ static void draw_wild_pokemon()
 
     glBegin(GL_POLYGON);
 
-    glColor3f(1, 1, 1);
+    glColor3f(0, 1, 0);
 
-    glVertex2f(0, 0);
-    glVertex2f(0, -1);
-    glVertex2f(1, -1);
-    glVertex2f(1, 0);
+    glVertex3f(0, 0, 0.02);
+    glVertex3f(0, -1, 0.02);
+    glVertex3f(1, -1, 0.02);
+    glVertex3f(1, 0, 0.02);
 
     glEnd();
 
@@ -305,5 +306,49 @@ static void reshape2(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
+static void draw_textures()
+{
+    /* Crtaju se vrata kuce. */
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
 
+        glTexCoord2f(0, 0);
+        glVertex3f(0, 0, 0);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(10, 0, 0);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(10, 10, 0);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 10, 0);
+    glEnd();
+    
+        /* Crta se zid kuce. */
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 0);
+        glVertex3f(-10, -10, 0);
+
+        glTexCoord2f(12, 0);
+        glVertex3f(10, -10, 0);
+
+        glTexCoord2f(12, 6);
+        glVertex3f(10, 10, 0);
+
+        glTexCoord2f(0, 6);
+        glVertex3f(-10, 10, 0);
+    glEnd();
+    
+
+
+
+
+    /* Iskljucujemo aktivnu teksturu */
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
 

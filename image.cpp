@@ -74,6 +74,11 @@ void image_read(Image *image, const char *filename) {
   fread(&bih.colorsused, 4, 1, file);
   fread(&bih.colorsimportant, 4, 1, file);
 
+  /***** Najbitniji deo koda koj popravlja bag loseg ucitavanja GIMP sprajtova ******/
+	  /**************/  fseek(file, bfh.offsetbits, SEEK_SET);   /***********************/
+	  /**********************************************************************************/
+  //centrira sprite texturu?
+
   /*
    * Od podataka iz drugog zaglavlja koristimo samo informacije
    * o dimenzijama slike.
@@ -128,10 +133,18 @@ void image_read(Image *image, const char *filename) {
       fread(&r, sizeof(char), 1, file);
       fread(&a, sizeof(char), 1, file);
 
+      // /* GIMP exporti */
+      // image->pixels[4 * i] = a;
+      // image->pixels[4 * i + 1] = r;
+      // image->pixels[4 * i + 2] = g;
+      // image->pixels[4 * i + 3] = b;
+      
+
       image->pixels[4 * i] = r;
       image->pixels[4 * i + 1] = g;
       image->pixels[4 * i + 2] = b;
       image->pixels[4 * i + 3] = a;
+
     }
 
   /* Zatvara se fajl. */

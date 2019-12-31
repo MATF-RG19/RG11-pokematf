@@ -21,7 +21,7 @@ static int choose_pokemon;
 float matrix[16];
 int window_width = 700;
 int window_height = 700;
-GLuint names[2];
+GLuint names[4];
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -50,7 +50,9 @@ static void draw_wild_pokemon();
 static GLboolean check_collision( float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
                       float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h);
 
-static void draw_textures();
+static void draw_grass();
+
+static void draw_floor();
 
 static void pick_pokemon( int id );
 
@@ -87,25 +89,29 @@ static void display1()
               0, 0, 0,
               0, 1, 0);
 
-
+    
     glPushMatrix();
 
-    glDisable(GL_LIGHTING); 
-    //draw_axes(50);    
+    glMultMatrixf(matrix);
 
-    if( check_collision( player_x, player_y, player_size, player_size,
-                        pokemon_x, pokemon_y, pokemon_size, pokemon_size))
-        printf("touching!!!\n");
+    glDisable(GL_LIGHTING);    
+
+    // if( check_collision( player_x, player_y, player_size, player_size,
+    //                     pokemon_x, pokemon_y, pokemon_size, pokemon_size))
+    //     printf("touching!!!\n");
+
+    draw_floor();
 
     draw_player();
+
+    draw_grass();
+
     draw_wild_pokemon();
 
-    draw_textures();
-
-    glPopMatrix();
-
+    
 
     glEnable(GL_LIGHTING);
+    glPopMatrix();
     glutSwapBuffers();                  
 }
 
@@ -118,6 +124,8 @@ static void display2()
     gluLookAt(10, 10, 10,
               0, 0, 0,
               0, 1, 0);
+
+    glPushMatrix();
 
     glMultMatrixf(matrix);
 
@@ -142,6 +150,8 @@ static void display2()
         default:
             break;
     }
+
+    glPopMatrix();
 
     glutSwapBuffers();                    
 }
@@ -203,19 +213,28 @@ static void draw_player()
     glPushMatrix();
 
     glTranslatef(player_x,player_y,0);
-    glScalef( player_size, player_size, 0);
+    glScalef( player_size, player_size*2, 1);
 
     glDisable(GL_LIGHTING); 
-    glBegin(GL_POLYGON);
 
-    glColor3f(1, 0, 0);
+    glBindTexture(GL_TEXTURE_2D, names[3]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
 
-    glVertex3f(0, 0, 10);
-    glVertex3f(0, -1, 10);
-    glVertex3f(1, -1, 10);
-    glVertex3f(1, 0, 10);
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 0, 4);
 
+        glTexCoord2f(0 , 0);
+        glVertex3f(0, -1, 4);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(1, -1, 4);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(1, 0, 4);
     glEnd();
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     glPopMatrix();
 }
@@ -232,21 +251,30 @@ static void draw_wild_pokemon()
         move_pokemon = false;
     }
 
-    glTranslatef( pokemon_x, pokemon_y, 0 );
-    glScalef( pokemon_size, pokemon_size, 0);
+    // glTranslatef( pokemon_x, pokemon_y, 0 );
+    // glScalef( pokemon_size, pokemon_size, 0);
+    glScalef( 5, 5, 1);
 
     glDisable(GL_LIGHTING); 
 
-    glBegin(GL_POLYGON);
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
 
-    glColor3f(0, 1, 0);
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 0, 4);
 
-    glVertex3f(0, 0, 0.02);
-    glVertex3f(0, -1, 0.02);
-    glVertex3f(1, -1, 0.02);
-    glVertex3f(1, 0, 0.02);
+        glTexCoord2f(0  , 0);
+        glVertex3f(0, -1, 4);
 
+        glTexCoord2f(1, 0);
+        glVertex3f(1, -1, 4);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(1, 0, 4);
     glEnd();
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
 
     glPopMatrix();
 }
@@ -266,8 +294,11 @@ static void reshape1(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 
     glOrtho(-10, 10, -10, 10, -10, 10);
+
+    glMatrixMode(GL_MODELVIEW);
 }
 
 static void reshape2(int w, int h)
@@ -275,33 +306,38 @@ static void reshape2(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 
     gluPerspective(30, (float) w/h, 1, 20);
 
     glMatrixMode(GL_MODELVIEW);
 }
 
-static void draw_textures()
+static void draw_grass()
 {
-    /* Crtaju se vrata kuce. */
+    /* Crtaju se trava */
     glBindTexture(GL_TEXTURE_2D, names[0]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
         glTexCoord2f(0, 0);
-        glVertex3f(0, 0, 0);
+        glVertex3f(0, 0, 3);
 
-        glTexCoord2f(1, 0);
-        glVertex3f(10, 0, 0);
+        glTexCoord2f(10, 0);
+        glVertex3f(10, 0, 3);
 
-        glTexCoord2f(1, 1);
-        glVertex3f(10, 10, 0);
+        glTexCoord2f(10, 10);
+        glVertex3f(10, 10, 3);
 
-        glTexCoord2f(0, 1);
-        glVertex3f(0, 10, 0);
+        glTexCoord2f(0, 10);
+        glVertex3f(0, 10, 3);
     glEnd();
-    
-        /* Crta se zid kuce. */
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+static void draw_floor()
+{
+    /* Crta se pod*/
     glBindTexture(GL_TEXTURE_2D, names[1]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
@@ -309,23 +345,18 @@ static void draw_textures()
         glTexCoord2f(0, 0);
         glVertex3f(-10, -10, 0);
 
-        glTexCoord2f(12, 0);
+        glTexCoord2f(6, 0);
         glVertex3f(10, -10, 0);
 
-        glTexCoord2f(12, 6);
+        glTexCoord2f(6, 6);
         glVertex3f(10, 10, 0);
 
         glTexCoord2f(0, 6);
         glVertex3f(-10, 10, 0);
     glEnd();
-    
 
-
-
-
-    /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);
-}
+}  
 
 static void pick_pokemon( int id )
 {
@@ -401,9 +432,20 @@ void keyboard(unsigned char key, int x, int y)
     case 'k':
     case 'K':
     {
-        animation_ongoing = 0;
-        window_select = WINDOW_FIELD;
-        reshape1(window_width, window_height);
+        if(animation_ongoing)
+        {
+            animation_ongoing = 0;
+            window_select = WINDOW_FIELD;
+            reshape1(window_width, window_height);
+            glutPostRedisplay();
+        }
+    break;
+    }
+    case 'r':
+    case 'R':
+    {
+        glLoadIdentity();
+        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
         glutPostRedisplay();
     break;
     }

@@ -16,9 +16,11 @@
 /* Imena fajlova sa teksturama. */
 #define FILENAME0 "floor.bmp"
 #define FILENAME1 "grass.bmp"
+#define FILENAME2 "bulbasaur.bmp"
+#define FILENAME3 "character.bmp"
 
 /* Identifikatori tekstura. */
-extern GLuint names[2];
+extern GLuint names[4];
 
 extern int window_width;
 extern int window_height;

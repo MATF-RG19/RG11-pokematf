@@ -18,12 +18,6 @@ GLuint names[4];
 
 //PRIVATE VARIABLES
 
-static float player_x = 0;
-static float player_y = 0;
-static float pokemon_x = 0;
-static float pokemon_y = 0;
-static float player_size = 1;
-static float pokemon_size = 0.3;
 static int state = 1;
 static bool window_select = WINDOW_FIELD;
 static int animation_parametar = 0;
@@ -32,6 +26,8 @@ static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
 static int choose_pokemon = 1;
+static Position_info pokemon_position_info = { 0, 0, 0.3, 0.3};
+static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 
 
@@ -59,8 +55,8 @@ static void draw_charmander();
 
 static void draw_wild_pokemon();
 
-static GLboolean check_collision( float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
-                      float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h);
+static bool check_collision(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2);
 
 static void draw_grass();
 
@@ -92,6 +88,15 @@ static void draw_axes(float len) {
         glVertex3f(0,0,len);
     glEnd();
 
+    glPointSize(10);
+    glBegin(GL_POINTS);
+        glColor3f(0,0,0);
+        for(int i = -10; i <=10; i++)
+            glVertex3i(i, 0, 10);
+        for(int i = -10; i <=10; i++)
+            glVertex3i(0, i, 10);
+    glEnd();
+
     glEnable(GL_LIGHTING);
 }
 
@@ -111,13 +116,20 @@ static void display1()
 
     glMultMatrixf(matrix);
 
-    glDisable(GL_LIGHTING);  
+    glDisable(GL_LIGHTING);
+
+    glDisable(GL_TEXTURE_2D);
+    draw_axes(10);  
+    glEnable(GL_TEXTURE_2D);
     
-    // if( check_collision( player_x, player_y, player_size, player_size,
-    //                     pokemon_x, pokemon_y, pokemon_size, pokemon_size))
-    //     printf("touching!!!\n");
+    if( check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+        printf("player x: %f,   player y: %f,   player width: %f,   player height: %f, box x: %f,   box y: %f,   box width: %f,   box height: %f\n", player_info.x, player_info.y, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height);
 
     text_log(-3, -3, "hiii");
+
+    draw_pokecenter();
 
     draw_floor();
 
@@ -125,7 +137,7 @@ static void display1()
 
     draw_grass();
 
-    draw_pokecenter();
+    
 
     
     glEnable(GL_LIGHTING);
@@ -271,8 +283,8 @@ static void draw_player()
 {
     glPushMatrix();
 
-    glTranslatef(player_x,player_y,0);
-    glScalef( player_size, player_size*2, 1);
+    glTranslatef(player_info.x,player_info.y,0);
+    glScalef( player_info.width, player_info.height, 1);
 
     glDisable(GL_LIGHTING); 
 
@@ -305,13 +317,13 @@ static void draw_wild_pokemon()
     if ( move_pokemon )
     {
         srand((unsigned)time(0));
-        pokemon_x = rand()%9;
-        pokemon_y = rand()%9;
+        pokemon_position_info.x = rand()%9;
+        pokemon_position_info.y = rand()%9;
         move_pokemon = false;
     }
 
-    // glTranslatef( pokemon_x, pokemon_y, 0 );
-    // glScalef( pokemon_size, pokemon_size, 0);
+    // glTranslatef( pokemon_position_info.x, pokemon_position_info.y, 0 );
+    // glScalef( pokemon_position_info.width, pokemon_position_info.width, 0);
     glScalef( 5, 5, 1); 
 
     glBindTexture(GL_TEXTURE_2D, names[2]);
@@ -336,13 +348,21 @@ static void draw_wild_pokemon()
     glPopMatrix();
 }
 
-static GLboolean check_collision(float obj_1_x, float obj_1_y, float obj_1_w, float obj_1_h, 
-                        float obj_2_x, float obj_2_y, float obj_2_w, float obj_2_h)
+static bool check_collision(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2)
 {
-    return obj_1_x < obj_2_x + obj_2_w &&
-           obj_1_x + obj_1_w > obj_2_x &&
-           obj_1_y < obj_2_y + obj_2_h &&
-           obj_1_y + obj_1_h > obj_2_y;
+    if (x1 + w1 >= x2 &&
+       x1 <= x2 + w2 &&
+       y1 - h1 <= y2 &&
+       y1 >= y2 - h2 )
+    {
+    return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
 
@@ -529,33 +549,33 @@ void keyboard(unsigned char key, int x, int y)
     switch (key) {
     case 'w':
     case 'W':
-        if(player_y <= 10 )
+        if(player_info.y <= 10 )
         {
-        player_y+=.1;
+        player_info.y+=.1;
         glutPostRedisplay();
         }
         break;
     case 's':
     case 'S':
-        if(player_y - 0.1 >= -10 + player_size)
+        if(player_info.y - 0.1 >= -10 + player_info.height)
         {
-        player_y-=.1;
+        player_info.y-=.1;
         glutPostRedisplay();
         }
         break;
     case 'a':
     case 'A':
-        if(player_x >= -10)
+        if(player_info.x >= -10)
         {
-        player_x-=.1;
+        player_info.x-=.1;
         glutPostRedisplay();
         }
         break;
     case 'd':
     case 'D':
-        if(player_x+.1 <= 10 - player_size)
+        if(player_info.x+.1 <= 10 - player_info.width)
         {
-        player_x+=.1;
+        player_info.x+=.1;
         glutPostRedisplay();
         }
         break;

@@ -124,12 +124,11 @@ static void display1()
     
     if( check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
                          pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
-        printf("player x: %f,   player y: %f,   player width: %f,   player height: %f, box x: %f,   box y: %f,   box width: %f,   box height: %f\n", player_info.x, player_info.y, player_info.width, player_info.height,
-                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height);
+        printf("touching\n");
 
     text_log(-3, -3, "hiii");
 
-    draw_pokecenter();
+    draw_pokecenter();  //move down
 
     draw_floor();
 
@@ -551,32 +550,48 @@ void keyboard(unsigned char key, int x, int y)
     case 'W':
         if(player_info.y <= 10 )
         {
-        player_info.y+=.1;
-        glutPostRedisplay();
+            if(!check_collision( player_info.x, player_info.y + .1, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+            {             
+                player_info.y+=.1;
+                glutPostRedisplay();
+            }
         }
         break;
     case 's':
     case 'S':
         if(player_info.y - 0.1 >= -10 + player_info.height)
         {
-        player_info.y-=.1;
-        glutPostRedisplay();
+            if(!check_collision( player_info.x, player_info.y - .1, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+            {
+                player_info.y-=.1;
+                glutPostRedisplay();
+            }
         }
         break;
     case 'a':
     case 'A':
         if(player_info.x >= -10)
         {
-        player_info.x-=.1;
-        glutPostRedisplay();
+            if(!check_collision( player_info.x - .1, player_info.y, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+            {
+                player_info.x-=.1;
+                glutPostRedisplay();
+            }
         }
         break;
     case 'd':
     case 'D':
         if(player_info.x+.1 <= 10 - player_info.width)
         {
-        player_info.x+=.1;
-        glutPostRedisplay();
+            if(!check_collision( player_info.x + .1, player_info.y, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+            {
+                player_info.x+=.1;
+                glutPostRedisplay();
+            }
         }
         break;
        

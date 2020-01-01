@@ -16,10 +16,10 @@ static int animation_ongoing = 0;
 static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
-static int choose_pokemon;
+static int choose_pokemon = 1;
 
 float matrix[16];
-int window_width = 700;
+int window_width = 700;   
 int window_height = 700;
 GLuint names[4];
 
@@ -81,6 +81,7 @@ static void draw_axes(float len) {
 
 static void display1()
 {
+    glEnable(GL_TEXTURE_2D);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -117,6 +118,7 @@ static void display1()
 
 static void display2()
 {
+    glDisable(GL_TEXTURE_2D);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -294,11 +296,11 @@ static void reshape1(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-
     glOrtho(-10, 10, -10, 10, -10, 10);
 
     glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
 
 static void reshape2(int w, int h)
@@ -306,11 +308,11 @@ static void reshape2(int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-
     gluPerspective(30, (float) w/h, 1, 20);
 
     glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
 
 static void draw_grass()
@@ -365,10 +367,6 @@ static void pick_pokemon( int id )
     {
         animation_ongoing = 1;
         window_select = WINDOW_POKEBALL;
-        /* Inicijalizujemo matricu rotacije. */
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
         reshape2(window_width, window_height); 
         glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
     }

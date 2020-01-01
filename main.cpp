@@ -140,6 +140,7 @@ int main(int argc, char **argv)
     glutReshapeFunc(reshape);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
+    glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
     init();
 
     glutMainLoop();

@@ -21,7 +21,6 @@ GLuint names[4];
 static int state = 1;
 static bool window_select = WINDOW_FIELD;
 static int animation_parametar = 0;
-static int animation_ongoing = 0;
 static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
@@ -29,7 +28,8 @@ static int choose_pokemon = 1;
 static Position_info pokemon_position_info = { 0, 0, 0.3, 0.3};
 static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
-
+static bool write_message = false;
+static const char* message;
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -67,6 +67,9 @@ static void pick_pokemon( int id );
 static void text_log( float x, float y, const char *s);
 
 static void draw_pokecenter();
+
+static bool check_proximity(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2);
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -121,12 +124,9 @@ static void display1()
     glDisable(GL_TEXTURE_2D);
     draw_axes(10);  
     glEnable(GL_TEXTURE_2D);
-    
-    if( check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
-                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
-        printf("touching\n");
 
-    text_log(-3, -3, "hiii");
+    if(write_message)
+        text_log(-3, -3, message);
 
     draw_pokecenter();  //move down
 
@@ -364,6 +364,29 @@ static bool check_collision(float x1, float y1, float w1, float h1,
 
 }
 
+static bool check_proximity(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2)
+{
+    if ( check_collision( x1 + .1, y1, w1, h1, 
+                        x2, y2, w2, h2 ) )
+        return true;
+    
+    if ( check_collision( x1 - .1, y1, w1, h1, 
+                        x2, y2, w2, h2 ) )
+        return true;
+
+    if ( check_collision( x1 , y1 + .1, w1, h1, 
+                        x2, y2, w2, h2 ) )
+        return true;
+
+    if ( check_collision( x1 , y1 - .1, w1, h1, 
+                        x2, y2, w2, h2 ) )
+        return true;
+
+    
+    return false;
+}
+
 
 static void reshape1(int w, int h)
 {
@@ -437,13 +460,9 @@ static void draw_floor()
 static void pick_pokemon( int id )
 {
     choose_pokemon = id;
-    if(!animation_ongoing)
-    {
-        animation_ongoing = 1;
-        window_select = WINDOW_POKEBALL;
-        reshape2(window_width, window_height); 
-        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
-    }
+    window_select = WINDOW_POKEBALL;
+    reshape2(window_width, window_height);
+    glutPostRedisplay();
 }
 
 //PUBLIC
@@ -486,8 +505,7 @@ void timer(int timer_id)
 
     glutPostRedisplay();
 
-    if(animation_ongoing)
-        glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
+    glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
 }
 
 
@@ -504,13 +522,9 @@ void keyboard(unsigned char key, int x, int y)
     case 'k':
     case 'K':
     {
-        if(animation_ongoing)
-        {
-            animation_ongoing = 0;
-            window_select = WINDOW_FIELD;
-            reshape1(window_width, window_height);
-            glutPostRedisplay();
-        }
+        window_select = WINDOW_FIELD;
+        reshape1(window_width, window_height);
+        glutPostRedisplay();
     break;
     }
     case 'r':
@@ -594,6 +608,18 @@ void keyboard(unsigned char key, int x, int y)
             }
         }
         break;
+    case 'h':
+    case 'H':
+    {
+        if( check_proximity( player_info.x, player_info.y, player_info.width, player_info.height,
+                         pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
+            {
+                write_message = true;
+                message = "All pokemons healed";
+                glutPostRedisplay();
+            }
+        break;
+    }
        
     }
     }

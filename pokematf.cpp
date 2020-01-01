@@ -30,6 +30,7 @@ static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 static bool write_message = false;
 static const char* message;
+static int message_time = 100;
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -126,15 +127,16 @@ static void display1()
     glEnable(GL_TEXTURE_2D);
 
     if(write_message)
-        text_log(-3, -3, message);
+        text_log(-8, 8.3, message);
 
-    draw_pokecenter();  //move down
-
+    
     draw_floor();
+
+    draw_grass();
 
     draw_player();
 
-    draw_grass();
+    draw_pokecenter();
 
     
 
@@ -178,8 +180,8 @@ static void text_log( float x, float y, const char *s)
     glDisable(GL_TEXTURE_2D);
 
     glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-    glRasterPos3i(x, y, 10);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, reinterpret_cast<const unsigned char *>( s ) ); 
+    glRasterPos3f(x, y, 10);
+    glutBitmapString(GLUT_BITMAP_HELVETICA_18, reinterpret_cast<const unsigned char *>( s ) ); 
 
     glEnable(GL_TEXTURE_2D);
 }
@@ -501,6 +503,16 @@ void timer(int timer_id)
         if(animation_parametar >= 100)
             animation_parametar = 0;
         animation_parametar += 1;
+
+        if(write_message)
+        {
+            message_time -= 1;
+            if( message_time <=0 )
+            {
+                write_message = false;
+                message_time = 100;
+            }
+        }
     }
 
     glutPostRedisplay();

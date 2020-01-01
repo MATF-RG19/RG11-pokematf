@@ -18,6 +18,8 @@ static int mouse_x;
 static int mouse_y;
 static int choose_pokemon = 1;
 
+const unsigned char* s = reinterpret_cast<const unsigned char *>( "Random text" );
+
 float matrix[16];
 int window_width = 700;   
 int window_height = 700;
@@ -55,6 +57,8 @@ static void draw_grass();
 static void draw_floor();
 
 static void pick_pokemon( int id );
+
+static void text_log( float x, float y, const unsigned char *s);
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -95,11 +99,13 @@ static void display1()
 
     glMultMatrixf(matrix);
 
-    glDisable(GL_LIGHTING);    
-
+    glDisable(GL_LIGHTING);  
+    
     // if( check_collision( player_x, player_y, player_size, player_size,
     //                     pokemon_x, pokemon_y, pokemon_size, pokemon_size))
     //     printf("touching!!!\n");
+
+    text_log(0, 0, s);
 
     draw_floor();
 
@@ -109,11 +115,24 @@ static void display1()
 
     draw_wild_pokemon();
 
+ 
+
     
 
     glEnable(GL_LIGHTING);
     glPopMatrix();
     glutSwapBuffers();                  
+}
+
+static void text_log( float x, float y, const unsigned char *s)
+{
+    glDisable(GL_TEXTURE_2D);
+
+    glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+    glRasterPos3i(0, 0, 10);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, s); 
+
+    glEnable(GL_TEXTURE_2D);
 }
 
 static void display2()

@@ -3,6 +3,7 @@
 
 #include <GL/glut.h>
 #include <iostream>
+#include <GL/freeglut.h>
 
 
 #define WINDOW_FIELD              0  

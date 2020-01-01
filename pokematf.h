@@ -28,7 +28,7 @@ extern int window_height;
 extern float matrix[16];
 
 
-//PUBLIC
+//PUBLIC FUNCTIONS
 
 void display();
 

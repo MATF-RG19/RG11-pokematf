@@ -3,6 +3,21 @@
 #include "pokematf.h"
 #include <vector>
 
+//STRUCTURES
+
+typedef struct Position_info{
+    float x, y, width, height;
+} Position_info;
+
+//GLOBAL VARIABLES
+
+float matrix[16];
+int window_width = 700;   
+int window_height = 700;
+GLuint names[4];
+
+//PRIVATE VARIABLES
+
 static float player_x = 0;
 static float player_y = 0;
 static float pokemon_x = 0;
@@ -17,13 +32,8 @@ static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
 static int choose_pokemon = 1;
+static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 
-const unsigned char* s = reinterpret_cast<const unsigned char *>( "Random text" );
-
-float matrix[16];
-int window_width = 700;   
-int window_height = 700;
-GLuint names[4];
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -58,7 +68,9 @@ static void draw_floor();
 
 static void pick_pokemon( int id );
 
-static void text_log( float x, float y, const unsigned char *s);
+static void text_log( float x, float y, const char *s);
+
+static void draw_pokecenter();
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -105,7 +117,7 @@ static void display1()
     //                     pokemon_x, pokemon_y, pokemon_size, pokemon_size))
     //     printf("touching!!!\n");
 
-    text_log(0, 0, s);
+    text_log(-3, -3, "hiii");
 
     draw_floor();
 
@@ -113,24 +125,50 @@ static void display1()
 
     draw_grass();
 
-    draw_wild_pokemon();
-
- 
+    draw_pokecenter();
 
     
-
     glEnable(GL_LIGHTING);
     glPopMatrix();
     glutSwapBuffers();                  
 }
 
-static void text_log( float x, float y, const unsigned char *s)
+static void draw_pokecenter()
+{
+    glPushMatrix();
+
+    glTranslatef( pokecenter_info.x, pokecenter_info.y, 0 );
+    glScalef( pokecenter_info.width, pokecenter_info.height, 1); 
+
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 0, 4);
+
+        glTexCoord2f(0  , 0);
+        glVertex3f(0, -1, 4);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(1, -1, 4);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(1, 0, 4);
+    glEnd();
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glPopMatrix();
+}
+
+static void text_log( float x, float y, const char *s)
 {
     glDisable(GL_TEXTURE_2D);
 
     glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-    glRasterPos3i(0, 0, 10);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, s); 
+    glRasterPos3i(x, y, 10);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, reinterpret_cast<const unsigned char *>( s ) ); 
 
     glEnable(GL_TEXTURE_2D);
 }
@@ -274,9 +312,7 @@ static void draw_wild_pokemon()
 
     // glTranslatef( pokemon_x, pokemon_y, 0 );
     // glScalef( pokemon_size, pokemon_size, 0);
-    glScalef( 5, 5, 1);
-
-    glDisable(GL_LIGHTING); 
+    glScalef( 5, 5, 1); 
 
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glBegin(GL_QUADS);

@@ -83,7 +83,7 @@ void init()
 
 
     /* Kreira se pokemon. */
-    image_read(image, FILENAME2);
+    image_read(image, "pokecenter.bmp");
 
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

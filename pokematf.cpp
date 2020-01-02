@@ -138,7 +138,14 @@ static void display_field()
     glEnable(GL_TEXTURE_2D);
 
     if(write_message)
+    {
         text_log(-8, 8.3, message);
+    }
+    else
+    {
+        text_log(-8, 8.3, "Press H next to the\nPokecenter to heal pokemons");
+    }
+    
 
 
     text_log(-9.5, -9.5, "Pokedex( P )");

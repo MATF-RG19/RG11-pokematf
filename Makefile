@@ -1,15 +1,13 @@
 PROGRAM = Pokemon
-CC      = g++
-CFLAGS  = -lm
-LDLIBS  = -lglut -lGLU -lGL
+CC	= g++
+LDLIBS  = -lglut -lGLU -lGL -lm
 
-$(PROGRAM): main.o pokematf.o image.o
-	$(CC) $(LDFLAGS) -o $(PROGRAM) image.o pokematf.o main.o $(LDLIBS)
+$(PROGRAM): image.o pokematf.o main.o
+	$(CC) -o $(PROGRAM) $^ $(LDLIBS)
+image.o: image.cpp image.h
+	$(CC) -c -o $@ $<
+pokematf.o: pokematf.cpp pokematf.h
+	$(CC) -c -o $@ $<
+main.o: main.cpp image.h pokematf.h
+	$(CC) -c -o $@ $<
 
-.PHONY: clean dist
-
-clean:
-	-rm *.o $(PROGRAM) *core
-
-dist: clean
-	-tar -chvj -C .. -f ../$(PROGRAM).tar.bz2 $(PROGRAM)

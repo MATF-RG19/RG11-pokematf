@@ -101,6 +101,8 @@ static void init_battle();
 
 static void light_attack();
 
+static void catch_pokemon();
+
 //PRIVATE FUNCTION DEFINITION
 
 static void light_attack()
@@ -139,7 +141,6 @@ static void light_attack()
 static void init_battle()
 {
     turn = true;
-    printf("WILD POKEMON\n");
     window_select = WINDOW_BATTLE;
     move_pokemon = true;
     srand(time(NULL));
@@ -346,6 +347,11 @@ static void display_battle()
 
     glPopMatrix();
     glutSwapBuffers(); 
+}
+
+static void catch_pokemon()
+{
+    owned_pokemons.insert(show_wild_pokemon);
 }
 
 static void draw_forest_background()
@@ -856,7 +862,7 @@ void keyboard(unsigned char key, int x, int y)
                 glutPostRedisplay();
             }
             break;
-        }   
+        }
     }
     
 
@@ -868,6 +874,10 @@ void keyboard(unsigned char key, int x, int y)
         case 'J':
             if(turn)
                 light_attack();
+            break;
+        case 'h':
+        case 'H':
+            catch_pokemon();
             break;
         }
     }    

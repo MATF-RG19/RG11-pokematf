@@ -14,12 +14,20 @@ typedef struct Position_info{
 float matrix[16];
 int window_width = 700;   
 int window_height = 700;
-GLuint names[4];
+
+GLuint player_sprites[3];
+GLuint pokecenter_sprite;
+GLuint pokemon_sprites[50];
+GLuint background_textures[3];
+
+#define WINDOW_FIELD              0  
+//#define WINDOW_POKEBALL           1
+#define WINDOW_POKEMONS           2
 
 //PRIVATE VARIABLES
 
 static int state = 1;
-static bool window_select = WINDOW_FIELD;
+static int window_select = WINDOW_FIELD;
 static int animation_parametar = 0;
 static bool move_pokemon = true;
 static int mouse_x;
@@ -36,13 +44,15 @@ static int message_time = 100;
 
 static void draw_axes(float len);
 
-static void display1();
+static void display_field();
 
-static void display2();
+static void display_pokemons();
+
+// static void display_3Dstuff();
 
 static void reshape1(int w, int h);
 
-static void reshape2(int w, int h);
+// static void reshape2(int w, int h);
 
 static void draw_player();
 
@@ -54,7 +64,7 @@ static void draw_squirtle();
 
 static void draw_charmander();
 
-static void draw_wild_pokemon();
+//static void draw_wild_pokemon();
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
@@ -71,6 +81,8 @@ static void draw_pokecenter();
 
 static bool check_proximity(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
+
+static void draw_pokedex_background();
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -104,7 +116,7 @@ static void draw_axes(float len) {
     glEnable(GL_LIGHTING);
 }
 
-static void display1()
+static void display_field()
 {
     glEnable(GL_TEXTURE_2D);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -146,6 +158,46 @@ static void display1()
     glutSwapBuffers();                  
 }
 
+static void display_pokemons()
+{
+    glEnable(GL_TEXTURE_2D);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(0, 0, 5,
+              0, 0, 0,
+              0, 1, 0);
+
+    
+    glPushMatrix();
+
+    glMultMatrixf(matrix);
+
+    glDisable(GL_LIGHTING);
+
+
+
+
+    glDisable(GL_TEXTURE_2D);
+    draw_axes(10);  
+
+    // if(write_message)
+    //     text_log(-8, 8.3, message);
+
+    glEnable(GL_TEXTURE_2D);
+
+
+    draw_pokedex_background();
+
+    
+
+    
+    glEnable(GL_LIGHTING);
+    glPopMatrix();
+    glutSwapBuffers(); 
+}
+
 static void draw_pokecenter()
 {
     glPushMatrix();
@@ -153,7 +205,7 @@ static void draw_pokecenter()
     glTranslatef( pokecenter_info.x, pokecenter_info.y, 0 );
     glScalef( pokecenter_info.width, pokecenter_info.height, 1); 
 
-    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glBindTexture(GL_TEXTURE_2D, pokecenter_sprite);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
@@ -186,47 +238,47 @@ static void text_log( float x, float y, const char *s)
     glEnable(GL_TEXTURE_2D);
 }
 
-static void display2()
-{
-    glDisable(GL_TEXTURE_2D);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+// static void display_3Dstuff()
+// {
+//     glDisable(GL_TEXTURE_2D);
+//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//     glMatrixMode(GL_MODELVIEW);
+//     glLoadIdentity();
 
-    gluLookAt(10, 10, 10,
-              0, 0, 0,
-              0, 1, 0);
+//     gluLookAt(10, 10, 10,
+//               0, 0, 0,
+//               0, 1, 0);
 
-    glPushMatrix();
+//     glPushMatrix();
 
-    glMultMatrixf(matrix);
+//     glMultMatrixf(matrix);
 
-    glDisable(GL_LIGHTING); 
-    draw_axes(50);
-    glEnable(GL_LIGHTING);
+//     glDisable(GL_LIGHTING); 
+//     draw_axes(50);
+//     glEnable(GL_LIGHTING);
 
-    switch( choose_pokemon )
-    {
-        case 1:
-            draw_pikachu();
-            break;
-        case 2:
-            draw_squirtle();
-            break;
-        case 3:
-            draw_bulbasaur();
-            break;
-        case 4:
-            draw_charmander();
-            break;
-        default:
-            break;
-    }
+//     switch( choose_pokemon )
+//     {
+//         case 1:
+//             draw_pikachu();
+//             break;
+//         case 2:
+//             draw_squirtle();
+//             break;
+//         case 3:
+//             draw_bulbasaur();
+//             break;
+//         case 4:
+//             draw_charmander();
+//             break;
+//         default:
+//             break;
+//     }
 
-    glPopMatrix();
+//     glPopMatrix();
 
-    glutSwapBuffers();                    
-}
+//     glutSwapBuffers();                    
+// }
 
 static void draw_pikachu()
 {
@@ -289,7 +341,7 @@ static void draw_player()
 
     glDisable(GL_LIGHTING); 
 
-    glBindTexture(GL_TEXTURE_2D, names[3]);
+    glBindTexture(GL_TEXTURE_2D, player_sprites[0]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
@@ -311,43 +363,43 @@ static void draw_player()
     glPopMatrix();
 }
 
-static void draw_wild_pokemon()
-{
-    glPushMatrix();
+// static void draw_wild_pokemon()
+// {
+//     glPushMatrix();
     
-    if ( move_pokemon )
-    {
-        srand((unsigned)time(0));
-        pokemon_position_info.x = rand()%9;
-        pokemon_position_info.y = rand()%9;
-        move_pokemon = false;
-    }
+//     if ( move_pokemon )
+//     {
+//         srand((unsigned)time(0));
+//         pokemon_position_info.x = rand()%9;
+//         pokemon_position_info.y = rand()%9;
+//         move_pokemon = false;
+//     }
 
-    // glTranslatef( pokemon_position_info.x, pokemon_position_info.y, 0 );
-    // glScalef( pokemon_position_info.width, pokemon_position_info.width, 0);
-    glScalef( 5, 5, 1); 
+//     // glTranslatef( pokemon_position_info.x, pokemon_position_info.y, 0 );
+//     // glScalef( pokemon_position_info.width, pokemon_position_info.width, 0);
+//     glScalef( 5, 5, 1); 
 
-    glBindTexture(GL_TEXTURE_2D, names[2]);
-    glBegin(GL_QUADS);
-        glNormal3f(0, 0, 1);
+//     glBindTexture(GL_TEXTURE_2D, names[2]);
+//     glBegin(GL_QUADS);
+//         glNormal3f(0, 0, 1);
 
-        glTexCoord2f(0, 1);
-        glVertex3f(0, 0, 4);
+//         glTexCoord2f(0, 1);
+//         glVertex3f(0, 0, 4);
 
-        glTexCoord2f(0  , 0);
-        glVertex3f(0, -1, 4);
+//         glTexCoord2f(0  , 0);
+//         glVertex3f(0, -1, 4);
 
-        glTexCoord2f(1, 0);
-        glVertex3f(1, -1, 4);
+//         glTexCoord2f(1, 0);
+//         glVertex3f(1, -1, 4);
 
-        glTexCoord2f(1, 1);
-        glVertex3f(1, 0, 4);
-    glEnd();
+//         glTexCoord2f(1, 1);
+//         glVertex3f(1, 0, 4);
+//     glEnd();
     
-    glBindTexture(GL_TEXTURE_2D, 0);
+//     glBindTexture(GL_TEXTURE_2D, 0);
 
-    glPopMatrix();
-}
+//     glPopMatrix();
+// }
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2)
@@ -402,22 +454,45 @@ static void reshape1(int w, int h)
     glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
 
-static void reshape2(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(30, (float) w/h, 1, 20);
+// static void reshape2(int w, int h)
+// {
+//     glViewport(0, 0, w, h);
+//     glMatrixMode(GL_PROJECTION);
+//     glLoadIdentity();
+//     gluPerspective(30, (float) w/h, 1, 20);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-}
+//     glMatrixMode(GL_MODELVIEW);
+//     glLoadIdentity();
+//     glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+// }
+
+static void draw_pokedex_background()
+{
+    /* Crta se pod*/
+    glBindTexture(GL_TEXTURE_2D, background_textures[0]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 0);
+        glVertex3f(-10, -10, 0);
+
+        glTexCoord2f(6, 0);
+        glVertex3f(10, -10, 0);
+
+        glTexCoord2f(6, 6);
+        glVertex3f(10, 10, 0);
+
+        glTexCoord2f(0, 6);
+        glVertex3f(-10, 10, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}  
 
 static void draw_grass()
 {
     /* Crtaju se trava */
-    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glBindTexture(GL_TEXTURE_2D, background_textures[1]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
@@ -439,7 +514,7 @@ static void draw_grass()
 static void draw_floor()
 {
     /* Crta se pod*/
-    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBindTexture(GL_TEXTURE_2D, background_textures[0]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
@@ -462,8 +537,8 @@ static void draw_floor()
 static void pick_pokemon( int id )
 {
     choose_pokemon = id;
-    window_select = WINDOW_POKEBALL;
-    reshape2(window_width, window_height);
+    window_select = WINDOW_POKEMONS;
+    reshape1(window_width, window_height);
     glutPostRedisplay();
 }
 
@@ -473,12 +548,16 @@ void display()
 {
     if(window_select == WINDOW_FIELD)
     {
-        display1();
+        display_field();
     }
-    else if(window_select == WINDOW_POKEBALL)
+    else if(window_select == WINDOW_POKEMONS)
     {
-        display2();
+        display_pokemons();
     }
+    // else if(window_select == WINDOW_POKEBALL)
+    // {
+    //     display_3Dstuff();
+    // }
 }
 
 void reshape(int w, int h)
@@ -486,14 +565,14 @@ void reshape(int w, int h)
     window_width = w;
     window_height = h;
 
-    if(window_select == WINDOW_FIELD)
-    {
+    // if(window_select == WINDOW_FIELD)
+    // {
         reshape1(w, h);
-    }
-    else if(window_select == WINDOW_POKEBALL)
-    {
-        reshape2(w, h);
-    }
+    // }
+    // else if(window_select == WINDOW_POKEBALL)
+    // {
+    //     reshape2(w, h);
+    // }
 }
 
 void timer(int timer_id)
@@ -513,6 +592,8 @@ void timer(int timer_id)
                 message_time = 100;
             }
         }
+
+        printf("%d:%d\n", animation_parametar, window_select);
     }
 
     glutPostRedisplay();
@@ -527,7 +608,9 @@ void keyboard(unsigned char key, int x, int y)
     {
     case 27:
     {
-        glDeleteTextures(2, names);
+        glDeleteTextures(2, background_textures);
+        glDeleteTextures(1, &pokecenter_sprite);
+        glDeleteTextures(1, player_sprites);
         exit(0);
     break;
     }
@@ -550,6 +633,7 @@ void keyboard(unsigned char key, int x, int y)
     case '1':
     {
         pick_pokemon( 1 );
+        glutPostRedisplay();
     break;
     }
     case '2':

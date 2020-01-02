@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <GL/freeglut.h>
+#include "image.h"
 
 #define TIMER_ID                  1
 #define TIMER_INTERVAL            20
@@ -33,6 +34,8 @@ void keyboard(unsigned char key, int x, int y);
 void mouse(int button, int state, int x, int y);
 
 void motion(int x, int y);
+
+void texture_init();
 
 
 #endif

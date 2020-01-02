@@ -69,14 +69,6 @@ static void draw_stats();
 
 static void draw_player();
 
-static void draw_pikachu();
-
-static void draw_bulbasaur();
-
-static void draw_squirtle();
-
-static void draw_charmander();
-
 static void draw_pokemons();
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
@@ -113,31 +105,33 @@ static void light_attack();
 
 static void light_attack()
 {
+    if(wild_pokemon_stats.health <= 0 )
+    {
+        printf("you won\n");
+        return;
+    }
+
+    if(poke_info[ favorite_pokemon ].health <=0 )
+    {
+        printf("you lost\n");
+        return;
+    }
+
     if(turn)
     {
-        turn = false;
-        if(wild_pokemon_stats.health <=0 )
-            printf("you won\n");
-        else
-        {                  
-            wild_pokemon_stats.health -= poke_info[ favorite_pokemon ].attack;
-            hit = true;
-            hit_time = 50;
-            glutPostRedisplay();
-        }
+        turn = false;                 
+        wild_pokemon_stats.health -= poke_info[ favorite_pokemon ].attack;
+        hit = true;
+        hit_time = 50;
+        glutPostRedisplay();
     }
     else
     {
-        turn = true;
-        if(poke_info[ favorite_pokemon ].health <=0 )
-            printf("you lost\n");
-        else
-        {                  
-            poke_info[ favorite_pokemon ].health -= wild_pokemon_stats.attack;
-            hit = true;
-            hit_time = 50;
-            glutPostRedisplay();
-        }
+        turn = true;                
+        poke_info[ favorite_pokemon ].health -= wild_pokemon_stats.attack;
+        hit = true;
+        hit_time = 50;
+        glutPostRedisplay();
     }
 
 }
@@ -290,8 +284,8 @@ static void display_pokemons()
     {
         text_log( -8, 9, "OWNED");
 
+        battle_drawing = 0;
         draw_stats();
-
     }
     else
     {
@@ -330,7 +324,10 @@ static void display_battle()
     // draw_axes(10);
     text_log(7, -9, "Run ( K )" );
     if(turn)
+    {
         text_log(6, -8, "Light attack ( J )" );
+        text_log(4.8, -7, " Catch pokemon ( H )");
+    }
     glEnable(GL_TEXTURE_2D);
 
     draw_forest_background();
@@ -380,7 +377,7 @@ static void draw_stats()
     if(battle_drawing == 0)
     {
         glTranslatef( -3, -4, 0);
-        glScalef( 6 * poke_info[ favorite_pokemon ].health/100.0, 0.7, 1);
+        glScalef( 6 * poke_info[ show_pokemon ].health/100.0, 0.7, 1);
         sprintf (buffer, "Attack : %d", poke_info[ show_pokemon ].attack);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
@@ -1181,7 +1178,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[1] = { 95, 5 };
+    poke_info[1] = { 95, 10 };
     
     image_read(image, "./resources/pokemon_sprites/charmander.bmp");
 

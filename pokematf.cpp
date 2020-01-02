@@ -323,7 +323,7 @@ static void display_battle()
 
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
-    text_log(7, -9, "Run ( K )" );
+    text_log(6, -9, "Exit battle ( K )" );
     if(turn)
     {
         text_log(6, -8, "Light attack ( J )" );
@@ -333,15 +333,20 @@ static void display_battle()
 
     draw_forest_background();
 
-    battle_drawing = 1;
-    //set favorite_pokemon
-    draw_pokemons();
-    draw_stats();
+    if ( poke_info[ favorite_pokemon ].health > 0 )
+    {
+        battle_drawing = 1;
+        draw_pokemons();
+        draw_stats();
+    }
 
+    if ( wild_pokemon_stats.health > 0 )
+    {
     battle_drawing = 2;
     show_pokemon = show_wild_pokemon;
     draw_pokemons();
     draw_stats();
+    }
 
     battle_drawing = 0;
 
@@ -351,7 +356,14 @@ static void display_battle()
 
 static void catch_pokemon()
 {
-    owned_pokemons.insert(show_wild_pokemon);
+    if ( wild_pokemon_stats.health > 0  &&
+         wild_pokemon_stats.health <=30 &&      
+         poke_info[ favorite_pokemon ].health > 0)
+    {
+        printf("COUGHT\n");
+        wild_pokemon_stats.health = 0;
+        owned_pokemons.insert(show_wild_pokemon);
+    }
 }
 
 static void draw_forest_background()
@@ -877,7 +889,8 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'h':
         case 'H':
-            catch_pokemon();
+            if(turn)
+                catch_pokemon();
             break;
         }
     }    

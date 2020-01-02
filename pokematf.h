@@ -9,6 +9,7 @@
 #define TIMER_INTERVAL            20
 
 /* Identifikatori tekstura. */
+
 extern GLuint player_sprites[3];
 extern GLuint pokecenter_sprite;
 extern GLuint pokemon_sprites[50];

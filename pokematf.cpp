@@ -64,7 +64,7 @@ static void draw_squirtle();
 
 static void draw_charmander();
 
-//static void draw_wild_pokemon();
+static void draw_pokemons( int id);
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
@@ -187,10 +187,9 @@ static void display_pokemons()
 
     glEnable(GL_TEXTURE_2D);
 
-
     draw_pokedex_background();
 
-    
+    draw_pokemons(choose_pokemon);
 
     
     glEnable(GL_LIGHTING);
@@ -238,100 +237,6 @@ static void text_log( float x, float y, const char *s)
     glEnable(GL_TEXTURE_2D);
 }
 
-// static void display_3Dstuff()
-// {
-//     glDisable(GL_TEXTURE_2D);
-//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//     glMatrixMode(GL_MODELVIEW);
-//     glLoadIdentity();
-
-//     gluLookAt(10, 10, 10,
-//               0, 0, 0,
-//               0, 1, 0);
-
-//     glPushMatrix();
-
-//     glMultMatrixf(matrix);
-
-//     glDisable(GL_LIGHTING); 
-//     draw_axes(50);
-//     glEnable(GL_LIGHTING);
-
-//     switch( choose_pokemon )
-//     {
-//         case 1:
-//             draw_pikachu();
-//             break;
-//         case 2:
-//             draw_squirtle();
-//             break;
-//         case 3:
-//             draw_bulbasaur();
-//             break;
-//         case 4:
-//             draw_charmander();
-//             break;
-//         default:
-//             break;
-//     }
-
-//     glPopMatrix();
-
-//     glutSwapBuffers();                    
-// }
-
-static void draw_pikachu()
-{
-    glPushMatrix();
-
-    glColor3f(1, 1, 0);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
-
-    glPopMatrix();
-
-}
-
-static void draw_bulbasaur()
-{
-    glPushMatrix();
-
-    glColor3f(0, 1, 0);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
-
-    glPopMatrix();
-
-}
-
-static void draw_squirtle()
-{
-    glPushMatrix();
-
-    glColor3f(0, 0, 1);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
-
-    glPopMatrix();
-
-}
-
-static void draw_charmander()
-{
-    glPushMatrix();
-
-    glColor3f(1, 0, 0);
-    glTranslatef(animation_parametar/100.0, animation_parametar/100.0, animation_parametar/100.0);
-    glRotatef(60, 1, 1, 1);
-    glutSolidSphere(1, 25, 25);
-
-    glPopMatrix();
-
-}
-
 static void draw_player()
 {
     glPushMatrix();
@@ -363,43 +268,48 @@ static void draw_player()
     glPopMatrix();
 }
 
-// static void draw_wild_pokemon()
-// {
-//     glPushMatrix();
+static void draw_pokemons( int id )
+{
+    glPushMatrix();
     
-//     if ( move_pokemon )
-//     {
-//         srand((unsigned)time(0));
-//         pokemon_position_info.x = rand()%9;
-//         pokemon_position_info.y = rand()%9;
-//         move_pokemon = false;
-//     }
+    // if ( move_pokemon )
+    // {
+    //     srand((unsigned)time(0));
+    //     pokemon_position_info.x = rand()%9;
+    //     pokemon_position_info.y = rand()%9;
+    //     move_pokemon = false;
+    // }
 
-//     // glTranslatef( pokemon_position_info.x, pokemon_position_info.y, 0 );
-//     // glScalef( pokemon_position_info.width, pokemon_position_info.width, 0);
-//     glScalef( 5, 5, 1); 
+    // glTranslatef( pokemon_position_info.x, pokemon_position_info.y, 0 );
+    // glScalef( pokemon_position_info.width, pokemon_position_info.width, 0);
 
-//     glBindTexture(GL_TEXTURE_2D, names[2]);
-//     glBegin(GL_QUADS);
-//         glNormal3f(0, 0, 1);
+    glTranslatef( -5, 7, 0);
+    glScalef( 10, 10, 1); 
 
-//         glTexCoord2f(0, 1);
-//         glVertex3f(0, 0, 4);
 
-//         glTexCoord2f(0  , 0);
-//         glVertex3f(0, -1, 4);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[id - 1 ]);
 
-//         glTexCoord2f(1, 0);
-//         glVertex3f(1, -1, 4);
 
-//         glTexCoord2f(1, 1);
-//         glVertex3f(1, 0, 4);
-//     glEnd();
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 0, 4);
+
+        glTexCoord2f(0  , 0);
+        glVertex3f(0, -1, 4);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(1, -1, 4);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(1, 0, 4);
+    glEnd();
     
-//     glBindTexture(GL_TEXTURE_2D, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
-//     glPopMatrix();
-// }
+    glPopMatrix();
+}
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2)
@@ -469,20 +379,20 @@ static void reshape1(int w, int h)
 static void draw_pokedex_background()
 {
     /* Crta se pod*/
-    glBindTexture(GL_TEXTURE_2D, background_textures[0]);
+    glBindTexture(GL_TEXTURE_2D, background_textures[2]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
         glTexCoord2f(0, 0);
         glVertex3f(-10, -10, 0);
 
-        glTexCoord2f(6, 0);
+        glTexCoord2f(1, 0);
         glVertex3f(10, -10, 0);
 
-        glTexCoord2f(6, 6);
+        glTexCoord2f(1, 1);
         glVertex3f(10, 10, 0);
 
-        glTexCoord2f(0, 6);
+        glTexCoord2f(0, 1);
         glVertex3f(-10, 10, 0);
     glEnd();
 

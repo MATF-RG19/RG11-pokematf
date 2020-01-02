@@ -158,7 +158,7 @@ static void display_field()
         text_log(-8, 8.3, "Press H next to the\nPokecenter to heal pokemons");
     }
     
-    text_log(-9.5, -9.5, "Pokedex( P )");
+    text_log(-9.5, -9.5, "Pokedex ( P )");
 
     draw_wild_pokemon();
 
@@ -270,7 +270,8 @@ static void display_battle()
 
 
     glDisable(GL_TEXTURE_2D);
-    draw_axes(10);  
+    draw_axes(10);
+    text_log(7, -9, "Run ( K )" );  
     glEnable(GL_TEXTURE_2D);
 
     draw_forest_background();

@@ -68,7 +68,7 @@ void init()
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
     /* Kreira se druga tekstura. */
-    image_read(image, "floor.bmp");
+    image_read(image, "background.bmp");
 
     glBindTexture(GL_TEXTURE_2D, background_textures[0]);
     glTexParameteri(GL_TEXTURE_2D,

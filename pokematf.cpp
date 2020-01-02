@@ -653,6 +653,8 @@ void keyboard(unsigned char key, int x, int y)
             {
                 write_message = true;
                 message = "All pokemons healed";
+                for( auto elem : owned_pokemons)
+                    poke_info[elem].health = 100;
                 glutPostRedisplay();
             }
         break;

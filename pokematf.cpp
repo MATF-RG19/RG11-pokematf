@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "pokematf.h"
-#include <vector>
+#include <unordered_set>
 
 //STRUCTURES
 
@@ -39,6 +39,7 @@ static bool write_message = false;
 static const char* message;
 static int message_time = 100;
 static int show_pokemon = 0;
+static std::unordered_set<int> owned_pokemons = {0, 1, 2};
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -188,6 +189,9 @@ static void display_pokemons()
     //     text_log(-8, 8.3, message);
 
     glEnable(GL_TEXTURE_2D);
+
+    if( owned_pokemons.count( show_pokemon ))
+        text_log( -8, 9, "Owned");
 
     draw_pokedex_background();
 

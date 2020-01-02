@@ -35,6 +35,7 @@ static Position_info wild_pokemon_info = { 0, 0, 0.3, 0.3};
 static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 static Pokemon_info poke_info[50];
+static Pokemon_info wild_pokemon_stats;
 static bool write_message = false;
 static const char* message;
 static int message_time = 100;
@@ -48,6 +49,7 @@ static GLuint background_textures[10];
 static GLuint arrow_sprite;
 static int battle_drawing = 0;
 static int show_wild_pokemon = 0;
+
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -99,7 +101,21 @@ static void display_battle();
 
 static void draw_forest_background();
 
+static void init_battle();
+
 //PRIVATE FUNCTION DEFINITION
+
+static void init_battle()
+{
+    printf("WILD POKEMON\n");
+    window_select = WINDOW_BATTLE;
+    move_pokemon = true;
+    srand(time(NULL));
+    show_wild_pokemon = rand()%16;
+    wild_pokemon_stats.health = 100;
+    wild_pokemon_stats.attack = poke_info[show_wild_pokemon].attack;
+
+}
 
 
 static void draw_axes(float len) {
@@ -337,7 +353,15 @@ static void draw_stats()
     sprintf (buffer, "Attack : %d", poke_info[ show_pokemon ].attack);
     text_log(0, -1.8, buffer);
 
-    sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
+    if(battle_drawing!=2)
+    {
+        sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
+    }
+    else
+    {
+        sprintf (buffer, "Health : %d", wild_pokemon_stats.health);
+    }
+    
     text_log(0, 0.2, buffer);
     
     glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
@@ -786,12 +810,8 @@ void keyboard(unsigned char key, int x, int y)
             {
                 if(check_collision( player_info.x, player_info.y + .1, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
-                {             
-                    printf("WILD POKEMON\n");
-                    window_select = WINDOW_BATTLE;
-                    move_pokemon = true;
-                    srand(time(NULL));
-                    show_wild_pokemon = rand()%16;
+                {   
+                    init_battle();          
                 }
 
                 player_info.y+=.1;
@@ -810,11 +830,7 @@ void keyboard(unsigned char key, int x, int y)
                 if(check_collision( player_info.x, player_info.y - .1, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
-                    printf("WILD POKEMON\n");
-                    window_select = WINDOW_BATTLE;
-                    move_pokemon = true;
-                    srand(time(NULL));
-                    show_wild_pokemon = rand()%16;                    
+                    init_battle();
                 }
 
                 player_info.y-=.1;
@@ -832,11 +848,7 @@ void keyboard(unsigned char key, int x, int y)
                 if(check_collision( player_info.x - .1, player_info.y, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
-                    printf("WILD POKEMON\n");
-                    window_select = WINDOW_BATTLE;
-                    move_pokemon = true;
-                    srand(time(NULL));
-                    show_wild_pokemon = rand()%16;
+                    init_battle();
                 }
 
                 player_info.x-=.1;
@@ -854,11 +866,7 @@ void keyboard(unsigned char key, int x, int y)
                 if(check_collision( player_info.x + .1, player_info.y, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
-                    printf("WILD POKEMON\n");
-                    window_select = WINDOW_BATTLE;
-                    move_pokemon = true;
-                    srand(time(NULL));
-                    show_wild_pokemon = rand()%16;
+                    init_battle();
                 }
 
                 player_info.x+=.1;

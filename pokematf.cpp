@@ -209,7 +209,7 @@ static void display_field()
     }
     else
     {
-        text_log(-8, 8.3, "Heal pokemons at Pokecenter ( H )");
+        text_log(-8, 8.8, "Heal pokemons at\nPokecenter ( H )");
     }
     
     text_log(-9.5, -9.5, "Pokedex ( P )");
@@ -276,8 +276,10 @@ static void display_pokemons()
 
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
-
-    text_log(6, -8, "Make favorite ( J )" );
+    if(owned_pokemons.count(show_pokemon))
+    {
+        text_log(5, -8, "Make favorite ( F )" );
+    }
 
     if( show_pokemon == favorite_pokemon )
     {
@@ -849,8 +851,17 @@ void keyboard(unsigned char key, int x, int y)
             show_pokemon ++;
             glutPostRedisplay();
             break;
-        }
+        case 'f':
+        case 'F':
+            if(owned_pokemons.count(show_pokemon))
+            {
+                favorite_pokemon = show_pokemon;
+                glutPostRedisplay();
+            }
+            break;
+        }   
     }
+    
 
     if(window_select == WINDOW_BATTLE)
     {

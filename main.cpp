@@ -43,8 +43,8 @@ int main(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
+    // glutMouseFunc(mouse);
+    // glutMotionFunc(motion);
     glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
     init();
 

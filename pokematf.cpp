@@ -271,7 +271,10 @@ static void display_pokemons()
 
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
-    if(owned_pokemons.count(show_pokemon))
+
+    text_log(5, -9, "Back ( K )" );
+
+    if(owned_pokemons.count(show_pokemon) && show_pokemon!=favorite_pokemon)
     {
         text_log(5, -8, "Make favorite ( F )" );
     }
@@ -360,7 +363,7 @@ static void catch_pokemon()
          wild_pokemon_stats.health <=30 &&      
          poke_info[ favorite_pokemon ].health > 0)
     {
-        printf("COUGHT\n");
+        printf("CAUGHT\n");
         wild_pokemon_stats.health = 0;
         owned_pokemons.insert(show_wild_pokemon);
     }
@@ -586,6 +589,8 @@ static void draw_pokemons()
     {
         if( hit && turn)
         {
+            // sprintf (buffer, "-%d", wild_pokemon_stats.attack);
+            // text_log(hit_time%10, hit_time%10, buffer);
             glTranslatef((rand()%51-25)/100.0, (rand()%51-25)/100.0, 0);
         }
         glTranslatef( -8, -2.5, 4);
@@ -997,40 +1002,40 @@ void keyboard(unsigned char key, int x, int y)
 }
 
 
-void mouse(int button, int state, int x, int y)
-{
-    /* Pamti se pozicija pokazivaca misa. */
-    mouse_x = x;
-    mouse_y = y;
-}
+// void mouse(int button, int state, int x, int y)
+// {
+//     /* Pamti se pozicija pokazivaca misa. */
+//     mouse_x = x;
+//     mouse_y = y;
+// }
 
-void motion(int x, int y)
-{
-    /* Promene pozicije pokazivaca misa. */
-    int delta_x, delta_y;
+// void motion(int x, int y)
+// {
+//     /* Promene pozicije pokazivaca misa. */
+//     int delta_x, delta_y;
 
-    /* Izracunavaju se promene pozicije pokazivaca misa. */
-    delta_x = x - mouse_x;
-    delta_y = y - mouse_y;
+//     /* Izracunavaju se promene pozicije pokazivaca misa. */
+//     delta_x = x - mouse_x;
+//     delta_y = y - mouse_y;
 
-    /* Pamti se nova pozicija pokazivaca misa. */
-    mouse_x = x;
-    mouse_y = y;
+//     /* Pamti se nova pozicija pokazivaca misa. */
+//     mouse_x = x;
+//     mouse_y = y;
 
-    /* Izracunava se nova matrica rotacije. */
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-        glLoadIdentity();
-        glRotatef(180 * (float) delta_x / window_width, 0, 1, 0);
-        glRotatef(180 * (float) delta_y / window_height, 1, 0, 0);
-        glMultMatrixf(matrix);
+//     /* Izracunava se nova matrica rotacije. */
+//     glMatrixMode(GL_MODELVIEW);
+//     glPushMatrix();
+//         glLoadIdentity();
+//         glRotatef(180 * (float) delta_x / window_width, 0, 1, 0);
+//         glRotatef(180 * (float) delta_y / window_height, 1, 0, 0);
+//         glMultMatrixf(matrix);
 
-        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-    glPopMatrix();
+//         glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+//     glPopMatrix();
 
-    /* Forsira se ponovno iscrtavanje prozora. */
-    glutPostRedisplay();
-}
+//     /* Forsira se ponovno iscrtavanje prozora. */
+//     glutPostRedisplay();
+// }
 
 void texture_init()
 {

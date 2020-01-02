@@ -52,7 +52,7 @@ static int show_wild_pokemon = 0;
 static int favorite_pokemon = 1;
 static bool turn = true; 
 static bool hit = false;
-static bool hit_time = 100;
+static int hit_time = 50;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -107,10 +107,44 @@ static void draw_forest_background();
 
 static void init_battle();
 
+static void light_attack();
+
 //PRIVATE FUNCTION DEFINITION
+
+static void light_attack()
+{
+    if(turn)
+    {
+        turn = false;
+        if(wild_pokemon_stats.health <=0 )
+            printf("you won\n");
+        else
+        {                  
+            wild_pokemon_stats.health -= poke_info[ favorite_pokemon ].attack;
+            hit = true;
+            hit_time = 50;
+            glutPostRedisplay();
+        }
+    }
+    else
+    {
+        turn = true;
+        if(poke_info[ favorite_pokemon ].health <=0 )
+            printf("you lost\n");
+        else
+        {                  
+            poke_info[ favorite_pokemon ].health -= wild_pokemon_stats.attack;
+            hit = true;
+            hit_time = 50;
+            glutPostRedisplay();
+        }
+    }
+
+}
 
 static void init_battle()
 {
+    turn = true;
     printf("WILD POKEMON\n");
     window_select = WINDOW_BATTLE;
     move_pokemon = true;
@@ -166,7 +200,7 @@ static void display_field()
     glMultMatrixf(matrix);
 
     glDisable(GL_TEXTURE_2D);
-    draw_axes(10);  
+    // draw_axes(10);  
     
 
     if(write_message)
@@ -175,7 +209,7 @@ static void display_field()
     }
     else
     {
-        text_log(-8, 8.3, "Press H next to the\nPokecenter to heal pokemons");
+        text_log(-8, 8.3, "Heal pokemons at Pokecenter ( H )");
     }
     
     text_log(-9.5, -9.5, "Pokedex ( P )");
@@ -241,11 +275,14 @@ static void display_pokemons()
 
 
     glDisable(GL_TEXTURE_2D);
-    draw_axes(10);  
+    // draw_axes(10);
 
-    // if(write_message)
-    //     text_log(-8, 8.3, message);
+    text_log(6, -8, "Make favorite ( J )" );
 
+    if( show_pokemon == favorite_pokemon )
+    {
+        text_log( -8, 8, "FAVORITE");
+    }  
 
     if( owned_pokemons.count( show_pokemon ))
     {
@@ -287,10 +324,8 @@ static void display_battle()
 
     glMultMatrixf(matrix);
 
-
-
     glDisable(GL_TEXTURE_2D);
-    draw_axes(10);
+    // draw_axes(10);
     text_log(7, -9, "Run ( K )" );
     if(turn)
         text_log(6, -8, "Light attack ( J )" );
@@ -343,7 +378,7 @@ static void draw_stats()
     if(battle_drawing == 0)
     {
         glTranslatef( -3, -4, 0);
-        glScalef( 6, 0.7, 1);
+        glScalef( 6 * poke_info[ favorite_pokemon ].health/100.0, 0.7, 1);
         sprintf (buffer, "Attack : %d", poke_info[ show_pokemon ].attack);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
@@ -352,7 +387,7 @@ static void draw_stats()
     if(battle_drawing == 1)
     {
         glTranslatef( -8, -1, 4);
-        glScalef( 4, 0.7, 1);
+        glScalef( 4 * poke_info[ favorite_pokemon ].health/100.0, 0.7, 1);
         sprintf (buffer, "Attack : %d", poke_info[ favorite_pokemon ].attack);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", poke_info[ favorite_pokemon ].health);
@@ -361,7 +396,7 @@ static void draw_stats()
     if(battle_drawing == 2)
     {
         glTranslatef( 3, 1.5, 4);
-        glScalef( 4, 0.7, 1);
+        glScalef( 4 * wild_pokemon_stats.health/100.0, 0.7 , 1);
         sprintf (buffer, "Attack : %d", wild_pokemon_stats.attack);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", wild_pokemon_stats.health);
@@ -532,12 +567,20 @@ static void draw_pokemons()
     }
     if(battle_drawing == 1)
     {
+        if( hit && turn)
+        {
+            glTranslatef((rand()%51-25)/100.0, (rand()%51-25)/100.0, 0);
+        }
         glTranslatef( -8, -2.5, 4);
         glScalef( 7, 7, 1);
         glBindTexture(GL_TEXTURE_2D, pokemon_sprites[ favorite_pokemon ]);    
     }
     if(battle_drawing == 2)
     {
+        if( hit && !turn)
+        {
+            glTranslatef((rand()%51-25)/100.0, (rand()%51-25)/100.0, 0);
+        }
         glTranslatef( 4 + 2.5, 0, 4);
         glRotatef( 180, 0, 1, 0);
         glScalef( 2.5, 2.5, 1);
@@ -729,13 +772,26 @@ void timer(int timer_id)
             animation_parametar = 0;
         animation_parametar += 1;
 
-        if(write_message)
+        if ( write_message )
         {
             message_time -= 1;
-            if( message_time <=0 )
+            if ( message_time <=0 )
             {
                 write_message = false;
                 message_time = 100;
+            }
+        }
+
+        if ( hit )
+        {
+            hit_time -= 1;
+            if ( hit_time <=0 )
+            {
+                hit = false;
+                hit_time = 50;
+
+                if(!turn)
+                    light_attack();
             }
         }
     }
@@ -802,19 +858,8 @@ void keyboard(unsigned char key, int x, int y)
         {
         case 'j':
         case 'J':
-                if(turn)
-                {
-                    turn = false;
-                    if(wild_pokemon_stats.health <=0 )
-                        printf("you won\n");
-                    else
-                    {                  
-                        wild_pokemon_stats.health -= poke_info[ favorite_pokemon ].attack;
-                        hit = true; 
-                        glutPostRedisplay();
-                    }
-
-                }
+            if(turn)
+                light_attack();
             break;
         }
     }    

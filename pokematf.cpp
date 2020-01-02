@@ -21,9 +21,8 @@ int window_width = 700;
 int window_height = 700;
 
 #define WINDOW_FIELD              0  
-//#define WINDOW_POKEBALL           1
-#define WINDOW_POKEMONS           2
-
+#define WINDOW_POKEDEX            1
+#define WINDOW_BATTLE             2
 //PRIVATE VARIABLES
 
 static int state = 1;
@@ -45,8 +44,10 @@ static char buffer[50];
 static GLuint player_sprites[3];
 static GLuint pokecenter_sprite;
 static GLuint pokemon_sprites[50];
-static GLuint background_textures[3];
+static GLuint background_textures[10];
 static GLuint arrow_sprite;
+static int battle_drawing = 0;
+static int show_wild_pokemon = 0;
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -93,6 +94,10 @@ static void draw_pokedex_background();
 static void draw_arrows();
 
 static void draw_wild_pokemon();
+
+static void display_battle();
+
+static void draw_forest_background();
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -246,18 +251,93 @@ static void display_pokemons()
     glutSwapBuffers(); 
 }
 
+static void display_battle()
+{
+    glEnable(GL_TEXTURE_2D);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(0, 0, 5,
+              0, 0, 0,
+              0, 1, 0);
+
+    
+    glPushMatrix();
+
+    glMultMatrixf(matrix);
+
+
+
+    glDisable(GL_TEXTURE_2D);
+    draw_axes(10);  
+    glEnable(GL_TEXTURE_2D);
+
+    draw_forest_background();
+
+    battle_drawing = 1;
+    show_pokemon = 0;
+    draw_pokemons();
+    draw_stats();
+
+    battle_drawing = 2;
+    show_pokemon = show_wild_pokemon;
+    draw_pokemons();
+    draw_stats();
+
+    battle_drawing = 0;
+
+    glPopMatrix();
+    glutSwapBuffers(); 
+}
+
+static void draw_forest_background()
+{
+    glBindTexture(GL_TEXTURE_2D, background_textures[3]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 0);
+        glVertex3f(-10, -10, 0);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(10, -10, 0);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(10, 10, 0);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(-10, 10, 0);
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 static void draw_stats()
 {
     glPushMatrix();
 
-    glTranslatef( -3, -4, 0);
-    glScalef( 6, 0.7, 1);
+    if(battle_drawing == 0)
+    {
+        glTranslatef( -3, -4, 0);
+        glScalef( 6, 0.7, 1);
+    }
+    if(battle_drawing == 1)
+    {
+        glTranslatef( -8, -1, 4);
+        glScalef( 4, 0.7, 1);
+    }
+    if(battle_drawing == 2)
+    {
+        glTranslatef( 3, 1.5, 4);
+        glScalef( 4, 0.7, 1);
+    }
 
     sprintf (buffer, "Attack : %d", poke_info[ show_pokemon ].attack);
-    text_log(0, -2, buffer);
+    text_log(0, -1.8, buffer);
 
     sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
-    text_log(0, 0, buffer);
+    text_log(0, 0.2, buffer);
     
     glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
     glBegin(GL_QUADS);
@@ -387,8 +467,6 @@ static void draw_player()
     glTranslatef(player_info.x,player_info.y,0);
     glScalef( player_info.width, player_info.height, 1);
 
-    // glDisable(GL_LIGHTING); 
-
     glBindTexture(GL_TEXTURE_2D, player_sprites[0]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
@@ -415,8 +493,23 @@ static void draw_pokemons()
 {
     glPushMatrix();
     
-    glTranslatef( -5, 7, 0);
-    glScalef( 10, 10, 1); 
+    if(battle_drawing == 0)
+    {
+        glTranslatef( -5, 7, 4);
+        glScalef( 10, 10, 1); 
+    }
+    if(battle_drawing == 1)
+    {
+        glTranslatef( -8, -2.5, 4);
+        glScalef( 7, 7, 1);
+    }
+    if(battle_drawing == 2)
+    {
+        glTranslatef( 4 + 2.5, 0, 4);
+        glRotatef( 180, 0, 1, 0);
+        glScalef( 2.5, 2.5, 1);
+    }
+
 
 
     glBindTexture(GL_TEXTURE_2D, pokemon_sprites[ show_pokemon ]);
@@ -426,16 +519,16 @@ static void draw_pokemons()
         glNormal3f(0, 0, 1);
 
         glTexCoord2f(0, 1);
-        glVertex3f(0, 0, 4);
+        glVertex3f(0, 0, 0);
 
         glTexCoord2f(0  , 0);
-        glVertex3f(0, -1, 4);
+        glVertex3f(0, -1, 0);
 
         glTexCoord2f(1, 0);
-        glVertex3f(1, -1, 4);
+        glVertex3f(1, -1, 0);
 
         glTexCoord2f(1, 1);
-        glVertex3f(1, 0, 4);
+        glVertex3f(1, 0, 0);
     glEnd();
     
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -495,18 +588,6 @@ static void reshape1(int w, int h)
     glLoadIdentity();
     glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
-
-// static void reshape2(int w, int h)
-// {
-//     glViewport(0, 0, w, h);
-//     glMatrixMode(GL_PROJECTION);
-//     glLoadIdentity();
-//     gluPerspective(30, (float) w/h, 1, 20);
-
-//     glMatrixMode(GL_MODELVIEW);
-//     glLoadIdentity();
-//     glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-// }
 
 static void draw_pokedex_background()
 {
@@ -579,7 +660,7 @@ static void draw_floor()
 static void open_pokedex()
 {
     show_pokemon = 0;
-    window_select = WINDOW_POKEMONS;
+    window_select = WINDOW_POKEDEX;
     reshape1(window_width, window_height);
     glutPostRedisplay();
 }
@@ -592,14 +673,15 @@ void display()
     {
         display_field();
     }
-    else if(window_select == WINDOW_POKEMONS)
+    else if(window_select == WINDOW_POKEDEX)
     {
         display_pokemons();
     }
-    // else if(window_select == WINDOW_POKEBALL)
-    // {
-    //     display_3Dstuff();
-    // }
+    else if(window_select == WINDOW_BATTLE)
+    {
+        display_battle();
+    }
+
 }
 
 void reshape(int w, int h)
@@ -607,14 +689,7 @@ void reshape(int w, int h)
     window_width = w;
     window_height = h;
 
-    // if(window_select == WINDOW_FIELD)
-    // {
-        reshape1(w, h);
-    // }
-    // else if(window_select == WINDOW_POKEBALL)
-    // {
-    //     reshape2(w, h);
-    // }
+    reshape1(w, h);
 }
 
 void timer(int timer_id)
@@ -671,7 +746,7 @@ void keyboard(unsigned char key, int x, int y)
     break;
     }
     }
-    if(window_select == WINDOW_POKEMONS)
+    if(window_select == WINDOW_POKEDEX)
     {
         switch(key)
         {
@@ -708,10 +783,14 @@ void keyboard(unsigned char key, int x, int y)
             if(!check_collision( player_info.x, player_info.y + .1, player_info.width, player_info.height,
                          pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
             {
-                if(check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
+                if(check_collision( player_info.x, player_info.y + .1, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
                     printf("WILD POKEMON\n");
+                    window_select = WINDOW_BATTLE;
+                    move_pokemon = true;
+                    srand(time(NULL));
+                    show_wild_pokemon = rand()%16;
                 }
 
                 player_info.y+=.1;
@@ -727,10 +806,14 @@ void keyboard(unsigned char key, int x, int y)
             if(!check_collision( player_info.x, player_info.y - .1, player_info.width, player_info.height,
                          pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
             {
-                if(check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
+                if(check_collision( player_info.x, player_info.y - .1, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
                     printf("WILD POKEMON\n");
+                    window_select = WINDOW_BATTLE;
+                    move_pokemon = true;
+                    srand(time(NULL));
+                    show_wild_pokemon = rand()%16;                    
                 }
 
                 player_info.y-=.1;
@@ -745,10 +828,14 @@ void keyboard(unsigned char key, int x, int y)
             if(!check_collision( player_info.x - .1, player_info.y, player_info.width, player_info.height,
                          pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
             {
-                if(check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
+                if(check_collision( player_info.x - .1, player_info.y, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
                     printf("WILD POKEMON\n");
+                    window_select = WINDOW_BATTLE;
+                    move_pokemon = true;
+                    srand(time(NULL));
+                    show_wild_pokemon = rand()%16;
                 }
 
                 player_info.x-=.1;
@@ -763,10 +850,14 @@ void keyboard(unsigned char key, int x, int y)
             if(!check_collision( player_info.x + .1, player_info.y, player_info.width, player_info.height,
                          pokecenter_info.x, pokecenter_info.y, pokecenter_info.width, pokecenter_info.height))
             {
-                if(check_collision( player_info.x, player_info.y, player_info.width, player_info.height,
+                if(check_collision( player_info.x + .1, player_info.y, player_info.width, player_info.height,
                          wild_pokemon_info.x, wild_pokemon_info.y, wild_pokemon_info.width, wild_pokemon_info.height))
                 {             
                     printf("WILD POKEMON\n");
+                    window_select = WINDOW_BATTLE;
+                    move_pokemon = true;
+                    srand(time(NULL));
+                    show_wild_pokemon = rand()%16;
                 }
 
                 player_info.x+=.1;
@@ -839,7 +930,7 @@ void texture_init()
      */
     image = image_init(0, 0);
 
-    glGenTextures(3, background_textures);
+    glGenTextures(4, background_textures);
 
     /* Kreira se prva tekstura. */
 
@@ -884,6 +975,21 @@ void texture_init()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
                  image->width, image->height, 0,
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    
+    image_read(image, "./resources/forest.bmp");
+
+    glBindTexture(GL_TEXTURE_2D, background_textures[3]);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
 
 
     glGenTextures(1, &pokecenter_sprite);

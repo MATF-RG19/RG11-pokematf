@@ -11,11 +11,6 @@
 
 /* Identifikatori tekstura. */
 
-extern GLuint player_sprites[3];
-extern GLuint pokecenter_sprite;
-extern GLuint pokemon_sprites[50];
-extern GLuint background_textures[3];
-
 extern int window_width;
 extern int window_height;
 extern float matrix[16];

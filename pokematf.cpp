@@ -32,13 +32,13 @@ static int animation_parametar = 0;
 static bool move_pokemon = true;
 static int mouse_x;
 static int mouse_y;
-static int choose_pokemon = 1;
 static Position_info pokemon_position_info = { 0, 0, 0.3, 0.3};
 static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 static bool write_message = false;
 static const char* message;
 static int message_time = 100;
+static int show_pokemon = 0;
 
 //PRIVATE FUNCTION DECLARATION
 
@@ -64,7 +64,7 @@ static void draw_squirtle();
 
 static void draw_charmander();
 
-static void draw_pokemons( int id);
+static void draw_pokemons();
 
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
@@ -73,7 +73,7 @@ static void draw_grass();
 
 static void draw_floor();
 
-static void pick_pokemon( int id );
+static void open_pokedex();
 
 static void text_log( float x, float y, const char *s);
 
@@ -141,7 +141,9 @@ static void display_field()
     if(write_message)
         text_log(-8, 8.3, message);
 
-    
+
+    text_log(-9.5, -9.5, "Pokedex( P )");
+
     draw_floor();
 
     draw_grass();
@@ -189,7 +191,7 @@ static void display_pokemons()
 
     draw_pokedex_background();
 
-    draw_pokemons(choose_pokemon);
+    draw_pokemons();
 
     
     glEnable(GL_LIGHTING);
@@ -268,7 +270,7 @@ static void draw_player()
     glPopMatrix();
 }
 
-static void draw_pokemons( int id )
+static void draw_pokemons()
 {
     glPushMatrix();
     
@@ -287,7 +289,7 @@ static void draw_pokemons( int id )
     glScalef( 10, 10, 1); 
 
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[id - 1 ]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[ show_pokemon ]);
 
 
     glBegin(GL_QUADS);
@@ -444,9 +446,9 @@ static void draw_floor()
     glBindTexture(GL_TEXTURE_2D, 0);
 }  
 
-static void pick_pokemon( int id )
+static void open_pokedex()
 {
-    choose_pokemon = id;
+    show_pokemon = 0;
     window_select = WINDOW_POKEMONS;
     reshape1(window_width, window_height);
     glutPostRedisplay();
@@ -540,32 +542,37 @@ void keyboard(unsigned char key, int x, int y)
         glutPostRedisplay();
     break;
     }
-    case '1':
+    }
+    if(window_select == WINDOW_POKEMONS)
     {
-        pick_pokemon( 1 );
-        glutPostRedisplay();
-    break;
-    }
-    case '2':
-    {
-        pick_pokemon( 2 );
-    break;
-    }
-    case '3':
-    {
-        pick_pokemon( 3 );
-    break;
-    }
-    case '4':
-    {
-        pick_pokemon( 4 );
-    break;
-    }
-    }
+        switch(key)
+        {
+        case 'a':
+        case 'A':
+            show_pokemon --;
+            if(show_pokemon < 0 )
+                show_pokemon = 0;
+            glutPostRedisplay();
+            break;
+        case 'd':
+        case 'D':
+            show_pokemon ++;
+            // if(show_pokemon < 0 )
+            //     show_pokemon = 0;
+            glutPostRedisplay();
+            break;
+        }
+    }   
 
     if(window_select == WINDOW_FIELD)
     {
     switch (key) {
+    case 'p':
+    case 'P':
+    {
+        open_pokedex();
+    break;
+    }
     case 'w':
     case 'W':
         if(player_info.y <= 10 )

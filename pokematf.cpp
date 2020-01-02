@@ -49,11 +49,9 @@ static void display_field();
 
 static void display_pokemons();
 
-// static void display_3Dstuff();
-
 static void reshape1(int w, int h);
 
-// static void reshape2(int w, int h);
+static void draw_healthbar();
 
 static void draw_player();
 
@@ -188,10 +186,20 @@ static void display_pokemons()
     // if(write_message)
     //     text_log(-8, 8.3, message);
 
-    glEnable(GL_TEXTURE_2D);
 
     if( owned_pokemons.count( show_pokemon ))
-        text_log( -8, 9, "Owned");
+    {
+        text_log( -8, 9, "OWNED");
+
+        draw_healthbar();
+
+    }
+    else
+    {
+        text_log( -8, 9, "NOT OWNED");
+    }
+    
+    glEnable(GL_TEXTURE_2D);
 
     draw_pokedex_background();
 
@@ -201,6 +209,22 @@ static void display_pokemons()
     glEnable(GL_LIGHTING);
     glPopMatrix();
     glutSwapBuffers(); 
+}
+
+static void draw_healthbar()
+{
+    glPushMatrix();
+    glTranslatef( -3, -4, 0);
+    glScalef( 6, 0.7, 1);
+    
+    glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+    glBegin(GL_QUADS);
+        glVertex3f(0, 0, 4);
+        glVertex3f(0, -1, 4);
+        glVertex3f(1, -1, 4);
+        glVertex3f(1, 0, 4);
+    glEnd();
+    glPopMatrix();
 }
 
 static void draw_pokecenter()
@@ -508,8 +532,6 @@ void timer(int timer_id)
                 message_time = 100;
             }
         }
-
-        printf("%d:%d\n", animation_parametar, window_select);
     }
 
     glutPostRedisplay();
@@ -553,16 +575,16 @@ void keyboard(unsigned char key, int x, int y)
         {
         case 'a':
         case 'A':
+            if(show_pokemon == 0 )
+                break;
             show_pokemon --;
-            if(show_pokemon < 0 )
-                show_pokemon = 0;
             glutPostRedisplay();
             break;
         case 'd':
         case 'D':
+            if(show_pokemon == 15 )
+                break;
             show_pokemon ++;
-            // if(show_pokemon < 0 )
-            //     show_pokemon = 0;
             glutPostRedisplay();
             break;
         }

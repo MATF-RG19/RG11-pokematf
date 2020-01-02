@@ -9,20 +9,20 @@ void init()
     glClearColor(1, 1, 1, 0);
     glShadeModel (GL_SMOOTH);
 
-    glEnable(GL_NORMALIZE);
+    // glEnable(GL_NORMALIZE);
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHT0);
 
-    float light_position[] = {-1, 1, 1, 0};
-    float light_ambient[] = {.3f, .3f, .3f, 1};
-    float light_diffuse[] = {.7f, .7f, .7f, 1};
-    float light_specular[] = {.7f, .7f, .7f, 1};
+    // float light_position[] = {-1, 1, 1, 0};
+    // float light_ambient[] = {.3f, .3f, .3f, 1};
+    // float light_diffuse[] = {.7f, .7f, .7f, 1};
+    // float light_specular[] = {.7f, .7f, .7f, 1};
 
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    // glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 
     Image * image;
 

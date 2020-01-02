@@ -9,6 +9,10 @@ typedef struct Position_info{
     float x, y, width, height;
 } Position_info;
 
+typedef struct Pokemon_info{
+    float health, attack_min, attack_max;
+} Pokemon_info;
+
 //GLOBAL VARIABLES
 
 float matrix[16];
@@ -35,6 +39,7 @@ static int mouse_y;
 static Position_info pokemon_position_info = { 0, 0, 0.3, 0.3};
 static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
+static Pokemon_info pokemon_info[50];
 static bool write_message = false;
 static const char* message;
 static int message_time = 100;
@@ -87,7 +92,7 @@ static void draw_pokedex_background();
 
 
 static void draw_axes(float len) {
-    glDisable(GL_LIGHTING);
+    // glDisable(GL_LIGHTING);
 
     glBegin(GL_LINES);
         glColor3f(1,0,0);
@@ -112,7 +117,7 @@ static void draw_axes(float len) {
             glVertex3i(0, i, 10);
     glEnd();
 
-    glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHTING);
 }
 
 static void display_field()
@@ -131,7 +136,7 @@ static void display_field()
 
     glMultMatrixf(matrix);
 
-    glDisable(GL_LIGHTING);
+    // glDisable(GL_LIGHTING);
 
     glDisable(GL_TEXTURE_2D);
     draw_axes(10);  
@@ -161,7 +166,7 @@ static void display_field()
     
 
     
-    glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHTING);
     glPopMatrix();
     glutSwapBuffers();                  
 }
@@ -182,7 +187,7 @@ static void display_pokemons()
 
     glMultMatrixf(matrix);
 
-    glDisable(GL_LIGHTING);
+    // glDisable(GL_LIGHTING);
 
 
 
@@ -213,7 +218,7 @@ static void display_pokemons()
     draw_pokemons();
 
     
-    glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHTING);
     glPopMatrix();
     glutSwapBuffers(); 
 }
@@ -281,7 +286,7 @@ static void draw_player()
     glTranslatef(player_info.x,player_info.y,0);
     glScalef( player_info.width, player_info.height, 1);
 
-    glDisable(GL_LIGHTING); 
+    // glDisable(GL_LIGHTING); 
 
     glBindTexture(GL_TEXTURE_2D, player_sprites[0]);
     glBegin(GL_QUADS);

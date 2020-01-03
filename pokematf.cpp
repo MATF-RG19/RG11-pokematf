@@ -63,6 +63,7 @@ static int catching_time = 0;
 static int potion_charges = 3;
 static int battle_state = -1;
 static std::deque<std::string> battle_log;
+static int tmp;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -161,7 +162,8 @@ static void heal_pokemon()
         if ( battle_state == 0 )
         {
             //animacija heala pre attacka sledeceg
-            light_attack();
+            catching = 1;
+            catching_time = 0;
         }
         glutPostRedisplay();
     }
@@ -459,7 +461,7 @@ static void catch_pokemon()
             add_to_battle_log( "CAUGHT" );
             owned_pokemons.insert(show_wild_pokemon);
         }
-        catching = true;
+        catching = 2;
         catching_time = 0;
         battle_state = 3;
         wild_pokemon_stats.health = 0;
@@ -698,7 +700,11 @@ static void draw_pokemons()
     }
     if(battle_drawing == 1)
     {
-        if ( running == 1 )
+        if ( catching == 1 )
+        {
+            glTranslatef ( 0, catching_time%20/20.0, 0 );
+        }
+        else if ( running == 1 )
         {
             glTranslatef(-running_time/5.0, 0, 0);
         }
@@ -716,7 +722,7 @@ static void draw_pokemons()
     }
     if(battle_drawing == 2)
     {
-        if ( catching )
+        if ( catching == 2 )
         {
             glTranslatef ( 0, catching_time%20/20.0, 0 );
         }
@@ -955,8 +961,11 @@ void timer(int timer_id)
             catching_time += 1;
             if ( catching_time >= 60 )
             {
+                tmp = catching;                
                 catching = 0;
                 catching_time = 0;
+                if( tmp == 1 )
+                    light_attack();
             }       
         }
     }

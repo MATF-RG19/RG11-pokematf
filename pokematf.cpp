@@ -43,16 +43,16 @@ static bool write_message = false;
 static const char* message;
 static int message_time = 100;
 static int show_pokemon = 0;
-static std::unordered_set<int> owned_pokemons = {0, 1, 2};
+static std::unordered_set<int> owned_pokemons = {};
 static char buffer[50];
-static GLuint player_sprites[3];
+static GLuint player_sprites[2];
 static GLuint pokecenter_sprite;
 static GLuint pokemon_sprites[50];
 static GLuint background_textures[10];
 static GLuint arrow_sprite;
 static int battle_drawing = 0;
 static int show_wild_pokemon = 0;
-static int favorite_pokemon = 1;
+static int favorite_pokemon = -1;
 static bool turn = true; 
 static bool hit = false;
 static int hit_time = 50;
@@ -64,6 +64,7 @@ static int potion_charges = 3;
 static int battle_state = -1;
 static std::deque<std::string> battle_log;
 static int tmp;
+static bool choose_starter = true;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -118,6 +119,8 @@ static void heal_pokemon();
 
 static void add_to_battle_log( std::string s );
 
+static void draw_oak();
+
 //PRIVATE FUNCTION DEFINITION
 
 static void draw_battle_log()
@@ -161,7 +164,6 @@ static void heal_pokemon()
         turn = false;
         if ( battle_state == 0 )
         {
-            //animacija heala pre attacka sledeceg
             catching = 1;
             catching_time = 0;
         }
@@ -214,6 +216,8 @@ static void light_attack()
 
 static void init_battle()
 {
+    if ( !choose_starter )
+    {
     battle_state = 0;
     if ( poke_info[ favorite_pokemon ].health <= 0 )
         battle_state = 2;
@@ -225,6 +229,7 @@ static void init_battle()
     wild_pokemon_stats.health = 100;
     wild_pokemon_stats.attack_min = poke_info[show_wild_pokemon].attack_min;
     wild_pokemon_stats.attack_max = poke_info[show_wild_pokemon].attack_max;
+    }
 }
 
 
@@ -273,7 +278,8 @@ static void display_field()
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);  
     
-
+    if( !choose_starter )
+    {
     if(write_message)
     {
         text_log(-8, 8.3, message);
@@ -282,6 +288,12 @@ static void display_field()
     {
         text_log(-8, 8.8, "Heal pokemons or restore \npotion charges at Pokecenter ( H )");
     }
+    }
+    else
+    {
+        text_log(-8, 8.8, " Open Pokedex to choose\n your starter Pokemon ");
+    }
+    
     
     text_log(-9.5, -9.5, "Pokedex ( P )");
 
@@ -293,13 +305,43 @@ static void display_field()
 
     draw_grass();
 
+    draw_oak();
+
     draw_player();
 
     draw_pokecenter();
-
     
     glPopMatrix();
     glutSwapBuffers();                  
+}
+
+static void draw_oak()
+{
+    glPushMatrix();
+
+    glTranslatef(-8.5, 7, 0);
+    glScalef( player_info.width, player_info.height, 1);
+
+    glBindTexture(GL_TEXTURE_2D, player_sprites[1]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(0, 0, 0.3);
+
+        glTexCoord2f(0 , 0);
+        glVertex3f(0, -1, 0.3);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(1, -1, 0.3);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(1, 0, 0.3);
+    glEnd();
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glPopMatrix();
 }
 
 static void draw_wild_pokemon()
@@ -352,7 +394,10 @@ static void display_pokemons()
         text_log(4.3, -8, buffer);
     }
 
-    if(owned_pokemons.count(show_pokemon) && show_pokemon!=favorite_pokemon)
+    if( (owned_pokemons.count(show_pokemon) && 
+         show_pokemon!=favorite_pokemon)    ||
+         ( ( show_pokemon == 0 || show_pokemon == 1 || show_pokemon == 2) &&
+             choose_starter ) )
     {
         text_log( - 9, -8, "Make favorite ( F )" );
     }
@@ -362,7 +407,7 @@ static void display_pokemons()
         text_log( -9, -8, "FAVORITE");
     }  
 
-    if( owned_pokemons.count( show_pokemon ))
+    if( owned_pokemons.count( show_pokemon ) )
     {
         text_log( -9, 8, "OWNED");
 
@@ -579,7 +624,7 @@ static void draw_pokecenter()
 
 static void draw_arrows()
 {
-    if(show_pokemon != 15 )
+    if(show_pokemon < 15 )
     {
 
     text_log(7.8, -0.15, "D");
@@ -611,9 +656,7 @@ static void draw_arrows()
 
     }
 
-
-
-    if(show_pokemon != 0 )
+    if(show_pokemon > 0 )
     {
 
     text_log(-8., -0.15, "A");
@@ -996,14 +1039,14 @@ void keyboard(unsigned char key, int x, int y)
         {
         case 'a':
         case 'A':
-            if(show_pokemon == 0 )
+            if(show_pokemon <= 0 )
                 break;
             show_pokemon --;
             glutPostRedisplay();
             break;
         case 'd':
         case 'D':
-            if(show_pokemon == 15 )
+            if(show_pokemon >= 15 )
                 break;
             show_pokemon ++;
             glutPostRedisplay();
@@ -1013,8 +1056,16 @@ void keyboard(unsigned char key, int x, int y)
             if(owned_pokemons.count(show_pokemon))
             {
                 favorite_pokemon = show_pokemon;
+                glutPostRedisplay();   
+            }
+            else if ( choose_starter )
+            {
+                favorite_pokemon = show_pokemon;
+                owned_pokemons.insert( favorite_pokemon );
+                choose_starter = false;
                 glutPostRedisplay();
             }
+            
             break;
         case 'y':
         case 'Y':
@@ -1308,10 +1359,25 @@ void texture_init()
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
     
-    glGenTextures(1, player_sprites);
+    glGenTextures(2, player_sprites);
     image_read(image, "character.bmp");
 
     glBindTexture(GL_TEXTURE_2D, player_sprites[0]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+    
+    image_read(image, "./resources/oak.bmp");    
+    glBindTexture(GL_TEXTURE_2D, player_sprites[1]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

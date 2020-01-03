@@ -119,6 +119,11 @@ static void heal_pokemon()
     }
     else
     {
+        if ( poke_info[ show_pokemon ].health <=0 )
+        {
+            printf(" Pokemon is too tired to get up, heal him at Pokecenter\n");
+            return;
+        }
         potion_charges--;
         poke_info[ show_pokemon ].health += 20;
         if ( poke_info[ show_pokemon ].health > 100 )
@@ -947,6 +952,14 @@ void keyboard(unsigned char key, int x, int y)
         case 'H':
             if ( turn && battle_state == 0 )
                 catch_pokemon();
+            break;
+        case 'y':
+        case 'Y':
+            if ( turn && battle_state == 0 )
+            {
+                show_pokemon = favorite_pokemon;
+                heal_pokemon();
+            }
             break;
         }
     }    

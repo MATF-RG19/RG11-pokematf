@@ -55,6 +55,8 @@ static int favorite_pokemon = 1;
 static bool turn = true; 
 static bool hit = false;
 static int hit_time = 50;
+static int potion_charges = 3;
+static int battle_state;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -105,22 +107,30 @@ static void light_attack();
 
 static void catch_pokemon();
 
+static void heal_pokemon();
+
 //PRIVATE FUNCTION DEFINITION
+
+static void heal_pokemon()
+{
+    if ( potion_charges <= 0 )
+    {
+        printf("Out of potions\n");
+    }
+    else
+    {
+        potion_charges--;
+        poke_info[ show_pokemon ].health += 20;
+        if ( poke_info[ show_pokemon ].health > 100 )
+            poke_info[ show_pokemon ].health = 100;
+        printf("Pokemon healed\n"); 
+        glutPostRedisplay();
+    }
+    
+}
 
 static void light_attack()
 {
-    if(wild_pokemon_stats.health <= 0 )
-    {
-        printf("you won\n");
-        return;
-    }
-
-    if(poke_info[ favorite_pokemon ].health <=0 )
-    {
-        printf("you lost\n");
-        return;
-    }
-
     if(turn)
     {
         srand(time(NULL));
@@ -130,6 +140,11 @@ static void light_attack()
         wild_pokemon_stats.health -= favorite_current_attack;
         hit = true;
         hit_time = 50;
+        if(wild_pokemon_stats.health <= 0 )
+        {
+            battle_state = 1;
+            printf("you won\n");
+        }
         glutPostRedisplay();
     }
     else
@@ -141,6 +156,11 @@ static void light_attack()
         poke_info[ favorite_pokemon ].health -= wild_current_attack;
         hit = true;
         hit_time = 50;
+        if(poke_info[ favorite_pokemon ].health <=0 )
+        {
+            battle_state = 2;
+            printf("you lost\n");
+        }
         glutPostRedisplay();
     }
 
@@ -148,6 +168,9 @@ static void light_attack()
 
 static void init_battle()
 {
+    battle_state = 0;
+    if ( poke_info[ favorite_pokemon ].health <= 0 )
+        battle_state = 2;
     turn = true;
     window_select = WINDOW_BATTLE;
     move_pokemon = true;
@@ -211,7 +234,7 @@ static void display_field()
     }
     else
     {
-        text_log(-8, 8.8, "Heal pokemons at\nPokecenter ( H )");
+        text_log(-8, 8.8, "Heal pokemons or restore \npotion charges at Pokecenter ( H )");
     }
     
     text_log(-9.5, -9.5, "Pokedex ( P )");
@@ -279,28 +302,31 @@ static void display_pokemons()
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
 
-    text_log(5, -9, "Back ( K )" );
+    text_log(7.4, -9, "Back ( K )" );
+
+    sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
+    text_log(4.3, -8, buffer);
 
     if(owned_pokemons.count(show_pokemon) && show_pokemon!=favorite_pokemon)
     {
-        text_log(5, -8, "Make favorite ( F )" );
+        text_log( - 9, -8, "Make favorite ( F )" );
     }
 
     if( show_pokemon == favorite_pokemon )
     {
-        text_log( -8, 8, "FAVORITE");
+        text_log( -9, -8, "FAVORITE");
     }  
 
     if( owned_pokemons.count( show_pokemon ))
     {
-        text_log( -8, 9, "OWNED");
+        text_log( -9, 8, "OWNED");
 
         battle_drawing = 0;
         draw_stats();
     }
     else
     {
-        text_log( -8, 9, "NOT OWNED");
+        text_log( -9, 8, "NOT OWNED");
     }
     
     glEnable(GL_TEXTURE_2D);
@@ -334,10 +360,12 @@ static void display_battle()
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
     text_log(6, -9, "Exit battle ( K )" );
-    if(turn)
+    if ( turn && battle_state == 0 )
     {
-        text_log(6, -8, "Light attack ( J )" );
-        text_log(4.8, -7, " Catch pokemon ( H )");
+        sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
+        text_log(4.3, -8, buffer);
+        text_log(6, -7, "Light attack ( J )" );
+        text_log(4.8, -6, " Catch pokemon ( H )");
     }
     glEnable(GL_TEXTURE_2D);
 
@@ -366,11 +394,13 @@ static void display_battle()
 
 static void catch_pokemon()
 {
+    //catch animacija ili run animacija
     if ( wild_pokemon_stats.health > 0  &&
          wild_pokemon_stats.health <=30 &&      
          poke_info[ favorite_pokemon ].health > 0)
     {
         printf("CAUGHT\n");
+        battle_state = 3;
         wild_pokemon_stats.health = 0;
         owned_pokemons.insert(show_wild_pokemon);
     }
@@ -381,7 +411,8 @@ static void catch_pokemon()
     
 
     turn = false;
-    light_attack();
+    if( battle_state == 0 )
+        light_attack();
 }
 
 static void draw_forest_background()
@@ -827,7 +858,7 @@ void timer(int timer_id)
                 hit = false;
                 hit_time = 50;
 
-                if(!turn)
+                if(!turn && battle_state==0 )
                     light_attack();
             }
         }
@@ -843,31 +874,32 @@ void keyboard(unsigned char key, int x, int y)
 {
     switch(key)
     {
-    case 27:
-    {
-        glDeleteTextures(2, background_textures);
-        glDeleteTextures(1, &pokecenter_sprite);
-        glDeleteTextures(1, player_sprites);
-        exit(0);
-    break;
+        case 27:
+        {
+            glDeleteTextures(2, background_textures);
+            glDeleteTextures(1, &pokecenter_sprite);
+            glDeleteTextures(1, player_sprites);
+            exit(0);
+        break;
+        }
+        case 'k':
+        case 'K':
+        {
+            window_select = WINDOW_FIELD;
+            reshape1(window_width, window_height);
+            glutPostRedisplay();
+        break;
+        }
+        case 'r':
+        case 'R':
+        {
+            glLoadIdentity();
+            glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+            glutPostRedisplay();
+        break;
+        }
     }
-    case 'k':
-    case 'K':
-    {
-        window_select = WINDOW_FIELD;
-        reshape1(window_width, window_height);
-        glutPostRedisplay();
-    break;
-    }
-    case 'r':
-    case 'R':
-    {
-        glLoadIdentity();
-        glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-        glutPostRedisplay();
-    break;
-    }
-    }
+
     if(window_select == WINDOW_POKEDEX)
     {
         switch(key)
@@ -894,6 +926,10 @@ void keyboard(unsigned char key, int x, int y)
                 glutPostRedisplay();
             }
             break;
+        case 'y':
+        case 'Y':
+            heal_pokemon();
+            break;
         }
     }
     
@@ -904,12 +940,12 @@ void keyboard(unsigned char key, int x, int y)
         {
         case 'j':
         case 'J':
-            if(turn)
+            if ( turn && battle_state == 0 )
                 light_attack();
             break;
         case 'h':
         case 'H':
-            if(turn)
+            if ( turn && battle_state == 0 )
                 catch_pokemon();
             break;
         }
@@ -1221,7 +1257,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[1] = { 100, 4, 20 };
+    poke_info[1] = { 30, 4, 20 };
     
     image_read(image, "./resources/pokemon_sprites/charmander.bmp");
 

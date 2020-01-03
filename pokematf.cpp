@@ -16,7 +16,7 @@ typedef struct Pokemon_info{
 
 //GLOBAL VARIABLES
 
-float matrix[16];
+// float matrix[16];
 int window_width = 700;   
 int window_height = 700;
 
@@ -56,7 +56,7 @@ static bool turn = true;
 static bool hit = false;
 static int hit_time = 50;
 static int potion_charges = 3;
-static int battle_state;
+static int battle_state = -1;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -234,7 +234,7 @@ static void display_field()
     
     glPushMatrix();
 
-    glMultMatrixf(matrix);
+    // glMultMatrixf(matrix);
 
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);  
@@ -307,17 +307,16 @@ static void display_pokemons()
     
     glPushMatrix();
 
-    glMultMatrixf(matrix);
-
-
-
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
 
     text_log(7.4, -9, "Back ( K )" );
 
-    sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
-    text_log(4.3, -8, buffer);
+    if ( battle_state == -1 )
+    {   
+        sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
+        text_log(4.3, -8, buffer);
+    }
 
     if(owned_pokemons.count(show_pokemon) && show_pokemon!=favorite_pokemon)
     {
@@ -367,17 +366,16 @@ static void display_battle()
     
     glPushMatrix();
 
-    glMultMatrixf(matrix);
-
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
-    text_log(6, -9, "Exit battle ( K )" );
+    text_log(6, -9, "Exit battle ( R )" );
     if ( turn && battle_state == 0 )
     {
+        text_log(4.5, -6, "Change pokemon ( P )" );
         sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
         text_log(4.3, -8, buffer);
         text_log(6, -7, "Light attack ( J )" );
-        text_log(4.8, -6, " Catch pokemon ( H )");
+        text_log(4.8, -5, " Catch pokemon ( H )");
     }
     glEnable(GL_TEXTURE_2D);
 
@@ -743,9 +741,9 @@ static void reshape1(int w, int h)
     glLoadIdentity();
     glOrtho(-10, 10, -10, 10, -10, 10);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+    // glMatrixMode(GL_MODELVIEW);
+    // glLoadIdentity();
+    // glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
 
 static void draw_pokedex_background()
@@ -820,7 +818,6 @@ static void open_pokedex()
 {
     show_pokemon = 0;
     window_select = WINDOW_POKEDEX;
-    reshape1(window_width, window_height);
     glutPostRedisplay();
 }
 
@@ -901,22 +898,6 @@ void keyboard(unsigned char key, int x, int y)
             exit(0);
         break;
         }
-        case 'k':
-        case 'K':
-        {
-            window_select = WINDOW_FIELD;
-            reshape1(window_width, window_height);
-            glutPostRedisplay();
-        break;
-        }
-        case 'r':
-        case 'R':
-        {
-            glLoadIdentity();
-            glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-            glutPostRedisplay();
-        break;
-        }
     }
 
     if(window_select == WINDOW_POKEDEX)
@@ -947,8 +928,24 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'y':
         case 'Y':
-            heal_pokemon();
+            if ( battle_state == -1 )
+                heal_pokemon();
             break;
+        case 'k':
+        case 'K':
+            printf("battle state : %d\n", battle_state);
+            if ( battle_state == 0 )
+            {
+                window_select = WINDOW_BATTLE;
+                turn = false;
+                light_attack();
+            }
+            else
+            {
+                window_select = WINDOW_FIELD;
+            }
+            glutPostRedisplay();
+        break;
         }
     }
     
@@ -975,6 +972,19 @@ void keyboard(unsigned char key, int x, int y)
                 heal_pokemon();
             }
             break;
+        case 'p':
+        case 'P':
+            if ( turn && battle_state == 0 )
+            {
+                open_pokedex();
+            }
+        break;
+        case 'r':
+        case 'R':
+            window_select = WINDOW_FIELD;
+            battle_state = -1;
+            glutPostRedisplay();
+        break;
         }
     }    
 

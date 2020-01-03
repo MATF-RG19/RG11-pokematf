@@ -55,6 +55,8 @@ static int favorite_pokemon = 1;
 static bool turn = true; 
 static bool hit = false;
 static int hit_time = 50;
+static int running = 0;
+static int running_time = 0;
 static int potion_charges = 3;
 static int battle_state = -1;
 
@@ -154,6 +156,8 @@ static void light_attack()
         if(wild_pokemon_stats.health <= 0 )
         {
             battle_state = 1;
+            running = 2;
+            running_time = 0;
             printf("you won\n");
         }
         glutPostRedisplay();
@@ -171,6 +175,8 @@ static void light_attack()
         {
             poke_info[ favorite_pokemon ].health = 0;
             battle_state = 2;
+            running = 1;
+            running_time = 0;            
             printf("you lost\n");
         }
         glutPostRedisplay();
@@ -386,18 +392,19 @@ static void display_battle()
 
     draw_forest_background();
 
+
+    battle_drawing = 1;
+    draw_pokemons();
     if ( poke_info[ favorite_pokemon ].health > 0 )
     {
-        battle_drawing = 1;
-        draw_pokemons();
         draw_stats();
     }
 
-    if ( wild_pokemon_stats.health > 0 )
-    {
     battle_drawing = 2;
     show_pokemon = show_wild_pokemon;
     draw_pokemons();
+    if ( wild_pokemon_stats.health > 0 )
+    {
     draw_stats();
     }
 
@@ -655,7 +662,15 @@ static void draw_pokemons()
     }
     if(battle_drawing == 1)
     {
-        if( hit && turn)
+        if ( running == 1 )
+        {
+            glTranslatef(-running_time/5.0, 0, 0);
+        }
+        else if ( battle_state == 2 )
+        {
+            glTranslatef(-60/5.0, 0, 0);
+        }
+        else if( hit && turn)
         {
             // sprintf (buffer, "-%d", wild_pokemon_stats.attack);
             // text_log(hit_time%10, hit_time%10, buffer);
@@ -667,7 +682,15 @@ static void draw_pokemons()
     }
     if(battle_drawing == 2)
     {
-        if( hit && !turn)
+        if ( running == 2 )
+        {
+            glTranslatef(running_time/8.0, 0, 0);
+        }
+        else if ( battle_state == 1 )
+        {
+            glTranslatef(60/8.0, 0, 0);
+        }
+        else if ( hit && !turn ) 
         {
             glTranslatef((rand()%51-25)/100.0, (rand()%51-25)/100.0, 0);
         }
@@ -882,6 +905,17 @@ void timer(int timer_id)
                 if(!turn && battle_state==0 )
                     light_attack();
             }
+        }
+
+        if ( running )
+        {
+            printf("%d\n", running_time);
+            running_time += 1;
+            if ( running_time >= 60 )
+            {
+                running = 0;
+                running_time = 0;
+            }       
         }
     }
 

@@ -3,6 +3,7 @@
 #include "pokematf.h"
 #include <unordered_set>
 #include <string>
+#include <deque>
 
 //STRUCTURES
 
@@ -61,6 +62,7 @@ static int catching = 0;
 static int catching_time = 0;
 static int potion_charges = 3;
 static int battle_state = -1;
+static std::deque<std::string> battle_log;
 
 
 //PRIVATE FUNCTION DECLARATION
@@ -113,26 +115,48 @@ static void catch_pokemon();
 
 static void heal_pokemon();
 
+static void add_to_battle_log( std::string s );
+
 //PRIVATE FUNCTION DEFINITION
+
+static void draw_battle_log()
+{
+    int i = 9;
+    for( auto s : battle_log )
+    {
+        text_log(-9, i, s.c_str());
+        i--;
+    }
+}
+
+static void add_to_battle_log( std::string s )
+{
+    battle_log.push_front( s );
+
+    if(battle_log.size() == 11)
+    {
+        battle_log.pop_back();
+    }
+}
 
 static void heal_pokemon()
 {
     if ( potion_charges <= 0 )
     {
-        printf("Out of potions\n");
+        add_to_battle_log( "Out of potions" );
     }
     else
     {
         if ( poke_info[ show_pokemon ].health <=0 )
         {
-            printf(" Pokemon is too tired to get up, heal him at Pokecenter\n");
+            add_to_battle_log( "Pokemon is too tired to get up, heal him at Pokecenter" );
             return;
         }
         potion_charges--;
         poke_info[ show_pokemon ].health += 20;
         if ( poke_info[ show_pokemon ].health > 100 )
             poke_info[ show_pokemon ].health = 100;
-        printf("+20 ~ healing potion\n");
+        add_to_battle_log( "+20 ~ healing potion" );
         turn = false;
         if ( battle_state == 0 )
         {
@@ -150,7 +174,7 @@ static void light_attack()
     {
         srand(time(NULL));
         favorite_current_attack = rand() % (poke_info[ favorite_pokemon ].attack_max + 1 - poke_info[ favorite_pokemon ].attack_min) + poke_info[ favorite_pokemon ].attack_min;
-        printf("%d\n", favorite_current_attack);
+        add_to_battle_log( std::to_string( favorite_current_attack ) );
         turn = false;                 
         wild_pokemon_stats.health -= favorite_current_attack;
         hit = true;
@@ -160,7 +184,7 @@ static void light_attack()
             battle_state = 1;
             running = 2;
             running_time = 0;
-            printf("you won\n");
+            add_to_battle_log("you won");
         }
         glutPostRedisplay();
     }
@@ -168,7 +192,7 @@ static void light_attack()
     {
         srand(time(NULL));
         wild_current_attack = rand() % (wild_pokemon_stats.attack_max + 1 - wild_pokemon_stats.attack_min) + wild_pokemon_stats.attack_min;
-        printf("%d\n", wild_current_attack);
+        add_to_battle_log( "-" + std::to_string( wild_current_attack ) );
         turn = true;                
         poke_info[ favorite_pokemon ].health -= wild_current_attack;
         hit = true;
@@ -179,7 +203,7 @@ static void light_attack()
             battle_state = 2;
             running = 1;
             running_time = 0;            
-            printf("you lost\n");
+            add_to_battle_log("you lost");
         }
         glutPostRedisplay();
     }
@@ -376,6 +400,9 @@ static void display_battle()
 
     glDisable(GL_TEXTURE_2D);
     // draw_axes(10);
+
+    draw_battle_log();
+
     text_log(6, -9, "Exit battle ( R )" );
     if ( turn && battle_state == 0 )
     {
@@ -425,11 +452,11 @@ static void catch_pokemon()
     {
         if( owned_pokemons.count( show_wild_pokemon ) )
         {
-            printf("You already have this pokemon, sending it to Professor Oak...\n");
+            add_to_battle_log( "You already have this pokemon, sending it to Professor Oak..." );
         }
         else
         {
-            printf("CAUGHT\n");
+            add_to_battle_log( "CAUGHT" );
             owned_pokemons.insert(show_wild_pokemon);
         }
         catching = true;
@@ -439,7 +466,7 @@ static void catch_pokemon()
     }
     else
     {
-        printf("NOT CAUGHT\n");
+        add_to_battle_log( "NOT CAUGHT" );
     }
     
 
@@ -681,8 +708,6 @@ static void draw_pokemons()
         }
         else if( hit && turn)
         {
-            // sprintf (buffer, "-%d", wild_pokemon_stats.attack);
-            // text_log(hit_time%10, hit_time%10, buffer);
             glTranslatef((rand()%51-25)/100.0, (rand()%51-25)/100.0, 0);
         }
         glTranslatef( -8, -2.5, 4);
@@ -781,10 +806,6 @@ static void reshape1(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(-10, 10, -10, 10, -10, 10);
-
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
-    // glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
 }
 
 static void draw_pokedex_background()
@@ -931,7 +952,6 @@ void timer(int timer_id)
         }
         if ( catching )
         {
-            printf("%d\n", catching_time);
             catching_time += 1;
             if ( catching_time >= 60 )
             {
@@ -994,7 +1014,6 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'k':
         case 'K':
-            printf("battle state : %d\n", battle_state);
             if ( battle_state == 0 || battle_state == 2 )
             {
                 window_select = WINDOW_BATTLE;

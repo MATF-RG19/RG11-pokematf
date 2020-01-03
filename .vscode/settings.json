@@ -40,6 +40,9 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "queue": "cpp",
+        "unordered_set": "cpp",
+        "set": "cpp"
     }
 }

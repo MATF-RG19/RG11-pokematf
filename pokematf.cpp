@@ -513,11 +513,15 @@ static void display_battle()
 
 static void catch_pokemon()
 {
-    //catch animacija ili run animacija
+    srand(time(NULL));
+
     if ( wild_pokemon_stats.health > 0  &&
          wild_pokemon_stats.health <=30 &&      
-         poke_info[ favorite_pokemon ].health > 0)
+         poke_info[ favorite_pokemon ].health > 0 &&
+         rand()%2 == 0)
     {
+        
+        
         if( owned_pokemons.count( show_wild_pokemon ) )
         {
             add_to_battle_log("You already have this pokemon, sending it to Professor Oak..." );

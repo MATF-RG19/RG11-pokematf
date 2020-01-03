@@ -11,7 +11,7 @@ typedef struct Position_info{
 } Position_info;
 
 typedef struct Pokemon_info{
-    int health, attack;
+    int health, attack_min, attack_max;
 } Pokemon_info;
 
 //GLOBAL VARIABLES
@@ -35,6 +35,8 @@ static Position_info wild_pokemon_info = { 0, 0, 0.3, 0.3};
 static Position_info player_info = { 0, 0, 1, 2};
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
 static Pokemon_info poke_info[50];
+static int favorite_current_attack;
+static int wild_current_attack;
 static Pokemon_info wild_pokemon_stats;
 static bool write_message = false;
 static const char* message;
@@ -121,16 +123,22 @@ static void light_attack()
 
     if(turn)
     {
+        srand(time(NULL));
+        favorite_current_attack = rand() % (poke_info[ favorite_pokemon ].attack_max + 1 - poke_info[ favorite_pokemon ].attack_min) + poke_info[ favorite_pokemon ].attack_min;
+        printf("%d\n", favorite_current_attack);
         turn = false;                 
-        wild_pokemon_stats.health -= poke_info[ favorite_pokemon ].attack;
+        wild_pokemon_stats.health -= favorite_current_attack;
         hit = true;
         hit_time = 50;
         glutPostRedisplay();
     }
     else
     {
+        srand(time(NULL));
+        wild_current_attack = rand() % (wild_pokemon_stats.attack_max + 1 - wild_pokemon_stats.attack_min) + wild_pokemon_stats.attack_min;
+        printf("%d\n", wild_current_attack);
         turn = true;                
-        poke_info[ favorite_pokemon ].health -= wild_pokemon_stats.attack;
+        poke_info[ favorite_pokemon ].health -= wild_current_attack;
         hit = true;
         hit_time = 50;
         glutPostRedisplay();
@@ -146,8 +154,8 @@ static void init_battle()
     srand(time(NULL));
     show_wild_pokemon = rand()%16;
     wild_pokemon_stats.health = 100;
-    wild_pokemon_stats.attack = poke_info[show_wild_pokemon].attack;
-
+    wild_pokemon_stats.attack_min = poke_info[show_wild_pokemon].attack_min;
+    wild_pokemon_stats.attack_max = poke_info[show_wild_pokemon].attack_max;
 }
 
 
@@ -399,7 +407,7 @@ static void draw_stats()
     {
         glTranslatef( -3, -4, 0);
         glScalef( 6 * poke_info[ show_pokemon ].health/100.0, 0.7, 1);
-        sprintf (buffer, "Attack : %d", poke_info[ show_pokemon ].attack);
+        sprintf (buffer, "Attack : %d ~ %d", poke_info[ show_pokemon ].attack_min, poke_info[ show_pokemon ].attack_max);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", poke_info[ show_pokemon ].health);
 
@@ -408,7 +416,7 @@ static void draw_stats()
     {
         glTranslatef( -8, -1, 4);
         glScalef( 4 * poke_info[ favorite_pokemon ].health/100.0, 0.7, 1);
-        sprintf (buffer, "Attack : %d", poke_info[ favorite_pokemon ].attack);
+        sprintf (buffer, "Attack : %d ~ %d", poke_info[ favorite_pokemon ].attack_min, poke_info[ favorite_pokemon ].attack_max);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", poke_info[ favorite_pokemon ].health);
 
@@ -417,7 +425,7 @@ static void draw_stats()
     {
         glTranslatef( 3, 1.5, 4);
         glScalef( 4 * wild_pokemon_stats.health/100.0, 0.7 , 1);
-        sprintf (buffer, "Attack : %d", wild_pokemon_stats.attack);
+        sprintf (buffer, "Attack : %d ~ %d", wild_pokemon_stats.attack_min, wild_pokemon_stats.attack_max);
         text_log(0, -1.8, buffer);
         sprintf (buffer, "Health : %d", wild_pokemon_stats.health);
     }
@@ -615,7 +623,7 @@ static void draw_pokemons()
         glTexCoord2f(0, 1);
         glVertex3f(0, 0, 0);
 
-        glTexCoord2f(0  , 0);
+        glTexCoord2f(0 , 0);
         glVertex3f(0, -1, 0);
 
         glTexCoord2f(1, 0);
@@ -1187,7 +1195,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[0] = { 100, 5 };
+    poke_info[0] = { 100, 1, 10 };
 
     
     image_read(image, "./resources/pokemon_sprites/squirtle.bmp");
@@ -1206,7 +1214,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[1] = { 95, 10 };
+    poke_info[1] = { 100, 4, 20 };
     
     image_read(image, "./resources/pokemon_sprites/charmander.bmp");
 
@@ -1224,7 +1232,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[2] = { 100, 5 };
+    poke_info[2] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/pikachu.bmp");
 
@@ -1242,7 +1250,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[3] = { 100, 5 };
+    poke_info[3] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/abra.bmp");
 
@@ -1260,7 +1268,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[4] = { 100, 5 };
+    poke_info[4] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/articuno.bmp");
 
@@ -1278,7 +1286,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[5] = { 100, 5 };
+    poke_info[5] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/eevee.bmp");
 
@@ -1296,7 +1304,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[6] = { 100, 5 };
+    poke_info[6] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/growlithe.bmp");
 
@@ -1314,7 +1322,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[7] = { 100, 5 };
+    poke_info[7] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/lapras.bmp");
 
@@ -1333,7 +1341,7 @@ void texture_init()
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
 
-    poke_info[8] = { 100, 5 };
+    poke_info[8] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/snorlax.bmp");
 
@@ -1351,7 +1359,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[9] = { 100, 5 };
+    poke_info[9] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/zapdos.bmp");
 
@@ -1369,7 +1377,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[10] = { 100, 5 };
+    poke_info[10] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/moltres.bmp");
 
@@ -1387,7 +1395,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[11] = { 100, 5 };
+    poke_info[11] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/cubone.bmp");
 
@@ -1405,7 +1413,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[12] = { 100, 5 };
+    poke_info[12] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/pidgey.bmp");
 
@@ -1423,7 +1431,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[13] = { 100, 5 };
+    poke_info[13] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/vulpix.bmp");
 
@@ -1441,7 +1449,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[14] = { 100, 5 };
+    poke_info[14] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/onix.bmp");
 
@@ -1459,7 +1467,7 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[15] = { 100, 5 };
+    poke_info[15] = { 100, 1, 10 };
 
     /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);

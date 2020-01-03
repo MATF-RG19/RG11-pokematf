@@ -57,6 +57,8 @@ static bool hit = false;
 static int hit_time = 50;
 static int running = 0;
 static int running_time = 0;
+static int catching = 0;
+static int catching_time = 0;
 static int potion_charges = 3;
 static int battle_state = -1;
 
@@ -441,7 +443,12 @@ static void catch_pokemon()
 
     turn = false;
     if( battle_state == 0 )
-        light_attack();
+    {
+        hit = true;
+        hit_time = 10;
+        glutPostRedisplay();
+        //light_attack();
+    }
 }
 
 static void draw_forest_background()
@@ -909,12 +916,21 @@ void timer(int timer_id)
 
         if ( running )
         {
-            printf("%d\n", running_time);
             running_time += 1;
             if ( running_time >= 60 )
             {
                 running = 0;
                 running_time = 0;
+            }       
+        }
+        if ( catching )
+        {
+            printf("%d\n", catching_time);
+            catching_time += 1;
+            if ( catching_time >= 60 )
+            {
+                catching = 0;
+                catching_time = 0;
             }       
         }
     }

@@ -716,7 +716,7 @@ static void text_log( float x, float y, const char *s)
 {
     glDisable(GL_TEXTURE_2D);
 
-    glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     glRasterPos3f(x, y, 10);
     glutBitmapString(GLUT_BITMAP_HELVETICA_18, reinterpret_cast<const unsigned char *>( s ) ); 
 

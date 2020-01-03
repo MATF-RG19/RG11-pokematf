@@ -227,7 +227,7 @@ static void light_attack()
             battle_state = 2;
             running = 1;
             running_time = 0;            
-            add_to_battle_log("Your Pokemon is too tired to continue, summon another Pokemon or run from the battle");
+            add_to_battle_log("Your Pokemon is too tired to continue");
         }
         glutPostRedisplay();
     }

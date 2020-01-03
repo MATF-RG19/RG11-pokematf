@@ -432,6 +432,8 @@ static void catch_pokemon()
             printf("CAUGHT\n");
             owned_pokemons.insert(show_wild_pokemon);
         }
+        catching = true;
+        catching_time = 0;
         battle_state = 3;
         wild_pokemon_stats.health = 0;
     }
@@ -689,7 +691,11 @@ static void draw_pokemons()
     }
     if(battle_drawing == 2)
     {
-        if ( running == 2 )
+        if ( catching )
+        {
+            glTranslatef ( 0, catching_time%20/20.0, 0 );
+        }
+        else if ( running == 2 )
         {
             glTranslatef(running_time/8.0, 0, 0);
         }

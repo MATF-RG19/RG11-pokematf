@@ -48,6 +48,7 @@ static char buffer[50];
 static GLuint player_sprites[2];
 static GLuint pokecenter_sprite;
 static GLuint pokemon_sprites[50];
+static GLuint pokemon_sprites_black[50];
 static GLuint background_textures[10];
 static GLuint arrow_sprite;
 static int battle_drawing = 0;
@@ -409,7 +410,7 @@ static void display_pokemons()
 
     text_log(7.4, -9, "Back ( K )" );
 
-    if ( battle_state == -1 )
+    if ( battle_state == -1 && owned_pokemons.count(show_pokemon))
     {   
         sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
         text_log(4.3, -8, buffer);
@@ -764,7 +765,17 @@ static void draw_pokemons()
     {
         glTranslatef( -5, 7, 4);
         glScalef( 10, 10, 1);
-        glBindTexture(GL_TEXTURE_2D, pokemon_sprites[ show_pokemon ]);
+        if( owned_pokemons.count( show_pokemon ) ||
+            show_pokemon == 0 || 
+            show_pokemon == 1 || 
+            show_pokemon == 2)
+        {
+            glBindTexture(GL_TEXTURE_2D, pokemon_sprites[ show_pokemon ]);
+        }
+        else
+        {
+            glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[ show_pokemon ]);
+        }
     }
     if(battle_drawing == 1)
     {
@@ -1094,7 +1105,7 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'y':
         case 'Y':
-            if ( battle_state == -1 )
+            if ( battle_state == -1 && owned_pokemons.count(show_pokemon))
                 heal_pokemon();
             break;
         case 'k':
@@ -1363,7 +1374,6 @@ void texture_init()
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
 
-
     glGenTextures(1, &pokecenter_sprite);
 
     /* Kreira se pokecentar. */
@@ -1440,6 +1450,7 @@ void texture_init()
 ////////////////////////////////////////// POKEMON LOADING
 
     glGenTextures(16, pokemon_sprites);
+    glGenTextures(16, pokemon_sprites_black);
 
     image_read(image, "./resources/pokemon_sprites/bulbasaur.bmp");
 
@@ -1509,6 +1520,22 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[3]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
+
 
     image_read(image, "./resources/pokemon_sprites/abra.bmp");
 
@@ -1525,7 +1552,21 @@ void texture_init()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
-    
+
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[4]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);        
 
     image_read(image, "./resources/pokemon_sprites/articuno.bmp");
 
@@ -1543,6 +1584,20 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[13]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
     image_read(image, "./resources/pokemon_sprites/eevee.bmp");
 
@@ -1560,10 +1615,40 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[6]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+                
 
     image_read(image, "./resources/pokemon_sprites/growlithe.bmp");
 
     glBindTexture(GL_TEXTURE_2D, pokemon_sprites[7]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[7]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1594,11 +1679,40 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[8]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
 
     image_read(image, "./resources/pokemon_sprites/snorlax.bmp");
 
     glBindTexture(GL_TEXTURE_2D, pokemon_sprites[9]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[9]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1629,10 +1743,40 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[14]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
 
     image_read(image, "./resources/pokemon_sprites/moltres.bmp");
 
     glBindTexture(GL_TEXTURE_2D, pokemon_sprites[15]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[15]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1663,6 +1807,21 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[12]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
 
     image_read(image, "./resources/pokemon_sprites/pidgey.bmp");
 
@@ -1680,6 +1839,20 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[5]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
     image_read(image, "./resources/pokemon_sprites/vulpix.bmp");
 
@@ -1697,9 +1870,39 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[10]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
     image_read(image, "./resources/pokemon_sprites/onix.bmp");
 
     glBindTexture(GL_TEXTURE_2D, pokemon_sprites[11]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
+                 image->width, image->height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_black( image );
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites_black[11]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

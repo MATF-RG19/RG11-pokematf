@@ -133,13 +133,6 @@ void image_read(Image *image, const char *filename) {
       fread(&r, sizeof(char), 1, file);
       fread(&a, sizeof(char), 1, file);
 
-      // /* GIMP exporti */
-      // image->pixels[4 * i] = a;
-      // image->pixels[4 * i + 1] = r;
-      // image->pixels[4 * i + 2] = g;
-      // image->pixels[4 * i + 3] = b;
-      
-
       image->pixels[4 * i] = r;
       image->pixels[4 * i + 1] = g;
       image->pixels[4 * i + 2] = b;
@@ -149,4 +142,14 @@ void image_read(Image *image, const char *filename) {
 
   /* Zatvara se fajl. */
   fclose(file);
+}
+
+void image_black( Image *image )
+{
+  for (int i = 0; i < image->width * image->height; i++) 
+  {
+      image->pixels[4 * i] = 0;
+      image->pixels[4 * i + 1] = 0;
+      image->pixels[4 * i + 2] = 0;
+    }
 }

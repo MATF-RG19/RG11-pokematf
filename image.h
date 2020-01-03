@@ -46,3 +46,5 @@ void image_done(Image *image);
  */
 void image_read(Image *image, const char *filename);
 
+void image_black( Image *image );
+

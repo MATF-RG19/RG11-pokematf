@@ -371,12 +371,17 @@ static void display_battle()
     text_log(6, -9, "Exit battle ( R )" );
     if ( turn && battle_state == 0 )
     {
-        text_log(4.5, -6, "Change pokemon ( P )" );
         sprintf(buffer, "Potion charges : %d ( Y )", potion_charges);
         text_log(4.3, -8, buffer);
         text_log(6, -7, "Light attack ( J )" );
         text_log(4.8, -5, " Catch pokemon ( H )");
     }
+
+    if ( turn )
+    {
+        text_log(4.5, -6, "Change pokemon ( P )" );
+    }
+    
     glEnable(GL_TEXTURE_2D);
 
     draw_forest_background();
@@ -934,10 +939,11 @@ void keyboard(unsigned char key, int x, int y)
         case 'k':
         case 'K':
             printf("battle state : %d\n", battle_state);
-            if ( battle_state == 0 )
+            if ( battle_state == 0 || battle_state == 2 )
             {
                 window_select = WINDOW_BATTLE;
                 turn = false;
+                battle_state = 0;
                 light_attack();
             }
             else
@@ -974,7 +980,7 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'p':
         case 'P':
-            if ( turn && battle_state == 0 )
+            if ( turn || battle_state == 2 )
             {
                 open_pokedex();
             }

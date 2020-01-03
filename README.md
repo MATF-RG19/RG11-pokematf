@@ -2,7 +2,9 @@
 Pokematf
 
 Run the game : Type " ./Pokemon " in console
+
 Compile the code: Type " make " in console
+
 Compile and run the game: Type " make && ./Pokemon " in console
 
 Move using WASD.

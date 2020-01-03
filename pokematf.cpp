@@ -128,7 +128,13 @@ static void heal_pokemon()
         poke_info[ show_pokemon ].health += 20;
         if ( poke_info[ show_pokemon ].health > 100 )
             poke_info[ show_pokemon ].health = 100;
-        printf("Pokemon healed\n"); 
+        printf("+20 ~ healing potion\n");
+        turn = false;
+        if ( battle_state == 0 )
+        {
+            //animacija heala pre attacka sledeceg
+            light_attack();
+        }
         glutPostRedisplay();
     }
     

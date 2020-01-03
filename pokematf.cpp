@@ -161,8 +161,9 @@ static void light_attack()
         poke_info[ favorite_pokemon ].health -= wild_current_attack;
         hit = true;
         hit_time = 50;
-        if(poke_info[ favorite_pokemon ].health <=0 )
+        if ( poke_info[ favorite_pokemon ].health <=0 )
         {
+            poke_info[ favorite_pokemon ].health = 0;
             battle_state = 2;
             printf("you lost\n");
         }
@@ -404,10 +405,17 @@ static void catch_pokemon()
          wild_pokemon_stats.health <=30 &&      
          poke_info[ favorite_pokemon ].health > 0)
     {
-        printf("CAUGHT\n");
+        if( owned_pokemons.count( show_wild_pokemon ) )
+        {
+            printf("You already have this pokemon, sending it to Professor Oak...\n");
+        }
+        else
+        {
+            printf("CAUGHT\n");
+            owned_pokemons.insert(show_wild_pokemon);
+        }
         battle_state = 3;
         wild_pokemon_stats.health = 0;
-        owned_pokemons.insert(show_wild_pokemon);
     }
     else
     {
@@ -1056,6 +1064,7 @@ void keyboard(unsigned char key, int x, int y)
                 message = "All pokemons healed";
                 for( auto elem : owned_pokemons)
                     poke_info[elem].health = 100;
+                potion_charges = 3;
                 glutPostRedisplay();
             }
         break;

@@ -121,7 +121,27 @@ static void add_to_battle_log( std::string s );
 
 static void draw_oak();
 
+static void init_pokemon_stats();
+
 //PRIVATE FUNCTION DEFINITION
+
+static void init_pokemon_stats()
+{
+    srand(time(NULL));
+    for( int i=0; i < 50; i++ )
+    {
+        poke_info[ i ].health = 100;
+        poke_info[ i ].attack_min = rand()%10+1;
+        poke_info[ i ].attack_max = rand()%10+11;
+    }
+
+    poke_info[15].attack_min = rand()%10+20;
+    poke_info[15].attack_max = rand()%10+30;
+    poke_info[14].attack_min = rand()%10+20;
+    poke_info[14].attack_max = rand()%10+30;
+    poke_info[13].attack_min = rand()%10+20;
+    poke_info[13].attack_max = rand()%10+30;
+}
 
 static void draw_battle_log()
 {
@@ -137,7 +157,7 @@ static void add_to_battle_log( std::string s )
 {
     battle_log.push_front( s );
 
-    if(battle_log.size() == 11)
+    if(battle_log.size() == 10)
     {
         battle_log.pop_back();
     }
@@ -147,20 +167,20 @@ static void heal_pokemon()
 {
     if ( potion_charges <= 0 )
     {
-        add_to_battle_log( "Out of potions" );
+        add_to_battle_log("You are out of potions" );
     }
     else
     {
         if ( poke_info[ show_pokemon ].health <=0 )
         {
-            add_to_battle_log( "Pokemon is too tired to get up, heal him at Pokecenter" );
+            add_to_battle_log("Pokemon is too tired to get up, heal him at Pokecenter" );
             return;
         }
         potion_charges--;
         poke_info[ show_pokemon ].health += 20;
         if ( poke_info[ show_pokemon ].health > 100 )
             poke_info[ show_pokemon ].health = 100;
-        add_to_battle_log( "+20 ~ healing potion" );
+        add_to_battle_log("+20hp ~ effect of healing potion" );
         turn = false;
         if ( battle_state == 0 )
         {
@@ -178,7 +198,7 @@ static void light_attack()
     {
         srand(time(NULL));
         favorite_current_attack = rand() % (poke_info[ favorite_pokemon ].attack_max + 1 - poke_info[ favorite_pokemon ].attack_min) + poke_info[ favorite_pokemon ].attack_min;
-        add_to_battle_log( std::to_string( favorite_current_attack ) );
+        add_to_battle_log("Light attack " + std::to_string( favorite_current_attack ) );
         turn = false;                 
         wild_pokemon_stats.health -= favorite_current_attack;
         hit = true;
@@ -188,7 +208,7 @@ static void light_attack()
             battle_state = 1;
             running = 2;
             running_time = 0;
-            add_to_battle_log("you won");
+            add_to_battle_log("You won the battle, wild Pokemon is fleeing");
         }
         glutPostRedisplay();
     }
@@ -196,7 +216,7 @@ static void light_attack()
     {
         srand(time(NULL));
         wild_current_attack = rand() % (wild_pokemon_stats.attack_max + 1 - wild_pokemon_stats.attack_min) + wild_pokemon_stats.attack_min;
-        add_to_battle_log( "-" + std::to_string( wild_current_attack ) );
+        add_to_battle_log("- " + std::to_string( wild_current_attack ) + "hp ~ wild pokemon light attack" );
         turn = true;                
         poke_info[ favorite_pokemon ].health -= wild_current_attack;
         hit = true;
@@ -207,7 +227,7 @@ static void light_attack()
             battle_state = 2;
             running = 1;
             running_time = 0;            
-            add_to_battle_log("you lost");
+            add_to_battle_log("Your Pokemon is too tired to continue, summon another Pokemon or run from the battle");
         }
         glutPostRedisplay();
     }
@@ -218,6 +238,7 @@ static void init_battle()
 {
     if ( !choose_starter )
     {
+    battle_log.clear();
     battle_state = 0;
     if ( poke_info[ favorite_pokemon ].health <= 0 )
         battle_state = 2;
@@ -499,11 +520,11 @@ static void catch_pokemon()
     {
         if( owned_pokemons.count( show_wild_pokemon ) )
         {
-            add_to_battle_log( "You already have this pokemon, sending it to Professor Oak..." );
+            add_to_battle_log("You already have this pokemon, sending it to Professor Oak..." );
         }
         else
         {
-            add_to_battle_log( "CAUGHT" );
+            add_to_battle_log("Pokemon caught!!!" );
             owned_pokemons.insert(show_wild_pokemon);
         }
         catching = 2;
@@ -513,7 +534,7 @@ static void catch_pokemon()
     }
     else
     {
-        add_to_battle_log( "NOT CAUGHT" );
+        add_to_battle_log("Pokemon resisted catching." );
     }
     
 
@@ -1432,7 +1453,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[0] = { 100, 1, 10 };
 
     
     image_read(image, "./resources/pokemon_sprites/squirtle.bmp");
@@ -1451,7 +1471,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[1] = { 30, 4, 20 };
     
     image_read(image, "./resources/pokemon_sprites/charmander.bmp");
 
@@ -1469,7 +1488,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[2] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/pikachu.bmp");
 
@@ -1487,7 +1505,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[3] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/abra.bmp");
 
@@ -1505,11 +1522,10 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
     
-    poke_info[4] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/articuno.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[5]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[13]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1523,7 +1539,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[5] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/eevee.bmp");
 
@@ -1541,7 +1556,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[6] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/growlithe.bmp");
 
@@ -1559,7 +1573,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[7] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/lapras.bmp");
 
@@ -1578,7 +1591,6 @@ void texture_init()
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
 
-    poke_info[8] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/snorlax.bmp");
 
@@ -1596,11 +1608,10 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[9] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/zapdos.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[10]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[14]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1614,11 +1625,10 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[10] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/moltres.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[11]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[15]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1632,7 +1642,6 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[11] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/cubone.bmp");
 
@@ -1650,11 +1659,10 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[12] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/pidgey.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[13]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[5]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1668,11 +1676,10 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[13] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/vulpix.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[14]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[10]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1685,12 +1692,10 @@ void texture_init()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
-
-    poke_info[14] = { 100, 1, 10 };
 
     image_read(image, "./resources/pokemon_sprites/onix.bmp");
 
-    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[15]);
+    glBindTexture(GL_TEXTURE_2D, pokemon_sprites[11]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1704,7 +1709,8 @@ void texture_init()
                  image->width, image->height, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    poke_info[15] = { 100, 1, 10 };
+
+    init_pokemon_stats();
 
     /* Iskljucujemo aktivnu teksturu */
     glBindTexture(GL_TEXTURE_2D, 0);

@@ -160,7 +160,6 @@ static void init_battle()
 
 
 static void draw_axes(float len) {
-    // glDisable(GL_LIGHTING);
 
     glBegin(GL_LINES);
         glColor3f(1,0,0);
@@ -375,6 +374,14 @@ static void catch_pokemon()
         wild_pokemon_stats.health = 0;
         owned_pokemons.insert(show_wild_pokemon);
     }
+    else
+    {
+        printf("NOT CAUGHT\n");
+    }
+    
+
+    turn = false;
+    light_attack();
 }
 
 static void draw_forest_background()

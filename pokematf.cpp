@@ -1306,7 +1306,7 @@ void texture_init()
 
     /* Kreira se prva tekstura. */
 
-    image_read(image, "grass.bmp");
+    image_read(image, "./resources/grass.bmp");
 
     glBindTexture(GL_TEXTURE_2D, background_textures[1]);
     glTexParameteri(GL_TEXTURE_2D,
@@ -1320,7 +1320,7 @@ void texture_init()
                  GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
     /* Kreira se druga tekstura. */
-    image_read(image, "floor.bmp");
+    image_read(image, "./resources/floor.bmp");
 
     glBindTexture(GL_TEXTURE_2D, background_textures[0]);
     glTexParameteri(GL_TEXTURE_2D,
@@ -1335,7 +1335,7 @@ void texture_init()
 
 
     /* Kreira se treca tekstura. */
-    image_read(image, "background.bmp");
+    image_read(image, "./resources/background.bmp");
 
     glBindTexture(GL_TEXTURE_2D, background_textures[2]);
     glTexParameteri(GL_TEXTURE_2D,
@@ -1367,7 +1367,7 @@ void texture_init()
     glGenTextures(1, &pokecenter_sprite);
 
     /* Kreira se pokecentar. */
-    image_read(image, "pokecenter.bmp");
+    image_read(image, "./resources/pokecenter.bmp");
 
     glBindTexture(GL_TEXTURE_2D, pokecenter_sprite);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -1385,7 +1385,7 @@ void texture_init()
 
     
     glGenTextures(2, player_sprites);
-    image_read(image, "character.bmp");
+    image_read(image, "./resources/character.bmp");
 
     glBindTexture(GL_TEXTURE_2D, player_sprites[0]);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

@@ -1,0 +1,1265 @@
+\hypertarget{pokematf_8cpp}{}\doxysection{pokematf.\+cpp File Reference}
+\label{pokematf_8cpp}\index{pokematf.cpp@{pokematf.cpp}}
+{\ttfamily \#include $<$G\+L/glut.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}pokematf.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$deque$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}
+\begin{DoxyCompactList}\small\item\em Struct used for storing coordinates, width and height of objects in the project. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}}
+\begin{DoxyCompactList}\small\item\em Struct used for storing info about every Pokemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pokematf_8cpp_a151a39bd39b9db0549a61ed7d6b34d14}{W\+I\+N\+D\+O\+W\+\_\+\+F\+I\+E\+LD}}~0
+\begin{DoxyCompactList}\small\item\em Determines which window should be drawn in window\+\_\+select variable. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{pokematf_8cpp_ad0e96ba67685743d26145469dd5ce1ba}{W\+I\+N\+D\+O\+W\+\_\+\+P\+O\+K\+E\+D\+EX}}~1
+\begin{DoxyCompactList}\small\item\em Determines which window should be drawn in window\+\_\+select variable. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{pokematf_8cpp_a71f87e9156237d9dd6ae4f8d1e2c2570}{W\+I\+N\+D\+O\+W\+\_\+\+B\+A\+T\+T\+LE}}~2
+\begin{DoxyCompactList}\small\item\em Determines which window should be drawn in window\+\_\+select variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}{Position\+\_\+info}}
+\begin{DoxyCompactList}\small\item\em Struct used for storing coordinates, width and height of objects in the project. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}{Pokemon\+\_\+info}}
+\begin{DoxyCompactList}\small\item\em Struct used for storing info about every Pokemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ac18f97169e48aecdd28c7218293e69ce}{draw\+\_\+axes}} (float len)
+\begin{DoxyCompactList}\small\item\em Additional for drawing axes, not used in final project. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a4f7c240186e442cff77425e9e5167c2d}{text\+\_\+log}} (float x, float y, const char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Function used to display text on the screen, x and y represent coordinates of the text and s is the string that will be displayed. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ac47e832c6c40036d4feff70587905e25}{reshape1}} (int w, int h)
+\begin{DoxyCompactList}\small\item\em Additional reshape function called by reshape(...). \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ab48b71097b9fc10075a80a6cbb9552a5}{init\+\_\+pokemon\+\_\+stats}} ()
+\begin{DoxyCompactList}\small\item\em Function initializes random pokemon min and max attack in predetermined range. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a4f4eb428d6fc0080b0bbecee0aa307ec}{display\+\_\+field}} ()
+\begin{DoxyCompactList}\small\item\em First display mode where player moves around looking for wild pokemons. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a7d4f5bc967a1a16bfa6b725ee07c1596}{display\+\_\+pokemons}} ()
+\begin{DoxyCompactList}\small\item\em Second display mode -\/ Pokedex. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a464a73b3d91a2d9c4cd3859ebbe7d33c}{display\+\_\+battle}} ()
+\begin{DoxyCompactList}\small\item\em Third display mode showing the battle between pokemons. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a31f16480cd8101157fe577f69b4da86c}{draw\+\_\+floor}} ()
+\begin{DoxyCompactList}\small\item\em Draws background texture on the first display. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ab28ffa84d092695bf17e3e841ad853ca}{draw\+\_\+player}} ()
+\begin{DoxyCompactList}\small\item\em Draws player on the first display using provided texture and position determined by player movement. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a2d218a82351b75c9c7bbd2db96adbc24}{draw\+\_\+oak}} ()
+\begin{DoxyCompactList}\small\item\em Draws Proffesor Oak on the first display using provided texture. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a0d7ce026f3c0f24997db1e8f43d1ddda}{draw\+\_\+grass}} ()
+\begin{DoxyCompactList}\small\item\em Draws grass on the first display using provided texture. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a2a065e12f4b3cfc54eb2ea9627fec6c7}{draw\+\_\+pokecenter}} ()
+\begin{DoxyCompactList}\small\item\em Draws Pokecenter on the first display using provided texture. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_aac49e1a4e1fc1759acc66abdd7d92c12}{draw\+\_\+wild\+\_\+pokemon}} ()
+\begin{DoxyCompactList}\small\item\em Draws the red dot represening wild pokemon in the grass. Random position after every battle. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}{check\+\_\+collision}} (float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
+\begin{DoxyCompactList}\small\item\em Checks collision between two objects using their coordinates, width and height. Returns bool value that determines if collision occurred. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}{check\+\_\+proximity}} (float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
+\begin{DoxyCompactList}\small\item\em Checks if collision would occuring when player moved in any direction by calling check\+\_\+collision func. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a5683d6e57862b4357270258f75b9ff23}{open\+\_\+pokedex}} ()
+\begin{DoxyCompactList}\small\item\em Init function for displaying Pokedex. Triggered by a keyboard action. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ae85f76dd0331d5929855f88a3e0a97e3}{draw\+\_\+pokedex\+\_\+background}} ()
+\begin{DoxyCompactList}\small\item\em Draws background texture on the second display. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a3756b83f822beec5650b048ba41894b5}{draw\+\_\+pokemons}} ()
+\begin{DoxyCompactList}\small\item\em Draws Pokemon that was previously selected with show\+\_\+wild\+\_\+pokemon variable. Function has different ways of drawing a Pokemon depending on the display mode. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a6f4a29078423ca73c71c89acdc9db992}{draw\+\_\+stats}} ()
+\begin{DoxyCompactList}\small\item\em Draws Pokemon stats. Function has different ways of drawing a Pokemon depending on the display mode. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_ab07cb95f7cfeebc5b44c8d703fda051e}{draw\+\_\+arrows}} ()
+\begin{DoxyCompactList}\small\item\em Draws arrows. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a3b3e602f4c90eec95de236f8a9889e61}{init\+\_\+battle}} ()
+\begin{DoxyCompactList}\small\item\em Init function for displaying battle. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_adc13fbc3ef3b7737fdd68b204cbc0f12}{draw\+\_\+forest\+\_\+background}} ()
+\begin{DoxyCompactList}\small\item\em Draws background texture on the third display. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_abc215d3b5b3b9680db7f15ea56b4c663}{light\+\_\+attack}} ()
+\begin{DoxyCompactList}\small\item\em Light attack function that starts an attack animation and reduces opponents health. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_aa4f677b23b3acf5b5140479e32fe64a2}{catch\+\_\+pokemon}} ()
+\begin{DoxyCompactList}\small\item\em Try to catch Pokemon with predetermined probability of success. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a8c987a443b210997584435a4a6527f67}{add\+\_\+to\+\_\+battle\+\_\+log}} (std\+::string s)
+\begin{DoxyCompactList}\small\item\em Adds event that occurred in battle to the battle log. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a0a0f97ebad800c01e5665e5df86b6559}{draw\+\_\+battle\+\_\+log}} ()
+\begin{DoxyCompactList}\small\item\em Displays all the events in the battle log on the screen. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{pokematf_8cpp_a359bfe5c26cf6b7b325085f7ea63322a}{heal\+\_\+pokemon}} ()
+\begin{DoxyCompactList}\small\item\em Heal pokemon. Function has two ways of working depending from which display mode it was called. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}{display}} ()
+\begin{DoxyCompactList}\small\item\em Display function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8cpp_acc1ffe65e6869931318610cae7210078}{reshape}} (int w, int h)
+\begin{DoxyCompactList}\small\item\em Reshape function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8cpp_a970b1d8b0b0572a9b2b0b23e5abcc8f3}{timer}} (int timer\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Timer function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8cpp_aef7ba2f69afb2d954545f64c7fe24b14}{keyboard}} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em Called when event on keyboard occured and takes necessary steps. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8cpp_a99dc6e9e1263a55d2327045fb53b41ba}{texture\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Loads textures and sets corresponding in various structures. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{pokematf_8cpp_a0e2e740afd510cfe652a1836ffbad209}{window\+\_\+width}} = 700
+\begin{DoxyCompactList}\small\item\em Initial window width. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{pokematf_8cpp_aca33f926b061680d857699a22f676418}{window\+\_\+height}} = 700
+\begin{DoxyCompactList}\small\item\em Initial window height ~\newline
+ \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a89f234133d3efe315836311cbf21c64b}{state}} = 1
+\begin{DoxyCompactList}\small\item\em State represents the phase of the battle. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a93bb6afe42c11129ef5b60d8d90075b0}{window\+\_\+select}} = \mbox{\hyperlink{pokematf_8cpp_a151a39bd39b9db0549a61ed7d6b34d14}{W\+I\+N\+D\+O\+W\+\_\+\+F\+I\+E\+LD}}
+\begin{DoxyCompactList}\small\item\em Determines which window will be displayed in display func. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a824877a1245a8b6a0fb8b5599b80059a}{animation\+\_\+parametar}} = 0
+\begin{DoxyCompactList}\small\item\em Animation parametar that changes in timer func. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_ad78385b35d7e4a379447e3228e77667d}{move\+\_\+pokemon}} = true
+\begin{DoxyCompactList}\small\item\em Generate new position for the red dot( wild Pokemon ). \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_afd78cc4b538efd2805fbfd046fd6551a}{wild\+\_\+pokemon\+\_\+info}} = \{ 0, 0, 0.\+3, 0.\+3\}
+\begin{DoxyCompactList}\small\item\em Wild Pokemon \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad4e28d05f02b87cbbf4b992437117633}{player\+\_\+info}} = \{ 0, 0, 1, 2\}
+\begin{DoxyCompactList}\small\item\em Players \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_aacce25da149d6c0c077c65aff6a87e1b}{pokecenter\+\_\+info}} = \{ -\/7, 8, 3.\+5, 3.\+5\}
+\begin{DoxyCompactList}\small\item\em Pokecenter \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad40786d86c42b48b7336d038147d6f97}{poke\+\_\+info}} \mbox{[}50\mbox{]}
+\begin{DoxyCompactList}\small\item\em Info about every loaded Pokemon. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a8a6eb4e95e1a45e6e4b5ac9a25575386}{favorite\+\_\+current\+\_\+attack}}
+\begin{DoxyCompactList}\small\item\em Random value between min and max attack of the currently selected Pokemon. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_af7a63cfe2f0a06efc3e1fbffd9cbd621}{wild\+\_\+current\+\_\+attack}}
+\begin{DoxyCompactList}\small\item\em Random value between min and max attack of the wild Pokemon player encountered. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_a8f7fd558ab9aa38ae0bcdc044d255256}{wild\+\_\+pokemon\+\_\+stats}}
+\begin{DoxyCompactList}\small\item\em Info about the wild Pokemon player encountered. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_a6ea068b4b5c4c473edcd482e01b2c5f8}{write\+\_\+message}} = false
+\begin{DoxyCompactList}\small\item\em Used for displaying a messsage for a brief time. \end{DoxyCompactList}\item 
+static const char $\ast$ \mbox{\hyperlink{pokematf_8cpp_a254bf0858da09c96a48daf64404eb4f8}{message}}
+\begin{DoxyCompactList}\small\item\em Message to be sent to text\+\_\+log and displayed. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_af3a8ba09b4563068b965b60f886b26ea}{message\+\_\+time}} = 100
+\begin{DoxyCompactList}\small\item\em Timer for displaying a message for a brief time. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_aa0267a2669d2ac8019a813851b771418}{show\+\_\+pokemon}} = 0
+\begin{DoxyCompactList}\small\item\em Determines which Pokemon will be drawn. \end{DoxyCompactList}\item 
+static std\+::unordered\+\_\+set$<$ int $>$ \mbox{\hyperlink{pokematf_8cpp_a4a805ffb8a4412f083da3d96441b13e3}{owned\+\_\+pokemons}} = \{\}
+\begin{DoxyCompactList}\small\item\em Set containing all owned Pokemon. \end{DoxyCompactList}\item 
+static char \mbox{\hyperlink{pokematf_8cpp_ac02a549f76b725558e9dc63ca585e253}{buffer}} \mbox{[}50\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer used for storing message to be sent to text\+\_\+log for displaying. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_a904fb461ee26f216385a191c84d29ebb}{player\+\_\+sprites}} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Textures for player and Professor Oak. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_aa2e0a9f5cd13cd179c44c995e7beabaa}{pokecenter\+\_\+sprite}}
+\begin{DoxyCompactList}\small\item\em Pokecenter texture. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_ada61d1e4c9f7550fed7e9e5a3242a690}{pokemon\+\_\+sprites}} \mbox{[}50\mbox{]}
+\begin{DoxyCompactList}\small\item\em All loaded Pokemon textures. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_a782ef71a3403186ed588f30e68ed35e2}{pokemon\+\_\+sprites\+\_\+black}} \mbox{[}50\mbox{]}
+\begin{DoxyCompactList}\small\item\em All loaded Pokemon silhouettes. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_aa3ee81992741f4e969c7a3fb67c33dec}{background\+\_\+textures}} \mbox{[}10\mbox{]}
+\begin{DoxyCompactList}\small\item\em Backgrounds textures. \end{DoxyCompactList}\item 
+static G\+Luint \mbox{\hyperlink{pokematf_8cpp_a358599c10c2122b5db8e714ae738fb59}{arrow\+\_\+sprite}}
+\begin{DoxyCompactList}\small\item\em Arrow textures. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_ac77d6882d70bb2110f97c90b6e25b0e2}{battle\+\_\+drawing}} = 0
+\begin{DoxyCompactList}\small\item\em Used for displayinh battle. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_afef7bd58cc95be9a289db14957aefe16}{show\+\_\+wild\+\_\+pokemon}} = 0
+\begin{DoxyCompactList}\small\item\em Determines which wild Pokemon the player is fighting. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a3a2d4af1072e5d0233f9945840a12d70}{favorite\+\_\+pokemon}} = -\/1
+\begin{DoxyCompactList}\small\item\em Stores the value of player currently selected Pokemon. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_a0596dd648affe32e428af51a69077182}{turn}} = true
+\begin{DoxyCompactList}\small\item\em Determines which turn it is in battle. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_a60be6f7b3d0d908fcedf0842fd96c1f4}{hit}} = false
+\begin{DoxyCompactList}\small\item\em Used for displaying attack animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a13a16dc02afc5e5f8422c131c1a6000e}{hit\+\_\+time}} = 50
+\begin{DoxyCompactList}\small\item\em Timer for displaying attack animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a2f45113638a0b749a8a205d2cd7fb42b}{running}} = 0
+\begin{DoxyCompactList}\small\item\em Used for displaying running animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a2f22f5a52b0f089cdd98e59545b98554}{running\+\_\+time}} = 0
+\begin{DoxyCompactList}\small\item\em Timer for displaying running animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_aaf7e0221e7777ba32ae4e4edeffd398a}{catching}} = 0
+\begin{DoxyCompactList}\small\item\em Used for catching running animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_abae792a61c0fa7775ea686c3aa67f4f9}{catching\+\_\+time}} = 0
+\begin{DoxyCompactList}\small\item\em Timer for catching running animation. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a66ee402bd9b7cdaee817182d9b002ea3}{potion\+\_\+charges}} = 3
+\begin{DoxyCompactList}\small\item\em Number of potion charges left. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a1b782a1099eed220c8d8dd205eaafffc}{battle\+\_\+state}} = -\/1
+\begin{DoxyCompactList}\small\item\em Determines phase of the battle. \end{DoxyCompactList}\item 
+static std\+::deque$<$ std\+::string $>$ \mbox{\hyperlink{pokematf_8cpp_a3c195393184e8b08eab4cc621ed1e0e2}{battle\+\_\+log}}
+\begin{DoxyCompactList}\small\item\em Log storing last 8 messages and events that happened in battle. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{pokematf_8cpp_a869dc96b4fa3d9bd19c20088b1fc9cf4}{tmp}}
+\begin{DoxyCompactList}\small\item\em Tmp var. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{pokematf_8cpp_acd56c3a5b023534c40c706c83c380a38}{choose\+\_\+starter}} = true
+\begin{DoxyCompactList}\small\item\em Determines if player chose a starter Pokemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{pokematf_8cpp_a71f87e9156237d9dd6ae4f8d1e2c2570}\label{pokematf_8cpp_a71f87e9156237d9dd6ae4f8d1e2c2570}} 
+\index{pokematf.cpp@{pokematf.cpp}!WINDOW\_BATTLE@{WINDOW\_BATTLE}}
+\index{WINDOW\_BATTLE@{WINDOW\_BATTLE}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{WINDOW\_BATTLE}{WINDOW\_BATTLE}}
+{\footnotesize\ttfamily \#define W\+I\+N\+D\+O\+W\+\_\+\+B\+A\+T\+T\+LE~2}
+
+
+
+Determines which window should be drawn in window\+\_\+select variable. 
+
+
+
+Definition at line 32 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a151a39bd39b9db0549a61ed7d6b34d14}\label{pokematf_8cpp_a151a39bd39b9db0549a61ed7d6b34d14}} 
+\index{pokematf.cpp@{pokematf.cpp}!WINDOW\_FIELD@{WINDOW\_FIELD}}
+\index{WINDOW\_FIELD@{WINDOW\_FIELD}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{WINDOW\_FIELD}{WINDOW\_FIELD}}
+{\footnotesize\ttfamily \#define W\+I\+N\+D\+O\+W\+\_\+\+F\+I\+E\+LD~0}
+
+
+
+Determines which window should be drawn in window\+\_\+select variable. 
+
+
+
+Definition at line 28 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ad0e96ba67685743d26145469dd5ce1ba}\label{pokematf_8cpp_ad0e96ba67685743d26145469dd5ce1ba}} 
+\index{pokematf.cpp@{pokematf.cpp}!WINDOW\_POKEDEX@{WINDOW\_POKEDEX}}
+\index{WINDOW\_POKEDEX@{WINDOW\_POKEDEX}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{WINDOW\_POKEDEX}{WINDOW\_POKEDEX}}
+{\footnotesize\ttfamily \#define W\+I\+N\+D\+O\+W\+\_\+\+P\+O\+K\+E\+D\+EX~1}
+
+
+
+Determines which window should be drawn in window\+\_\+select variable. 
+
+
+
+Definition at line 30 of file pokematf.\+cpp.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}\label{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}} 
+\index{pokematf.cpp@{pokematf.cpp}!Pokemon\_info@{Pokemon\_info}}
+\index{Pokemon\_info@{Pokemon\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{Pokemon\_info}{Pokemon\_info}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}}}
+
+
+
+Struct used for storing info about every Pokemon. 
+
+\mbox{\Hypertarget{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}\label{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}} 
+\index{pokematf.cpp@{pokematf.cpp}!Position\_info@{Position\_info}}
+\index{Position\_info@{Position\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{Position\_info}{Position\_info}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}}
+
+
+
+Struct used for storing coordinates, width and height of objects in the project. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{pokematf_8cpp_a8c987a443b210997584435a4a6527f67}\label{pokematf_8cpp_a8c987a443b210997584435a4a6527f67}} 
+\index{pokematf.cpp@{pokematf.cpp}!add\_to\_battle\_log@{add\_to\_battle\_log}}
+\index{add\_to\_battle\_log@{add\_to\_battle\_log}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{add\_to\_battle\_log()}{add\_to\_battle\_log()}}
+{\footnotesize\ttfamily static void add\+\_\+to\+\_\+battle\+\_\+log (\begin{DoxyParamCaption}\item[{std\+::string}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Adds event that occurred in battle to the battle log. 
+
+
+
+Definition at line 229 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aa4f677b23b3acf5b5140479e32fe64a2}\label{pokematf_8cpp_aa4f677b23b3acf5b5140479e32fe64a2}} 
+\index{pokematf.cpp@{pokematf.cpp}!catch\_pokemon@{catch\_pokemon}}
+\index{catch\_pokemon@{catch\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{catch\_pokemon()}{catch\_pokemon()}}
+{\footnotesize\ttfamily static void catch\+\_\+pokemon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Try to catch Pokemon with predetermined probability of success. 
+
+
+
+Definition at line 587 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}\label{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}} 
+\index{pokematf.cpp@{pokematf.cpp}!check\_collision@{check\_collision}}
+\index{check\_collision@{check\_collision}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{check\_collision()}{check\_collision()}}
+{\footnotesize\ttfamily static bool check\+\_\+collision (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks collision between two objects using their coordinates, width and height. Returns bool value that determines if collision occurred. 
+
+
+
+Definition at line 919 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}\label{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}} 
+\index{pokematf.cpp@{pokematf.cpp}!check\_proximity@{check\_proximity}}
+\index{check\_proximity@{check\_proximity}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{check\_proximity()}{check\_proximity()}}
+{\footnotesize\ttfamily static bool check\+\_\+proximity (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checks if collision would occuring when player moved in any direction by calling check\+\_\+collision func. 
+
+
+
+Definition at line 936 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}\label{pokematf_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}} 
+\index{pokematf.cpp@{pokematf.cpp}!display@{display}}
+\index{display@{display}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Display function. 
+
+
+
+Definition at line 1045 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a464a73b3d91a2d9c4cd3859ebbe7d33c}\label{pokematf_8cpp_a464a73b3d91a2d9c4cd3859ebbe7d33c}} 
+\index{pokematf.cpp@{pokematf.cpp}!display\_battle@{display\_battle}}
+\index{display\_battle@{display\_battle}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{display\_battle()}{display\_battle()}}
+{\footnotesize\ttfamily static void display\+\_\+battle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Third display mode showing the battle between pokemons. 
+
+
+
+Definition at line 528 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a4f4eb428d6fc0080b0bbecee0aa307ec}\label{pokematf_8cpp_a4f4eb428d6fc0080b0bbecee0aa307ec}} 
+\index{pokematf.cpp@{pokematf.cpp}!display\_field@{display\_field}}
+\index{display\_field@{display\_field}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{display\_field()}{display\_field()}}
+{\footnotesize\ttfamily static void display\+\_\+field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+First display mode where player moves around looking for wild pokemons. 
+
+
+
+Definition at line 356 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a7d4f5bc967a1a16bfa6b725ee07c1596}\label{pokematf_8cpp_a7d4f5bc967a1a16bfa6b725ee07c1596}} 
+\index{pokematf.cpp@{pokematf.cpp}!display\_pokemons@{display\_pokemons}}
+\index{display\_pokemons@{display\_pokemons}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{display\_pokemons()}{display\_pokemons()}}
+{\footnotesize\ttfamily static void display\+\_\+pokemons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Second display mode -\/ Pokedex. 
+
+
+
+Definition at line 466 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ab07cb95f7cfeebc5b44c8d703fda051e}\label{pokematf_8cpp_ab07cb95f7cfeebc5b44c8d703fda051e}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_arrows@{draw\_arrows}}
+\index{draw\_arrows@{draw\_arrows}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_arrows()}{draw\_arrows()}}
+{\footnotesize\ttfamily static void draw\+\_\+arrows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws arrows. 
+
+
+
+Definition at line 723 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ac18f97169e48aecdd28c7218293e69ce}\label{pokematf_8cpp_ac18f97169e48aecdd28c7218293e69ce}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_axes@{draw\_axes}}
+\index{draw\_axes@{draw\_axes}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_axes()}{draw\_axes()}}
+{\footnotesize\ttfamily static void draw\+\_\+axes (\begin{DoxyParamCaption}\item[{float}]{len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Additional for drawing axes, not used in final project. 
+
+
+
+Definition at line 330 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a0a0f97ebad800c01e5665e5df86b6559}\label{pokematf_8cpp_a0a0f97ebad800c01e5665e5df86b6559}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_battle\_log@{draw\_battle\_log}}
+\index{draw\_battle\_log@{draw\_battle\_log}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_battle\_log()}{draw\_battle\_log()}}
+{\footnotesize\ttfamily static void draw\+\_\+battle\+\_\+log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Displays all the events in the battle log on the screen. 
+
+
+
+Definition at line 219 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a31f16480cd8101157fe577f69b4da86c}\label{pokematf_8cpp_a31f16480cd8101157fe577f69b4da86c}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_floor@{draw\_floor}}
+\index{draw\_floor@{draw\_floor}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_floor()}{draw\_floor()}}
+{\footnotesize\ttfamily static void draw\+\_\+floor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws background texture on the first display. 
+
+
+
+Definition at line 1013 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_adc13fbc3ef3b7737fdd68b204cbc0f12}\label{pokematf_8cpp_adc13fbc3ef3b7737fdd68b204cbc0f12}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_forest\_background@{draw\_forest\_background}}
+\index{draw\_forest\_background@{draw\_forest\_background}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_forest\_background()}{draw\_forest\_background()}}
+{\footnotesize\ttfamily static void draw\+\_\+forest\+\_\+background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws background texture on the third display. 
+
+
+
+Definition at line 628 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a0d7ce026f3c0f24997db1e8f43d1ddda}\label{pokematf_8cpp_a0d7ce026f3c0f24997db1e8f43d1ddda}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_grass@{draw\_grass}}
+\index{draw\_grass@{draw\_grass}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_grass()}{draw\_grass()}}
+{\footnotesize\ttfamily static void draw\+\_\+grass (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws grass on the first display using provided texture. 
+
+
+
+Definition at line 991 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a2d218a82351b75c9c7bbd2db96adbc24}\label{pokematf_8cpp_a2d218a82351b75c9c7bbd2db96adbc24}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_oak@{draw\_oak}}
+\index{draw\_oak@{draw\_oak}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_oak()}{draw\_oak()}}
+{\footnotesize\ttfamily static void draw\+\_\+oak (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws Proffesor Oak on the first display using provided texture. 
+
+
+
+Definition at line 412 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ab28ffa84d092695bf17e3e841ad853ca}\label{pokematf_8cpp_ab28ffa84d092695bf17e3e841ad853ca}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_player@{draw\_player}}
+\index{draw\_player@{draw\_player}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_player()}{draw\_player()}}
+{\footnotesize\ttfamily static void draw\+\_\+player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws player on the first display using provided texture and position determined by player movement. 
+
+
+
+Definition at line 803 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a2a065e12f4b3cfc54eb2ea9627fec6c7}\label{pokematf_8cpp_a2a065e12f4b3cfc54eb2ea9627fec6c7}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_pokecenter@{draw\_pokecenter}}
+\index{draw\_pokecenter@{draw\_pokecenter}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_pokecenter()}{draw\_pokecenter()}}
+{\footnotesize\ttfamily static void draw\+\_\+pokecenter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws Pokecenter on the first display using provided texture. 
+
+
+
+Definition at line 694 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ae85f76dd0331d5929855f88a3e0a97e3}\label{pokematf_8cpp_ae85f76dd0331d5929855f88a3e0a97e3}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_pokedex\_background@{draw\_pokedex\_background}}
+\index{draw\_pokedex\_background@{draw\_pokedex\_background}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_pokedex\_background()}{draw\_pokedex\_background()}}
+{\footnotesize\ttfamily static void draw\+\_\+pokedex\+\_\+background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws background texture on the second display. 
+
+
+
+Definition at line 968 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a3756b83f822beec5650b048ba41894b5}\label{pokematf_8cpp_a3756b83f822beec5650b048ba41894b5}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_pokemons@{draw\_pokemons}}
+\index{draw\_pokemons@{draw\_pokemons}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_pokemons()}{draw\_pokemons()}}
+{\footnotesize\ttfamily static void draw\+\_\+pokemons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws Pokemon that was previously selected with show\+\_\+wild\+\_\+pokemon variable. Function has different ways of drawing a Pokemon depending on the display mode. 
+
+
+
+Definition at line 832 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a6f4a29078423ca73c71c89acdc9db992}\label{pokematf_8cpp_a6f4a29078423ca73c71c89acdc9db992}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_stats@{draw\_stats}}
+\index{draw\_stats@{draw\_stats}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_stats()}{draw\_stats()}}
+{\footnotesize\ttfamily static void draw\+\_\+stats (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws Pokemon stats. Function has different ways of drawing a Pokemon depending on the display mode. 
+
+
+
+Definition at line 650 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aac49e1a4e1fc1759acc66abdd7d92c12}\label{pokematf_8cpp_aac49e1a4e1fc1759acc66abdd7d92c12}} 
+\index{pokematf.cpp@{pokematf.cpp}!draw\_wild\_pokemon@{draw\_wild\_pokemon}}
+\index{draw\_wild\_pokemon@{draw\_wild\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{draw\_wild\_pokemon()}{draw\_wild\_pokemon()}}
+{\footnotesize\ttfamily static void draw\+\_\+wild\+\_\+pokemon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draws the red dot represening wild pokemon in the grass. Random position after every battle. 
+
+
+
+Definition at line 441 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a359bfe5c26cf6b7b325085f7ea63322a}\label{pokematf_8cpp_a359bfe5c26cf6b7b325085f7ea63322a}} 
+\index{pokematf.cpp@{pokematf.cpp}!heal\_pokemon@{heal\_pokemon}}
+\index{heal\_pokemon@{heal\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{heal\_pokemon()}{heal\_pokemon()}}
+{\footnotesize\ttfamily static void heal\+\_\+pokemon (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Heal pokemon. Function has two ways of working depending from which display mode it was called. 
+
+
+
+Definition at line 239 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a3b3e602f4c90eec95de236f8a9889e61}\label{pokematf_8cpp_a3b3e602f4c90eec95de236f8a9889e61}} 
+\index{pokematf.cpp@{pokematf.cpp}!init\_battle@{init\_battle}}
+\index{init\_battle@{init\_battle}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{init\_battle()}{init\_battle()}}
+{\footnotesize\ttfamily static void init\+\_\+battle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Init function for displaying battle. 
+
+
+
+Definition at line 310 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ab48b71097b9fc10075a80a6cbb9552a5}\label{pokematf_8cpp_ab48b71097b9fc10075a80a6cbb9552a5}} 
+\index{pokematf.cpp@{pokematf.cpp}!init\_pokemon\_stats@{init\_pokemon\_stats}}
+\index{init\_pokemon\_stats@{init\_pokemon\_stats}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{init\_pokemon\_stats()}{init\_pokemon\_stats()}}
+{\footnotesize\ttfamily static void init\+\_\+pokemon\+\_\+stats (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Function initializes random pokemon min and max attack in predetermined range. 
+
+
+
+Definition at line 201 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aef7ba2f69afb2d954545f64c7fe24b14}\label{pokematf_8cpp_aef7ba2f69afb2d954545f64c7fe24b14}} 
+\index{pokematf.cpp@{pokematf.cpp}!keyboard@{keyboard}}
+\index{keyboard@{keyboard}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{keyboard()}{keyboard()}}
+{\footnotesize\ttfamily void keyboard (\begin{DoxyParamCaption}\item[{unsigned char}]{key,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Called when event on keyboard occured and takes necessary steps. 
+
+
+
+Definition at line 1130 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_abc215d3b5b3b9680db7f15ea56b4c663}\label{pokematf_8cpp_abc215d3b5b3b9680db7f15ea56b4c663}} 
+\index{pokematf.cpp@{pokematf.cpp}!light\_attack@{light\_attack}}
+\index{light\_attack@{light\_attack}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{light\_attack()}{light\_attack()}}
+{\footnotesize\ttfamily static void light\+\_\+attack (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Light attack function that starts an attack animation and reduces opponents health. 
+
+
+
+Definition at line 268 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a5683d6e57862b4357270258f75b9ff23}\label{pokematf_8cpp_a5683d6e57862b4357270258f75b9ff23}} 
+\index{pokematf.cpp@{pokematf.cpp}!open\_pokedex@{open\_pokedex}}
+\index{open\_pokedex@{open\_pokedex}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{open\_pokedex()}{open\_pokedex()}}
+{\footnotesize\ttfamily static void open\+\_\+pokedex (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Init function for displaying Pokedex. Triggered by a keyboard action. 
+
+
+
+Definition at line 1036 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_acc1ffe65e6869931318610cae7210078}\label{pokematf_8cpp_acc1ffe65e6869931318610cae7210078}} 
+\index{pokematf.cpp@{pokematf.cpp}!reshape@{reshape}}
+\index{reshape@{reshape}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{reshape()}{reshape()}}
+{\footnotesize\ttfamily void reshape (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+
+Reshape function. 
+
+
+
+Definition at line 1062 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ac47e832c6c40036d4feff70587905e25}\label{pokematf_8cpp_ac47e832c6c40036d4feff70587905e25}} 
+\index{pokematf.cpp@{pokematf.cpp}!reshape1@{reshape1}}
+\index{reshape1@{reshape1}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{reshape1()}{reshape1()}}
+{\footnotesize\ttfamily static void reshape1 (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Additional reshape function called by reshape(...). 
+
+
+
+Definition at line 960 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a4f7c240186e442cff77425e9e5167c2d}\label{pokematf_8cpp_a4f7c240186e442cff77425e9e5167c2d}} 
+\index{pokematf.cpp@{pokematf.cpp}!text\_log@{text\_log}}
+\index{text\_log@{text\_log}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{text\_log()}{text\_log()}}
+{\footnotesize\ttfamily static void text\+\_\+log (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{const char $\ast$}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Function used to display text on the screen, x and y represent coordinates of the text and s is the string that will be displayed. 
+
+
+
+Definition at line 792 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a99dc6e9e1263a55d2327045fb53b41ba}\label{pokematf_8cpp_a99dc6e9e1263a55d2327045fb53b41ba}} 
+\index{pokematf.cpp@{pokematf.cpp}!texture\_init@{texture\_init}}
+\index{texture\_init@{texture\_init}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{texture\_init()}{texture\_init()}}
+{\footnotesize\ttfamily void texture\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Loads textures and sets corresponding in various structures. 
+
+
+
+Definition at line 1342 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a970b1d8b0b0572a9b2b0b23e5abcc8f3}\label{pokematf_8cpp_a970b1d8b0b0572a9b2b0b23e5abcc8f3}} 
+\index{pokematf.cpp@{pokematf.cpp}!timer@{timer}}
+\index{timer@{timer}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{timer()}{timer()}}
+{\footnotesize\ttfamily void timer (\begin{DoxyParamCaption}\item[{int}]{timer\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Timer function. 
+
+
+
+Definition at line 1070 of file pokematf.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{pokematf_8cpp_a824877a1245a8b6a0fb8b5599b80059a}\label{pokematf_8cpp_a824877a1245a8b6a0fb8b5599b80059a}} 
+\index{pokematf.cpp@{pokematf.cpp}!animation\_parametar@{animation\_parametar}}
+\index{animation\_parametar@{animation\_parametar}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{animation\_parametar}{animation\_parametar}}
+{\footnotesize\ttfamily int animation\+\_\+parametar = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Animation parametar that changes in timer func. 
+
+
+
+Definition at line 40 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a358599c10c2122b5db8e714ae738fb59}\label{pokematf_8cpp_a358599c10c2122b5db8e714ae738fb59}} 
+\index{pokematf.cpp@{pokematf.cpp}!arrow\_sprite@{arrow\_sprite}}
+\index{arrow\_sprite@{arrow\_sprite}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{arrow\_sprite}{arrow\_sprite}}
+{\footnotesize\ttfamily G\+Luint arrow\+\_\+sprite\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Arrow textures. 
+
+
+
+Definition at line 80 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aa3ee81992741f4e969c7a3fb67c33dec}\label{pokematf_8cpp_aa3ee81992741f4e969c7a3fb67c33dec}} 
+\index{pokematf.cpp@{pokematf.cpp}!background\_textures@{background\_textures}}
+\index{background\_textures@{background\_textures}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{background\_textures}{background\_textures}}
+{\footnotesize\ttfamily G\+Luint background\+\_\+textures\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Backgrounds textures. 
+
+
+
+Definition at line 78 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ac77d6882d70bb2110f97c90b6e25b0e2}\label{pokematf_8cpp_ac77d6882d70bb2110f97c90b6e25b0e2}} 
+\index{pokematf.cpp@{pokematf.cpp}!battle\_drawing@{battle\_drawing}}
+\index{battle\_drawing@{battle\_drawing}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{battle\_drawing}{battle\_drawing}}
+{\footnotesize\ttfamily int battle\+\_\+drawing = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used for displayinh battle. 
+
+
+
+Definition at line 82 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a3c195393184e8b08eab4cc621ed1e0e2}\label{pokematf_8cpp_a3c195393184e8b08eab4cc621ed1e0e2}} 
+\index{pokematf.cpp@{pokematf.cpp}!battle\_log@{battle\_log}}
+\index{battle\_log@{battle\_log}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{battle\_log}{battle\_log}}
+{\footnotesize\ttfamily std\+::deque$<$std\+::string$>$ battle\+\_\+log\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Log storing last 8 messages and events that happened in battle. 
+
+
+
+Definition at line 106 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a1b782a1099eed220c8d8dd205eaafffc}\label{pokematf_8cpp_a1b782a1099eed220c8d8dd205eaafffc}} 
+\index{pokematf.cpp@{pokematf.cpp}!battle\_state@{battle\_state}}
+\index{battle\_state@{battle\_state}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{battle\_state}{battle\_state}}
+{\footnotesize\ttfamily int battle\+\_\+state = -\/1\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines phase of the battle. 
+
+
+
+Definition at line 104 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ac02a549f76b725558e9dc63ca585e253}\label{pokematf_8cpp_ac02a549f76b725558e9dc63ca585e253}} 
+\index{pokematf.cpp@{pokematf.cpp}!buffer@{buffer}}
+\index{buffer@{buffer}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily char buffer\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Buffer used for storing message to be sent to text\+\_\+log for displaying. 
+
+
+
+Definition at line 68 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aaf7e0221e7777ba32ae4e4edeffd398a}\label{pokematf_8cpp_aaf7e0221e7777ba32ae4e4edeffd398a}} 
+\index{pokematf.cpp@{pokematf.cpp}!catching@{catching}}
+\index{catching@{catching}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{catching}{catching}}
+{\footnotesize\ttfamily int catching = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used for catching running animation. 
+
+
+
+Definition at line 98 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_abae792a61c0fa7775ea686c3aa67f4f9}\label{pokematf_8cpp_abae792a61c0fa7775ea686c3aa67f4f9}} 
+\index{pokematf.cpp@{pokematf.cpp}!catching\_time@{catching\_time}}
+\index{catching\_time@{catching\_time}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{catching\_time}{catching\_time}}
+{\footnotesize\ttfamily int catching\+\_\+time = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Timer for catching running animation. 
+
+
+
+Definition at line 100 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_acd56c3a5b023534c40c706c83c380a38}\label{pokematf_8cpp_acd56c3a5b023534c40c706c83c380a38}} 
+\index{pokematf.cpp@{pokematf.cpp}!choose\_starter@{choose\_starter}}
+\index{choose\_starter@{choose\_starter}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{choose\_starter}{choose\_starter}}
+{\footnotesize\ttfamily bool choose\+\_\+starter = true\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines if player chose a starter Pokemon. 
+
+
+
+Definition at line 110 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a8a6eb4e95e1a45e6e4b5ac9a25575386}\label{pokematf_8cpp_a8a6eb4e95e1a45e6e4b5ac9a25575386}} 
+\index{pokematf.cpp@{pokematf.cpp}!favorite\_current\_attack@{favorite\_current\_attack}}
+\index{favorite\_current\_attack@{favorite\_current\_attack}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{favorite\_current\_attack}{favorite\_current\_attack}}
+{\footnotesize\ttfamily int favorite\+\_\+current\+\_\+attack\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Random value between min and max attack of the currently selected Pokemon. 
+
+
+
+Definition at line 52 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a3a2d4af1072e5d0233f9945840a12d70}\label{pokematf_8cpp_a3a2d4af1072e5d0233f9945840a12d70}} 
+\index{pokematf.cpp@{pokematf.cpp}!favorite\_pokemon@{favorite\_pokemon}}
+\index{favorite\_pokemon@{favorite\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{favorite\_pokemon}{favorite\_pokemon}}
+{\footnotesize\ttfamily int favorite\+\_\+pokemon = -\/1\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores the value of player currently selected Pokemon. 
+
+
+
+Definition at line 86 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a60be6f7b3d0d908fcedf0842fd96c1f4}\label{pokematf_8cpp_a60be6f7b3d0d908fcedf0842fd96c1f4}} 
+\index{pokematf.cpp@{pokematf.cpp}!hit@{hit}}
+\index{hit@{hit}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{hit}{hit}}
+{\footnotesize\ttfamily bool hit = false\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used for displaying attack animation. 
+
+
+
+Definition at line 90 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a13a16dc02afc5e5f8422c131c1a6000e}\label{pokematf_8cpp_a13a16dc02afc5e5f8422c131c1a6000e}} 
+\index{pokematf.cpp@{pokematf.cpp}!hit\_time@{hit\_time}}
+\index{hit\_time@{hit\_time}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{hit\_time}{hit\_time}}
+{\footnotesize\ttfamily int hit\+\_\+time = 50\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Timer for displaying attack animation. 
+
+
+
+Definition at line 92 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a254bf0858da09c96a48daf64404eb4f8}\label{pokematf_8cpp_a254bf0858da09c96a48daf64404eb4f8}} 
+\index{pokematf.cpp@{pokematf.cpp}!message@{message}}
+\index{message@{message}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{message}{message}}
+{\footnotesize\ttfamily const char$\ast$ message\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Message to be sent to text\+\_\+log and displayed. 
+
+
+
+Definition at line 60 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_af3a8ba09b4563068b965b60f886b26ea}\label{pokematf_8cpp_af3a8ba09b4563068b965b60f886b26ea}} 
+\index{pokematf.cpp@{pokematf.cpp}!message\_time@{message\_time}}
+\index{message\_time@{message\_time}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{message\_time}{message\_time}}
+{\footnotesize\ttfamily int message\+\_\+time = 100\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Timer for displaying a message for a brief time. 
+
+
+
+Definition at line 62 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ad78385b35d7e4a379447e3228e77667d}\label{pokematf_8cpp_ad78385b35d7e4a379447e3228e77667d}} 
+\index{pokematf.cpp@{pokematf.cpp}!move\_pokemon@{move\_pokemon}}
+\index{move\_pokemon@{move\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{move\_pokemon}{move\_pokemon}}
+{\footnotesize\ttfamily bool move\+\_\+pokemon = true\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Generate new position for the red dot( wild Pokemon ). 
+
+
+
+Definition at line 42 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a4a805ffb8a4412f083da3d96441b13e3}\label{pokematf_8cpp_a4a805ffb8a4412f083da3d96441b13e3}} 
+\index{pokematf.cpp@{pokematf.cpp}!owned\_pokemons@{owned\_pokemons}}
+\index{owned\_pokemons@{owned\_pokemons}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{owned\_pokemons}{owned\_pokemons}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+set$<$int$>$ owned\+\_\+pokemons = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set containing all owned Pokemon. 
+
+
+
+Definition at line 66 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ad4e28d05f02b87cbbf4b992437117633}\label{pokematf_8cpp_ad4e28d05f02b87cbbf4b992437117633}} 
+\index{pokematf.cpp@{pokematf.cpp}!player\_info@{player\_info}}
+\index{player\_info@{player\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{player\_info}{player\_info}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} player\+\_\+info = \{ 0, 0, 1, 2\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Players \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. 
+
+
+
+Definition at line 46 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a904fb461ee26f216385a191c84d29ebb}\label{pokematf_8cpp_a904fb461ee26f216385a191c84d29ebb}} 
+\index{pokematf.cpp@{pokematf.cpp}!player\_sprites@{player\_sprites}}
+\index{player\_sprites@{player\_sprites}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{player\_sprites}{player\_sprites}}
+{\footnotesize\ttfamily G\+Luint player\+\_\+sprites\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Textures for player and Professor Oak. 
+
+
+
+Definition at line 70 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ad40786d86c42b48b7336d038147d6f97}\label{pokematf_8cpp_ad40786d86c42b48b7336d038147d6f97}} 
+\index{pokematf.cpp@{pokematf.cpp}!poke\_info@{poke\_info}}
+\index{poke\_info@{poke\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{poke\_info}{poke\_info}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} poke\+\_\+info\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Info about every loaded Pokemon. 
+
+
+
+Definition at line 50 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aacce25da149d6c0c077c65aff6a87e1b}\label{pokematf_8cpp_aacce25da149d6c0c077c65aff6a87e1b}} 
+\index{pokematf.cpp@{pokematf.cpp}!pokecenter\_info@{pokecenter\_info}}
+\index{pokecenter\_info@{pokecenter\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{pokecenter\_info}{pokecenter\_info}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} pokecenter\+\_\+info = \{ -\/7, 8, 3.\+5, 3.\+5\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Pokecenter \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. 
+
+
+
+Definition at line 48 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aa2e0a9f5cd13cd179c44c995e7beabaa}\label{pokematf_8cpp_aa2e0a9f5cd13cd179c44c995e7beabaa}} 
+\index{pokematf.cpp@{pokematf.cpp}!pokecenter\_sprite@{pokecenter\_sprite}}
+\index{pokecenter\_sprite@{pokecenter\_sprite}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{pokecenter\_sprite}{pokecenter\_sprite}}
+{\footnotesize\ttfamily G\+Luint pokecenter\+\_\+sprite\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Pokecenter texture. 
+
+
+
+Definition at line 72 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_ada61d1e4c9f7550fed7e9e5a3242a690}\label{pokematf_8cpp_ada61d1e4c9f7550fed7e9e5a3242a690}} 
+\index{pokematf.cpp@{pokematf.cpp}!pokemon\_sprites@{pokemon\_sprites}}
+\index{pokemon\_sprites@{pokemon\_sprites}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{pokemon\_sprites}{pokemon\_sprites}}
+{\footnotesize\ttfamily G\+Luint pokemon\+\_\+sprites\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+All loaded Pokemon textures. 
+
+
+
+Definition at line 74 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a782ef71a3403186ed588f30e68ed35e2}\label{pokematf_8cpp_a782ef71a3403186ed588f30e68ed35e2}} 
+\index{pokematf.cpp@{pokematf.cpp}!pokemon\_sprites\_black@{pokemon\_sprites\_black}}
+\index{pokemon\_sprites\_black@{pokemon\_sprites\_black}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{pokemon\_sprites\_black}{pokemon\_sprites\_black}}
+{\footnotesize\ttfamily G\+Luint pokemon\+\_\+sprites\+\_\+black\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+All loaded Pokemon silhouettes. 
+
+
+
+Definition at line 76 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a66ee402bd9b7cdaee817182d9b002ea3}\label{pokematf_8cpp_a66ee402bd9b7cdaee817182d9b002ea3}} 
+\index{pokematf.cpp@{pokematf.cpp}!potion\_charges@{potion\_charges}}
+\index{potion\_charges@{potion\_charges}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{potion\_charges}{potion\_charges}}
+{\footnotesize\ttfamily int potion\+\_\+charges = 3\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Number of potion charges left. 
+
+
+
+Definition at line 102 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a2f45113638a0b749a8a205d2cd7fb42b}\label{pokematf_8cpp_a2f45113638a0b749a8a205d2cd7fb42b}} 
+\index{pokematf.cpp@{pokematf.cpp}!running@{running}}
+\index{running@{running}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{running}{running}}
+{\footnotesize\ttfamily int running = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used for displaying running animation. 
+
+
+
+Definition at line 94 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a2f22f5a52b0f089cdd98e59545b98554}\label{pokematf_8cpp_a2f22f5a52b0f089cdd98e59545b98554}} 
+\index{pokematf.cpp@{pokematf.cpp}!running\_time@{running\_time}}
+\index{running\_time@{running\_time}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{running\_time}{running\_time}}
+{\footnotesize\ttfamily int running\+\_\+time = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Timer for displaying running animation. 
+
+
+
+Definition at line 96 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aa0267a2669d2ac8019a813851b771418}\label{pokematf_8cpp_aa0267a2669d2ac8019a813851b771418}} 
+\index{pokematf.cpp@{pokematf.cpp}!show\_pokemon@{show\_pokemon}}
+\index{show\_pokemon@{show\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{show\_pokemon}{show\_pokemon}}
+{\footnotesize\ttfamily int show\+\_\+pokemon = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines which Pokemon will be drawn. 
+
+
+
+Definition at line 64 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_afef7bd58cc95be9a289db14957aefe16}\label{pokematf_8cpp_afef7bd58cc95be9a289db14957aefe16}} 
+\index{pokematf.cpp@{pokematf.cpp}!show\_wild\_pokemon@{show\_wild\_pokemon}}
+\index{show\_wild\_pokemon@{show\_wild\_pokemon}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{show\_wild\_pokemon}{show\_wild\_pokemon}}
+{\footnotesize\ttfamily int show\+\_\+wild\+\_\+pokemon = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines which wild Pokemon the player is fighting. 
+
+
+
+Definition at line 84 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a89f234133d3efe315836311cbf21c64b}\label{pokematf_8cpp_a89f234133d3efe315836311cbf21c64b}} 
+\index{pokematf.cpp@{pokematf.cpp}!state@{state}}
+\index{state@{state}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily int state = 1\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+State represents the phase of the battle. 
+
+
+
+Definition at line 36 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a869dc96b4fa3d9bd19c20088b1fc9cf4}\label{pokematf_8cpp_a869dc96b4fa3d9bd19c20088b1fc9cf4}} 
+\index{pokematf.cpp@{pokematf.cpp}!tmp@{tmp}}
+\index{tmp@{tmp}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{tmp}{tmp}}
+{\footnotesize\ttfamily int tmp\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Tmp var. 
+
+
+
+Definition at line 108 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a0596dd648affe32e428af51a69077182}\label{pokematf_8cpp_a0596dd648affe32e428af51a69077182}} 
+\index{pokematf.cpp@{pokematf.cpp}!turn@{turn}}
+\index{turn@{turn}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{turn}{turn}}
+{\footnotesize\ttfamily bool turn = true\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines which turn it is in battle. 
+
+
+
+Definition at line 88 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_af7a63cfe2f0a06efc3e1fbffd9cbd621}\label{pokematf_8cpp_af7a63cfe2f0a06efc3e1fbffd9cbd621}} 
+\index{pokematf.cpp@{pokematf.cpp}!wild\_current\_attack@{wild\_current\_attack}}
+\index{wild\_current\_attack@{wild\_current\_attack}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{wild\_current\_attack}{wild\_current\_attack}}
+{\footnotesize\ttfamily int wild\+\_\+current\+\_\+attack\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Random value between min and max attack of the wild Pokemon player encountered. 
+
+
+
+Definition at line 54 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_afd78cc4b538efd2805fbfd046fd6551a}\label{pokematf_8cpp_afd78cc4b538efd2805fbfd046fd6551a}} 
+\index{pokematf.cpp@{pokematf.cpp}!wild\_pokemon\_info@{wild\_pokemon\_info}}
+\index{wild\_pokemon\_info@{wild\_pokemon\_info}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{wild\_pokemon\_info}{wild\_pokemon\_info}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} wild\+\_\+pokemon\+\_\+info = \{ 0, 0, 0.\+3, 0.\+3\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Wild Pokemon \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. 
+
+
+
+Definition at line 44 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a8f7fd558ab9aa38ae0bcdc044d255256}\label{pokematf_8cpp_a8f7fd558ab9aa38ae0bcdc044d255256}} 
+\index{pokematf.cpp@{pokematf.cpp}!wild\_pokemon\_stats@{wild\_pokemon\_stats}}
+\index{wild\_pokemon\_stats@{wild\_pokemon\_stats}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{wild\_pokemon\_stats}{wild\_pokemon\_stats}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} wild\+\_\+pokemon\+\_\+stats\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Info about the wild Pokemon player encountered. 
+
+
+
+Definition at line 56 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_aca33f926b061680d857699a22f676418}\label{pokematf_8cpp_aca33f926b061680d857699a22f676418}} 
+\index{pokematf.cpp@{pokematf.cpp}!window\_height@{window\_height}}
+\index{window\_height@{window\_height}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{window\_height}{window\_height}}
+{\footnotesize\ttfamily int window\+\_\+height = 700}
+
+
+
+Initial window height ~\newline
+ 
+
+
+
+Definition at line 25 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a93bb6afe42c11129ef5b60d8d90075b0}\label{pokematf_8cpp_a93bb6afe42c11129ef5b60d8d90075b0}} 
+\index{pokematf.cpp@{pokematf.cpp}!window\_select@{window\_select}}
+\index{window\_select@{window\_select}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{window\_select}{window\_select}}
+{\footnotesize\ttfamily int window\+\_\+select = \mbox{\hyperlink{pokematf_8cpp_a151a39bd39b9db0549a61ed7d6b34d14}{W\+I\+N\+D\+O\+W\+\_\+\+F\+I\+E\+LD}}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Determines which window will be displayed in display func. 
+
+
+
+Definition at line 38 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a0e2e740afd510cfe652a1836ffbad209}\label{pokematf_8cpp_a0e2e740afd510cfe652a1836ffbad209}} 
+\index{pokematf.cpp@{pokematf.cpp}!window\_width@{window\_width}}
+\index{window\_width@{window\_width}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{window\_width}{window\_width}}
+{\footnotesize\ttfamily int window\+\_\+width = 700}
+
+
+
+Initial window width. 
+
+
+
+Definition at line 23 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8cpp_a6ea068b4b5c4c473edcd482e01b2c5f8}\label{pokematf_8cpp_a6ea068b4b5c4c473edcd482e01b2c5f8}} 
+\index{pokematf.cpp@{pokematf.cpp}!write\_message@{write\_message}}
+\index{write\_message@{write\_message}!pokematf.cpp@{pokematf.cpp}}
+\doxysubsubsection{\texorpdfstring{write\_message}{write\_message}}
+{\footnotesize\ttfamily bool write\+\_\+message = false\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Used for displaying a messsage for a brief time. 
+
+
+
+Definition at line 58 of file pokematf.\+cpp.
+

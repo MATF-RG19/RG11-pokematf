@@ -13,24 +13,22 @@
 
 extern int window_width;
 extern int window_height;
-extern float matrix[16];
-
 
 //PUBLIC FUNCTIONS
 
+//! Display function.
 void display();
 
+//! Reshape function.
 void reshape(int w, int h);
 
+//! Timer function.
 void timer(int);
 
+//! Called when event on keyboard occured and takes necessary steps.
 void keyboard(unsigned char key, int x, int y);
 
-void mouse(int button, int state, int x, int y);
-
-void motion(int x, int y);
-
+//! Loads textures and sets corresponding in various structures.
 void texture_init();
-
 
 #endif

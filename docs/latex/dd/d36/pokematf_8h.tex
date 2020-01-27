@@ -1,0 +1,162 @@
+\hypertarget{pokematf_8h}{}\doxysection{pokematf.\+h File Reference}
+\label{pokematf_8h}\index{pokematf.h@{pokematf.h}}
+{\ttfamily \#include $<$G\+L/glut.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$G\+L/freeglut.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}image.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pokematf_8h_ae06e349b2a8a01148e40706325a36dcf}{T\+I\+M\+E\+R\+\_\+\+ID}}~1
+\item 
+\#define \mbox{\hyperlink{pokematf_8h_a2e2bf358c53c278fdff9b5bfba4efd66}{T\+I\+M\+E\+R\+\_\+\+I\+N\+T\+E\+R\+V\+AL}}~20
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{pokematf_8h_a1e5b20fed15743656bb6d2e6a6ea6269}{display}} ()
+\begin{DoxyCompactList}\small\item\em Display function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8h_acc1ffe65e6869931318610cae7210078}{reshape}} (int w, int h)
+\begin{DoxyCompactList}\small\item\em Reshape function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8h_a60ebef228b6633754a3122edd12a5473}{timer}} (int)
+\begin{DoxyCompactList}\small\item\em Timer function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8h_aef7ba2f69afb2d954545f64c7fe24b14}{keyboard}} (unsigned char key, int x, int y)
+\begin{DoxyCompactList}\small\item\em Called when event on keyboard occured and takes necessary steps. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pokematf_8h_a99dc6e9e1263a55d2327045fb53b41ba}{texture\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Loads textures and sets corresponding in various structures. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{pokematf_8h_a0e2e740afd510cfe652a1836ffbad209}{window\+\_\+width}}
+\begin{DoxyCompactList}\small\item\em Initial window width. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{pokematf_8h_aca33f926b061680d857699a22f676418}{window\+\_\+height}}
+\begin{DoxyCompactList}\small\item\em Initial window height ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{pokematf_8h_ae06e349b2a8a01148e40706325a36dcf}\label{pokematf_8h_ae06e349b2a8a01148e40706325a36dcf}} 
+\index{pokematf.h@{pokematf.h}!TIMER\_ID@{TIMER\_ID}}
+\index{TIMER\_ID@{TIMER\_ID}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{TIMER\_ID}{TIMER\_ID}}
+{\footnotesize\ttfamily \#define T\+I\+M\+E\+R\+\_\+\+ID~1}
+
+
+
+Definition at line 9 of file pokematf.\+h.
+
+\mbox{\Hypertarget{pokematf_8h_a2e2bf358c53c278fdff9b5bfba4efd66}\label{pokematf_8h_a2e2bf358c53c278fdff9b5bfba4efd66}} 
+\index{pokematf.h@{pokematf.h}!TIMER\_INTERVAL@{TIMER\_INTERVAL}}
+\index{TIMER\_INTERVAL@{TIMER\_INTERVAL}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{TIMER\_INTERVAL}{TIMER\_INTERVAL}}
+{\footnotesize\ttfamily \#define T\+I\+M\+E\+R\+\_\+\+I\+N\+T\+E\+R\+V\+AL~20}
+
+
+
+Definition at line 10 of file pokematf.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{pokematf_8h_a1e5b20fed15743656bb6d2e6a6ea6269}\label{pokematf_8h_a1e5b20fed15743656bb6d2e6a6ea6269}} 
+\index{pokematf.h@{pokematf.h}!display@{display}}
+\index{display@{display}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Display function. 
+
+
+
+Definition at line 1045 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8h_aef7ba2f69afb2d954545f64c7fe24b14}\label{pokematf_8h_aef7ba2f69afb2d954545f64c7fe24b14}} 
+\index{pokematf.h@{pokematf.h}!keyboard@{keyboard}}
+\index{keyboard@{keyboard}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{keyboard()}{keyboard()}}
+{\footnotesize\ttfamily void keyboard (\begin{DoxyParamCaption}\item[{unsigned char}]{key,  }\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Called when event on keyboard occured and takes necessary steps. 
+
+
+
+Definition at line 1130 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8h_acc1ffe65e6869931318610cae7210078}\label{pokematf_8h_acc1ffe65e6869931318610cae7210078}} 
+\index{pokematf.h@{pokematf.h}!reshape@{reshape}}
+\index{reshape@{reshape}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{reshape()}{reshape()}}
+{\footnotesize\ttfamily void reshape (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+
+Reshape function. 
+
+
+
+Definition at line 1062 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8h_a99dc6e9e1263a55d2327045fb53b41ba}\label{pokematf_8h_a99dc6e9e1263a55d2327045fb53b41ba}} 
+\index{pokematf.h@{pokematf.h}!texture\_init@{texture\_init}}
+\index{texture\_init@{texture\_init}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{texture\_init()}{texture\_init()}}
+{\footnotesize\ttfamily void texture\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Loads textures and sets corresponding in various structures. 
+
+
+
+Definition at line 1342 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8h_a60ebef228b6633754a3122edd12a5473}\label{pokematf_8h_a60ebef228b6633754a3122edd12a5473}} 
+\index{pokematf.h@{pokematf.h}!timer@{timer}}
+\index{timer@{timer}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{timer()}{timer()}}
+{\footnotesize\ttfamily void timer (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+
+
+Timer function. 
+
+
+
+Definition at line 1070 of file pokematf.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{pokematf_8h_aca33f926b061680d857699a22f676418}\label{pokematf_8h_aca33f926b061680d857699a22f676418}} 
+\index{pokematf.h@{pokematf.h}!window\_height@{window\_height}}
+\index{window\_height@{window\_height}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{window\_height}{window\_height}}
+{\footnotesize\ttfamily int window\+\_\+height}
+
+
+
+Initial window height ~\newline
+ 
+
+
+
+Definition at line 25 of file pokematf.\+cpp.
+
+\mbox{\Hypertarget{pokematf_8h_a0e2e740afd510cfe652a1836ffbad209}\label{pokematf_8h_a0e2e740afd510cfe652a1836ffbad209}} 
+\index{pokematf.h@{pokematf.h}!window\_width@{window\_width}}
+\index{window\_width@{window\_width}!pokematf.h@{pokematf.h}}
+\doxysubsubsection{\texorpdfstring{window\_width}{window\_width}}
+{\footnotesize\ttfamily int window\+\_\+width}
+
+
+
+Initial window width. 
+
+
+
+Definition at line 23 of file pokematf.\+cpp.
+

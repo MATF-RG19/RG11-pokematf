@@ -2,7 +2,7 @@
 #include <iostream>
 #include "pokematf.h"
 
-
+//! Initializes necessary OpenGL and glut settings for project.
 void init()
 {
     /* Obavlja se OpenGL inicijalizacija. */
@@ -31,6 +31,7 @@ void init()
     texture_init();
 }
 
+//! Main function.
 int main(int argc, char **argv) 
 {
     glutInit(&argc, argv);
@@ -43,8 +44,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    // glutMouseFunc(mouse);
-    // glutMotionFunc(motion);
     glutTimerFunc(TIMER_INTERVAL, timer, TIMER_ID);
     init();
 

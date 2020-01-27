@@ -7,122 +7,194 @@
 
 //STRUCTURES
 
+//! Struct used for storing coordinates, width and height of objects in the project.
 typedef struct Position_info{
     float x, y, width, height;
 } Position_info;
 
+//! Struct used for storing info about every Pokemon.
 typedef struct Pokemon_info{
     int health, attack_min, attack_max;
 } Pokemon_info;
 
 //GLOBAL VARIABLES
 
-// float matrix[16];
-int window_width = 700;   
+//! Initial window width
+int window_width = 700;
+//! Initial window height   
 int window_height = 700;
 
-#define WINDOW_FIELD              0  
+//! Determines which window should be drawn in window_select variable.
+#define WINDOW_FIELD              0
+//! Determines which window should be drawn in window_select variable. 
 #define WINDOW_POKEDEX            1
+//! Determines which window should be drawn in window_select variable.
 #define WINDOW_BATTLE             2
 //PRIVATE VARIABLES
 
+//! State represents the phase of the battle.
 static int state = 1;
+//! Determines which window will be displayed in display func
 static int window_select = WINDOW_FIELD;
+//! Animation parametar that changes in timer func.
 static int animation_parametar = 0;
+//! Generate new position for the red dot( wild Pokemon ).
 static bool move_pokemon = true;
-static int mouse_x;
-static int mouse_y;
+//! Wild Pokemon Position_info
 static Position_info wild_pokemon_info = { 0, 0, 0.3, 0.3};
+//! Players Position_info
 static Position_info player_info = { 0, 0, 1, 2};
+//! Pokecenter Position_info
 static Position_info pokecenter_info = { -7, 8, 3.5, 3.5};
+//! Info about every loaded Pokemon
 static Pokemon_info poke_info[50];
+//! Random value between min and max attack of the currently selected Pokemon.
 static int favorite_current_attack;
+//! Random value between min and max attack of the wild Pokemon player encountered.
 static int wild_current_attack;
+//! Info about the wild Pokemon player encountered.
 static Pokemon_info wild_pokemon_stats;
+//! Used for displaying a messsage for a brief time.
 static bool write_message = false;
+//! Message to be sent to text_log and displayed.
 static const char* message;
+//! Timer for displaying a message for a brief time. 
 static int message_time = 100;
+//! Determines which Pokemon will be drawn.
 static int show_pokemon = 0;
+//! Set containing all owned Pokemon.
 static std::unordered_set<int> owned_pokemons = {};
+//! Buffer used for storing message to be sent to text_log for displaying.
 static char buffer[50];
+//! Textures for player and Professor Oak.
 static GLuint player_sprites[2];
+//! Pokecenter texture.
 static GLuint pokecenter_sprite;
+//! All loaded Pokemon textures. 
 static GLuint pokemon_sprites[50];
+//! All loaded Pokemon silhouettes.
 static GLuint pokemon_sprites_black[50];
+//! Backgrounds textures.
 static GLuint background_textures[10];
+//! Arrow textures
 static GLuint arrow_sprite;
+//! Used for displayinh battle.
 static int battle_drawing = 0;
+//! Determines which wild Pokemon the player is fighting.
 static int show_wild_pokemon = 0;
+//! Stores the value of player currently selected Pokemon.
 static int favorite_pokemon = -1;
+//! Determines which turn it is in battle.
 static bool turn = true; 
+//! Used for displaying attack animation.
 static bool hit = false;
+//! Timer for displaying attack animation.
 static int hit_time = 50;
+//! Used for displaying running animation.
 static int running = 0;
+//! Timer for displaying running animation.
 static int running_time = 0;
+//! Used for catching running animation.
 static int catching = 0;
+//! Timer for catching running animation.
 static int catching_time = 0;
+//! Number of potion charges left.
 static int potion_charges = 3;
+//! Determines phase of the battle.
 static int battle_state = -1;
+//! Log storing last 8 messages and events that happened in battle.
 static std::deque<std::string> battle_log;
+//! Tmp var.
 static int tmp;
+//! Determines if player chose a starter Pokemon.
 static bool choose_starter = true;
 
 
 //PRIVATE FUNCTION DECLARATION
 
+//! Additional for drawing axes, not used in final project.
 static void draw_axes(float len);
 
-static void display_field();
+//! Function used to display text on the screen, x and y represent coordinates of the text and s is the string that will be displayed.
+static void text_log( float x, float y, const char *s);
 
-static void display_pokemons();
-
+//! Additional reshape function called by reshape(...).
 static void reshape1(int w, int h);
 
-static void draw_stats();
+//! Function initializes random pokemon min and max attack in predetermined range.
+static void init_pokemon_stats();
 
+//! First display mode where player moves around looking for wild pokemons.
+static void display_field();
+
+//! Second display mode - Pokedex
+static void display_pokemons();
+
+//! Third display mode showing the battle between pokemons.
+static void display_battle();
+
+//! Draws background texture on the first display.
+static void draw_floor();
+
+//! Draws player on the first display using provided texture and position determined by player movement.
 static void draw_player();
 
-static void draw_pokemons();
+//! Draws Proffesor Oak on the first display using provided texture.
+static void draw_oak();
 
+//! Draws grass on the first display using provided texture.
+static void draw_grass();
+
+//! Draws Pokecenter on the first display using provided texture.
+static void draw_pokecenter();
+
+//! Draws the red dot represening wild pokemon in the grass. Random position after every battle.
+static void draw_wild_pokemon();
+
+//! Checks collision between two objects using their coordinates, width and height. Returns bool value that determines if collision occurred.
 static bool check_collision(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
 
-static void draw_grass();
-
-static void draw_floor();
-
-static void open_pokedex();
-
-static void text_log( float x, float y, const char *s);
-
-static void draw_pokecenter();
-
+//! Checks if collision would occuring when player moved in any direction by calling check_collision func.
 static bool check_proximity(float x1, float y1, float w1, float h1, 
                         float x2, float y2, float w2, float h2);
 
+
+//! Init function for displaying Pokedex. Triggered by a keyboard action.
+static void open_pokedex();
+
+//! Draws background texture on the second display.
 static void draw_pokedex_background();
 
+//! Draws Pokemon that was previously selected with show_wild_pokemon variable. Function has different ways of drawing a Pokemon depending on the display mode.
+static void draw_pokemons();
+
+//! Draws Pokemon stats. Function has different ways of drawing a Pokemon depending on the display mode.
+static void draw_stats();
+
+//! Draws arrows
 static void draw_arrows();
 
-static void draw_wild_pokemon();
-
-static void display_battle();
-
-static void draw_forest_background();
-
+//! Init function for displaying battle.
 static void init_battle();
 
+//! Draws background texture on the third display.
+static void draw_forest_background();
+
+//! Light attack function that starts an attack animation and reduces opponents health.
 static void light_attack();
 
+//! Try to catch Pokemon with predetermined probability of success.
 static void catch_pokemon();
 
-static void heal_pokemon();
-
+//! Adds event that occurred in battle to the battle log.
 static void add_to_battle_log( std::string s );
 
-static void draw_oak();
+//! Displays all the events in the battle log on the screen.
+static void draw_battle_log();
 
-static void init_pokemon_stats();
+//! Heal pokemon. Function has two ways of working depending from which display mode it was called.
+static void heal_pokemon();
 
 //PRIVATE FUNCTION DEFINITION
 
@@ -1266,42 +1338,6 @@ void keyboard(unsigned char key, int x, int y)
     }
     }
 }
-
-
-// void mouse(int button, int state, int x, int y)
-// {
-//     /* Pamti se pozicija pokazivaca misa. */
-//     mouse_x = x;
-//     mouse_y = y;
-// }
-
-// void motion(int x, int y)
-// {
-//     /* Promene pozicije pokazivaca misa. */
-//     int delta_x, delta_y;
-
-//     /* Izracunavaju se promene pozicije pokazivaca misa. */
-//     delta_x = x - mouse_x;
-//     delta_y = y - mouse_y;
-
-//     /* Pamti se nova pozicija pokazivaca misa. */
-//     mouse_x = x;
-//     mouse_y = y;
-
-//     /* Izracunava se nova matrica rotacije. */
-//     glMatrixMode(GL_MODELVIEW);
-//     glPushMatrix();
-//         glLoadIdentity();
-//         glRotatef(180 * (float) delta_x / window_width, 0, 1, 0);
-//         glRotatef(180 * (float) delta_y / window_height, 1, 0, 0);
-//         glMultMatrixf(matrix);
-
-//         glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
-//     glPopMatrix();
-
-//     /* Forsira se ponovno iscrtavanje prozora. */
-//     glutPostRedisplay();
-// }
 
 void texture_init()
 {

@@ -43,6 +43,12 @@
         "typeinfo": "cpp",
         "queue": "cpp",
         "unordered_set": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "signal.h": "c",
+        "unistd.h": "c",
+        "fcntl.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "stat.h": "c"
     }
 }

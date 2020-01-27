@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 
     glutInitWindowPosition(200, 100);
     glutInitWindowSize(window_width, window_height);
-    glutCreateWindow("Window 1");
+    glutCreateWindow("Pokematf");
 
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);

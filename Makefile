@@ -1,4 +1,4 @@
-PROGRAM = Pokemon
+PROGRAM = Pokematf.exe
 CC	= g++
 LDLIBS  = -lglut -lGLU -lGL -lm
 

@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/Desktop/RG11-pokematf/image.cpp
+assert.h
+-
+stdlib.h
+-
+stdio.h
+-
+image.h
+/home/user/Desktop/RG11-pokematf/image.h
+
+/home/user/Desktop/RG11-pokematf/image.h
+

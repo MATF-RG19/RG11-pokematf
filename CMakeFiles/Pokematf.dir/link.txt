@@ -1,0 +1,1 @@
+/usr/bin/c++  -lglut -lGLU -lGL -lm   CMakeFiles/Pokematf.dir/main.cpp.o CMakeFiles/Pokematf.dir/image.cpp.o CMakeFiles/Pokematf.dir/pokematf.cpp.o  -o Pokematf 

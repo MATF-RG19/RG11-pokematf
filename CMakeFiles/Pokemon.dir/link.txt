@@ -1,0 +1,1 @@
+/usr/bin/c++   -lglut -lGLU -lGL -lm   CMakeFiles/Pokemon.dir/main.cpp.o  -o Pokemon  libimage.a libpokematf.a 

@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/Desktop/RG11-pokematf/image.cpp
+assert.h
+-
+stdlib.h
+-
+stdio.h
+-
+image.h
+/home/user/Desktop/RG11-pokematf/image.h
+
+/home/user/Desktop/RG11-pokematf/image.h
+
+/home/user/Desktop/RG11-pokematf/pokematf.cpp
+GL/glut.h
+-
+iostream
+-
+pokematf.h
+/home/user/Desktop/RG11-pokematf/pokematf.h
+unordered_set
+-
+string
+-
+deque
+-
+
+/home/user/Desktop/RG11-pokematf/pokematf.h
+GL/glut.h
+-
+iostream
+-
+GL/freeglut.h
+-
+image.h
+/home/user/Desktop/RG11-pokematf/image.h
+

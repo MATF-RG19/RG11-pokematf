@@ -1,4 +1,4 @@
-PROGRAM = Pokematf.exe
+PROGRAM = Pokemon.exe
 CC	= g++
 LDLIBS  = -lglut -lGLU -lGL -lm
 
@@ -10,4 +10,3 @@ pokematf.o: pokematf.cpp pokematf.h
 	$(CC) -c -o $@ $<
 main.o: main.cpp image.h pokematf.h
 	$(CC) -c -o $@ $<
-

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpokematf.a  CMakeFiles/pokematf.dir/pokematf.cpp.o
+/usr/bin/ranlib libpokematf.a

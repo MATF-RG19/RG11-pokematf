@@ -32,7 +32,7 @@ void init()
 }
 
 //! Main function.
-int main(int argc, char **argv) 
+auto main(int argc, char **argv) -> int 
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);

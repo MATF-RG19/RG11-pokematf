@@ -1,9 +1,9 @@
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cassert>
+#include <cstdlib>
+#include <cstdio>
 #include "image.h"
 
-Image *image_init(int width, int height) {
+auto image_init(int width, int height) -> Image * {
 
   Image *image;
 
@@ -12,16 +12,16 @@ Image *image_init(int width, int height) {
 
   /* Alocira se prostor za smestanje clanova strukture. */
   image = (Image *) malloc(sizeof(Image));
-  assert(image != NULL);
+  assert(image != nullptr);
 
   /* Inicijlizuju se clanovi strukture. */
   image->width = width;
   image->height = height;
   if (width == 0 || height == 0)
-    image->pixels = NULL;
+    image->pixels = nullptr;
   else {
     image->pixels = (char *)malloc(3 * width * height * sizeof(char));
-    assert(image->pixels != NULL);
+    assert(image->pixels != nullptr);
   }
 
   /* Vraca se pokazivac na inicijlizovanu strukturu. */
@@ -49,10 +49,10 @@ void image_read(Image *image, const char *filename) {
 
   /* Brise se prethodni sadrzaj strukture Image. */
   free(image->pixels);
-  image->pixels = NULL;
+  image->pixels = nullptr;
 
   /* Otvara se fajl koji sadrzi sliku u binarnom rezimu. */
-  assert((file = fopen(filename, "rb")) != NULL);
+  assert((file = fopen(filename, "rb")) != nullptr);
 
   /* Ocitavaju se podaci prvog zaglavlja. */
   fread(&bfh.type, 2, 1, file);
@@ -99,7 +99,7 @@ void image_read(Image *image, const char *filename) {
     fprintf(stderr, "image_read(): Podrzane su samo slike koje po pikselu cuvaju 24 ili 32 bita podataka.\n");
     exit(1);
   }
-  assert(image->pixels != NULL);
+  assert(image->pixels != nullptr);
 
   /* Ucitavaju se podaci o pikselima i smestaju u alocirani niz. */
   if (bih.bitcount == 24)

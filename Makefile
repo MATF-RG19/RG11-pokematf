@@ -1,6 +1,6 @@
 PROGRAM = Pokemon.exe
 CC	= g++
-LDLIBS  = -lglut -lGLU -lGL -lm
+LDLIBS  = -g -lglut -lGLU -lGL -lm
 
 $(PROGRAM): image.o pokematf.o main.o
 	$(CC) -o $(PROGRAM) $^ $(LDLIBS)

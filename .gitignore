@@ -34,3 +34,6 @@
 # Visual Studio Code settings
 
 .vscode
+
+# Clang tidy log
+log.txt

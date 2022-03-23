@@ -13,9 +13,9 @@ typedef struct Position_info{
 } Position_info;
 
 //! Struct used for storing info about every Pokemon.
-typedef struct Pokemon_info{
+using Pokemon_info = struct Pokemon_info{
     int health, attack_min, attack_max;
-} Pokemon_info;
+};
 
 //GLOBAL VARIABLES
 
@@ -152,12 +152,12 @@ static void draw_pokecenter();
 static void draw_wild_pokemon();
 
 //! Checks collision between two objects using their coordinates, width and height. Returns bool value that determines if collision occurred.
-static bool check_collision(float x1, float y1, float w1, float h1, 
-                        float x2, float y2, float w2, float h2);
+static auto check_collision(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2) -> bool;
 
 //! Checks if collision would occuring when player moved in any direction by calling check_collision func.
-static bool check_proximity(float x1, float y1, float w1, float h1, 
-                        float x2, float y2, float w2, float h2);
+static auto check_proximity(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2) -> bool;
 
 
 //! Init function for displaying Pokedex. Triggered by a keyboard action.
@@ -200,12 +200,12 @@ static void heal_pokemon();
 
 static void init_pokemon_stats()
 {
-    srand(time(NULL));
-    for( int i=0; i < 50; i++ )
+    srand(time(nullptr));
+    for(auto & i : poke_info)
     {
-        poke_info[ i ].health = 100;
-        poke_info[ i ].attack_min = rand()%10+1;
-        poke_info[ i ].attack_max = rand()%10+11;
+        i.health = 100;
+        i.attack_min = rand()%10+1;
+        i.attack_max = rand()%10+11;
     }
 
     poke_info[15].attack_min = rand()%10+20;
@@ -269,7 +269,7 @@ static void light_attack()
 {
     if(turn)
     {
-        srand(time(NULL));
+        srand(time(nullptr));
         favorite_current_attack = rand() % (poke_info[ favorite_pokemon ].attack_max + 1 - poke_info[ favorite_pokemon ].attack_min) + poke_info[ favorite_pokemon ].attack_min;
         add_to_battle_log("Light attack " + std::to_string( favorite_current_attack ) );
         turn = false;                 
@@ -287,7 +287,7 @@ static void light_attack()
     }
     else
     {
-        srand(time(NULL));
+        srand(time(nullptr));
         wild_current_attack = rand() % (wild_pokemon_stats.attack_max + 1 - wild_pokemon_stats.attack_min) + wild_pokemon_stats.attack_min;
         add_to_battle_log("- " + std::to_string( wild_current_attack ) + "hp ~ wild pokemon light attack" );
         turn = true;                
@@ -318,7 +318,7 @@ static void init_battle()
     turn = true;
     window_select = WINDOW_BATTLE;
     move_pokemon = true;
-    srand(time(NULL));
+    srand(time(nullptr));
     show_wild_pokemon = rand()%16;
     wild_pokemon_stats.health = 100;
     wild_pokemon_stats.attack_min = poke_info[show_wild_pokemon].attack_min;
@@ -444,7 +444,7 @@ static void draw_wild_pokemon()
     
     if(move_pokemon)
     {
-        srand(time(NULL));
+        srand(time(nullptr));
         move_pokemon = false;
         wild_pokemon_info.x = rand()%10;
         wild_pokemon_info.y = rand()%10;
@@ -586,7 +586,7 @@ static void display_battle()
 
 static void catch_pokemon()
 {
-    srand(time(NULL));
+    srand(time(nullptr));
 
     if ( wild_pokemon_stats.health > 0  &&
          wild_pokemon_stats.health <=30 &&      
@@ -916,8 +916,8 @@ static void draw_pokemons()
     glPopMatrix();
 }
 
-static bool check_collision(float x1, float y1, float w1, float h1, 
-                        float x2, float y2, float w2, float h2)
+static auto check_collision(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2) -> bool
 {
     if (x1 + w1 >= x2 &&
        x1 <= x2 + w2 &&
@@ -933,8 +933,8 @@ static bool check_collision(float x1, float y1, float w1, float h1,
 
 }
 
-static bool check_proximity(float x1, float y1, float w1, float h1, 
-                        float x2, float y2, float w2, float h2)
+static auto check_proximity(float x1, float y1, float w1, float h1, 
+                        float x2, float y2, float w2, float h2) -> bool
 {
     if ( check_collision( x1 + .1, y1, w1, h1, 
                         x2, y2, w2, h2 ) )

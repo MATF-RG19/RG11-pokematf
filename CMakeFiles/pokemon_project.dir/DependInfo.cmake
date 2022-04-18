@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/user/Desktop/RG11-pokematf/image.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/Pokemon.dir/image.cpp.o"
-  "/home/user/Desktop/RG11-pokematf/main.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/Pokemon.dir/main.cpp.o"
-  "/home/user/Desktop/RG11-pokematf/pokematf.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/Pokemon.dir/pokematf.cpp.o"
+  "/home/user/Desktop/RG11-pokematf/image.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/pokemon_project.dir/image.cpp.o"
+  "/home/user/Desktop/RG11-pokematf/main.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/pokemon_project.dir/main.cpp.o"
+  "/home/user/Desktop/RG11-pokematf/pokematf.cpp" "/home/user/Desktop/RG11-pokematf/CMakeFiles/pokemon_project.dir/pokematf.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

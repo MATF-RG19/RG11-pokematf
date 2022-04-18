@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/testas.dir/main.cpp.o CMakeFiles/testas.dir/pokematf.cpp.o CMakeFiles/testas.dir/image.cpp.o  -o testas  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libglut.so 

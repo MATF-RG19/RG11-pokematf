@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/Pokemon.dir/main.cpp.o CMakeFiles/Pokemon.dir/pokematf.cpp.o CMakeFiles/Pokemon.dir/image.cpp.o  -o Pokemon  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so 
+/usr/bin/c++  -fprofile-arcs -ftest-coverage   CMakeFiles/Pokemon.dir/main.cpp.o CMakeFiles/Pokemon.dir/pokematf.cpp.o CMakeFiles/Pokemon.dir/image.cpp.o  -o Pokemon  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so 

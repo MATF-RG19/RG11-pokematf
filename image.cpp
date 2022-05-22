@@ -1,7 +1,7 @@
-#include <cassert>
-#include <cstdlib>
-#include <cstdio>
 #include "image.h"
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
 
 auto image_init(int width, int height) -> Image * {
 
@@ -11,7 +11,7 @@ auto image_init(int width, int height) -> Image * {
   assert(width >= 0 && height >= 0);
 
   /* Alocira se prostor za smestanje clanova strukture. */
-  image = (Image *) malloc(sizeof(Image));
+  image = (Image *)malloc(sizeof(Image));
   assert(image != nullptr);
 
   /* Inicijlizuju se clanovi strukture. */
@@ -74,10 +74,12 @@ void image_read(Image *image, const char *filename) {
   fread(&bih.colorsused, 4, 1, file);
   fread(&bih.colorsimportant, 4, 1, file);
 
-  /***** Najbitniji deo koda koj popravlja bag loseg ucitavanja GIMP sprajtova ******/
-	  /**************/  fseek(file, bfh.offsetbits, SEEK_SET);   /***********************/
-	  /**********************************************************************************/
-  //centrira sprite texturu?
+  /***** Najbitniji deo koda koj popravlja bag loseg ucitavanja GIMP sprajtova
+   * ******/
+  /**************/ fseek(file, bfh.offsetbits,
+                         SEEK_SET); /***********************/
+  /**********************************************************************************/
+  // centrira sprite texturu?
 
   /*
    * Od podataka iz drugog zaglavlja koristimo samo informacije
@@ -87,8 +89,8 @@ void image_read(Image *image, const char *filename) {
   image->height = bih.height;
 
   /*
-   * U zavisnosti od toga koliko bitova informacija se cita po pikselu 
-   * (da li samo R, G i B komponenta ili R, G, B i A), alociramo niz 
+   * U zavisnosti od toga koliko bitova informacija se cita po pikselu
+   * (da li samo R, G i B komponenta ili R, G, B i A), alociramo niz
    * odgovarajuce duzine.
    */
   if (bih.bitcount == 24)
@@ -96,7 +98,8 @@ void image_read(Image *image, const char *filename) {
   else if (bih.bitcount == 32)
     image->pixels = (char *)malloc(4 * bih.width * bih.height * sizeof(char));
   else {
-    fprintf(stderr, "image_read(): Podrzane su samo slike koje po pikselu cuvaju 24 ili 32 bita podataka.\n");
+    fprintf(stderr, "image_read(): Podrzane su samo slike koje po pikselu "
+                    "cuvaju 24 ili 32 bita podataka.\n");
     exit(1);
   }
   assert(image->pixels != nullptr);
@@ -104,14 +107,15 @@ void image_read(Image *image, const char *filename) {
   /* Ucitavaju se podaci o pikselima i smestaju u alocirani niz. */
   if (bih.bitcount == 24)
     /*
-     * Ako se po pikselu cita 24 bita = 3 bajta informacija, pretpostavljamo 
-     * da oni (ta 3 bajta) predstavljaju R, G i B komponentu boje (1 bajt po 
+     * Ako se po pikselu cita 24 bita = 3 bajta informacija, pretpostavljamo
+     * da oni (ta 3 bajta) predstavljaju R, G i B komponentu boje (1 bajt po
      * komponenti).
      */
     for (i = 0; i < bih.width * bih.height; i++) {
       /*
-       * Ovo mozda izgleda cudno, to sto se komponente boje citaju u suprotnom redosledu, 
-       * tj. prvo plava, pa zelena, pa crvena, ali tako pise u specifikaciji bmp formata.
+       * Ovo mozda izgleda cudno, to sto se komponente boje citaju u suprotnom
+       * redosledu, tj. prvo plava, pa zelena, pa crvena, ali tako pise u
+       * specifikaciji bmp formata.
        */
       fread(&b, sizeof(char), 1, file);
       fread(&g, sizeof(char), 1, file);
@@ -123,8 +127,8 @@ void image_read(Image *image, const char *filename) {
     }
   else if (bih.bitcount == 32)
     /*
-     * Ako se po pikselu cita 32 bita = 4 bajta informacija, pretpostavljamo 
-     * da oni (ta 4 bajta) predstavljaju R, G, B i A komponentu boje (1 bajt po 
+     * Ako se po pikselu cita 32 bita = 4 bajta informacija, pretpostavljamo
+     * da oni (ta 4 bajta) predstavljaju R, G, B i A komponentu boje (1 bajt po
      * komponenti).
      */
     for (i = 0; i < bih.width * bih.height; i++) {
@@ -137,19 +141,16 @@ void image_read(Image *image, const char *filename) {
       image->pixels[4 * i + 1] = g;
       image->pixels[4 * i + 2] = b;
       image->pixels[4 * i + 3] = a;
-
     }
 
   /* Zatvara se fajl. */
   fclose(file);
 }
 
-void image_black( Image *image )
-{
-  for (int i = 0; i < image->width * image->height; i++) 
-  {
-      image->pixels[4 * i] = 0;
-      image->pixels[4 * i + 1] = 0;
-      image->pixels[4 * i + 2] = 0;
-    }
+void image_black(Image *image) {
+  for (int i = 0; i < image->width * image->height; i++) {
+    image->pixels[4 * i] = 0;
+    image->pixels[4 * i + 1] = 0;
+    image->pixels[4 * i + 2] = 0;
+  }
 }

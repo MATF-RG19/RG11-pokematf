@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['tmp_211',['tmp',['../d9/dcf/pokematf_8cpp.html#a869dc96b4fa3d9bd19c20088b1fc9cf4',1,'pokematf.cpp']]],
-  ['turn_212',['turn',['../d9/dcf/pokematf_8cpp.html#a0596dd648affe32e428af51a69077182',1,'pokematf.cpp']]],
-  ['type_213',['type',['../d2/d4a/structBITMAPFILEHEADER.html#a99a36e5e13989a188d8d6d8549e8f02a',1,'BITMAPFILEHEADER']]]
+  ['reserved1_257',['reserved1',['../d2/d4a/structBITMAPFILEHEADER.html#af0abaace0f58ffbc349c26b1f48af8e4',1,'BITMAPFILEHEADER']]],
+  ['reserved2_258',['reserved2',['../d2/d4a/structBITMAPFILEHEADER.html#a9733fd932f7d80f1d0b38df9b63c7c71',1,'BITMAPFILEHEADER']]],
+  ['running_259',['running',['../d9/dcf/pokematf_8cpp.html#a2f45113638a0b749a8a205d2cd7fb42b',1,'pokematf.cpp']]],
+  ['running_5ftime_260',['running_time',['../d9/dcf/pokematf_8cpp.html#a2f22f5a52b0f089cdd98e59545b98554',1,'pokematf.cpp']]]
 ];

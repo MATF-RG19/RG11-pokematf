@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['timer_5fid_229',['TIMER_ID',['../dd/d36/pokematf_8h.html#ae06e349b2a8a01148e40706325a36dcf',1,'pokematf.h']]],
-  ['timer_5finterval_230',['TIMER_INTERVAL',['../dd/d36/pokematf_8h.html#a2e2bf358c53c278fdff9b5bfba4efd66',1,'pokematf.h']]]
+  ['architecture_5fid_286',['ARCHITECTURE_ID',['../d9/d4b/CMakeCCompilerId_8c.html#aba35d0d200deaeb06aee95ca297acb28',1,'ARCHITECTURE_ID():&#160;CMakeCCompilerId.c'],['../d6/d83/CMakeCXXCompilerId_8cpp.html#aba35d0d200deaeb06aee95ca297acb28',1,'ARCHITECTURE_ID():&#160;CMakeCXXCompilerId.cpp']]]
 ];

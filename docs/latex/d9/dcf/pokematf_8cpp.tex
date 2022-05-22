@@ -10,9 +10,7 @@
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}
-\begin{DoxyCompactList}\small\item\em Struct used for storing coordinates, width and height of objects in the project. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}}
-\begin{DoxyCompactList}\small\item\em Struct used for storing info about every Pokemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Struct used for storing coordinates, width and height of objects in the project. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -27,7 +25,7 @@ struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}}
 \item 
 typedef struct \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}{Position\+\_\+info}}
 \begin{DoxyCompactList}\small\item\em Struct used for storing coordinates, width and height of objects in the project. \end{DoxyCompactList}\item 
-typedef struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}{Pokemon\+\_\+info}}
+using \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} = struct \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}}\{ int \mbox{\hyperlink{log_8txt_afddb082b315fb35ab3b1bfb5ef27eb85}{health}}, \mbox{\hyperlink{log_8txt_ab26608e5d5697b96fbe8784d88fcec1f}{attack\+\_\+min}}, \mbox{\hyperlink{log_8txt_a66e720fec3d568a4e8cbf1b1156e7038}{attack\+\_\+max}}
 \begin{DoxyCompactList}\small\item\em Struct used for storing info about every Pokemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -36,7 +34,7 @@ static void \mbox{\hyperlink{pokematf_8cpp_ac18f97169e48aecdd28c7218293e69ce}{dr
 \begin{DoxyCompactList}\small\item\em Additional for drawing axes, not used in final project. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{pokematf_8cpp_a4f7c240186e442cff77425e9e5167c2d}{text\+\_\+log}} (float x, float y, const char $\ast$s)
 \begin{DoxyCompactList}\small\item\em Function used to display text on the screen, x and y represent coordinates of the text and s is the string that will be displayed. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{pokematf_8cpp_ac47e832c6c40036d4feff70587905e25}{reshape1}} (int w, int h)
+static void \mbox{\hyperlink{pokematf_8cpp_ac47e832c6c40036d4feff70587905e25}{reshape1}} (int w, int \mbox{\hyperlink{log_8txt_a76085e24cefce8376abd95bbf4c37a99}{h}})
 \begin{DoxyCompactList}\small\item\em Additional reshape function called by reshape(...). \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{pokematf_8cpp_ab48b71097b9fc10075a80a6cbb9552a5}{init\+\_\+pokemon\+\_\+stats}} ()
 \begin{DoxyCompactList}\small\item\em Function initializes random pokemon min and max attack in predetermined range. \end{DoxyCompactList}\item 
@@ -58,9 +56,9 @@ static void \mbox{\hyperlink{pokematf_8cpp_a2a065e12f4b3cfc54eb2ea9627fec6c7}{dr
 \begin{DoxyCompactList}\small\item\em Draws Pokecenter on the first display using provided texture. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{pokematf_8cpp_aac49e1a4e1fc1759acc66abdd7d92c12}{draw\+\_\+wild\+\_\+pokemon}} ()
 \begin{DoxyCompactList}\small\item\em Draws the red dot represening wild pokemon in the grass. Random position after every battle. \end{DoxyCompactList}\item 
-static bool \mbox{\hyperlink{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}{check\+\_\+collision}} (float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
+static auto \mbox{\hyperlink{pokematf_8cpp_a3038d838a6af1fdd777c29cd541e1972}{check\+\_\+collision}} (float x1, float \mbox{\hyperlink{log_8txt_afda26a6fa9eea64d8d15c09b1dc81d74}{y1}}, float \mbox{\hyperlink{log_8txt_a6eb5efa9011a2d93042420c287806c7e}{w1}}, float \mbox{\hyperlink{log_8txt_aa010b6a00dd4e8849a39def047041afa}{h1}}, float x2, float y2, float w2, float h2) -\/$>$ bool
 \begin{DoxyCompactList}\small\item\em Checks collision between two objects using their coordinates, width and height. Returns bool value that determines if collision occurred. \end{DoxyCompactList}\item 
-static bool \mbox{\hyperlink{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}{check\+\_\+proximity}} (float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
+static auto \mbox{\hyperlink{pokematf_8cpp_ad3213c0f8e09e21767084606821cb6c4}{check\+\_\+proximity}} (float x1, float \mbox{\hyperlink{log_8txt_afda26a6fa9eea64d8d15c09b1dc81d74}{y1}}, float \mbox{\hyperlink{log_8txt_a6eb5efa9011a2d93042420c287806c7e}{w1}}, float \mbox{\hyperlink{log_8txt_aa010b6a00dd4e8849a39def047041afa}{h1}}, float x2, float y2, float w2, float h2) -\/$>$ bool
 \begin{DoxyCompactList}\small\item\em Checks if collision would occuring when player moved in any direction by calling check\+\_\+collision func. \end{DoxyCompactList}\item 
 static void \mbox{\hyperlink{pokematf_8cpp_a5683d6e57862b4357270258f75b9ff23}{open\+\_\+pokedex}} ()
 \begin{DoxyCompactList}\small\item\em Init function for displaying Pokedex. Triggered by a keyboard action. \end{DoxyCompactList}\item 
@@ -88,7 +86,7 @@ static void \mbox{\hyperlink{pokematf_8cpp_a359bfe5c26cf6b7b325085f7ea63322a}{he
 \begin{DoxyCompactList}\small\item\em Heal pokemon. Function has two ways of working depending from which display mode it was called. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{pokematf_8cpp_a1e5b20fed15743656bb6d2e6a6ea6269}{display}} ()
 \begin{DoxyCompactList}\small\item\em Display function. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{pokematf_8cpp_acc1ffe65e6869931318610cae7210078}{reshape}} (int w, int h)
+void \mbox{\hyperlink{pokematf_8cpp_acc1ffe65e6869931318610cae7210078}{reshape}} (int w, int \mbox{\hyperlink{log_8txt_a76085e24cefce8376abd95bbf4c37a99}{h}})
 \begin{DoxyCompactList}\small\item\em Reshape function. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{pokematf_8cpp_a970b1d8b0b0572a9b2b0b23e5abcc8f3}{timer}} (int timer\+\_\+id)
 \begin{DoxyCompactList}\small\item\em Timer function. \end{DoxyCompactList}\item 
@@ -118,13 +116,13 @@ static \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperl
 \begin{DoxyCompactList}\small\item\em Players \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. \end{DoxyCompactList}\item 
 static \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_aacce25da149d6c0c077c65aff6a87e1b}{pokecenter\+\_\+info}} = \{ -\/7, 8, 3.\+5, 3.\+5\}
 \begin{DoxyCompactList}\small\item\em Pokecenter \mbox{\hyperlink{structPosition__info}{Position\+\_\+info}}. \end{DoxyCompactList}\item 
-static \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad40786d86c42b48b7336d038147d6f97}{poke\+\_\+info}} \mbox{[}50\mbox{]}
+static \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_ad40786d86c42b48b7336d038147d6f97}{poke\+\_\+info}} \mbox{[}50\mbox{]}
 \begin{DoxyCompactList}\small\item\em Info about every loaded Pokemon. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{pokematf_8cpp_a8a6eb4e95e1a45e6e4b5ac9a25575386}{favorite\+\_\+current\+\_\+attack}}
 \begin{DoxyCompactList}\small\item\em Random value between min and max attack of the currently selected Pokemon. \end{DoxyCompactList}\item 
 static int \mbox{\hyperlink{pokematf_8cpp_af7a63cfe2f0a06efc3e1fbffd9cbd621}{wild\+\_\+current\+\_\+attack}}
 \begin{DoxyCompactList}\small\item\em Random value between min and max attack of the wild Pokemon player encountered. \end{DoxyCompactList}\item 
-static \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_a8f7fd558ab9aa38ae0bcdc044d255256}{wild\+\_\+pokemon\+\_\+stats}}
+static \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} \mbox{\hyperlink{pokematf_8cpp_a8f7fd558ab9aa38ae0bcdc044d255256}{wild\+\_\+pokemon\+\_\+stats}}
 \begin{DoxyCompactList}\small\item\em Info about the wild Pokemon player encountered. \end{DoxyCompactList}\item 
 static bool \mbox{\hyperlink{pokematf_8cpp_a6ea068b4b5c4c473edcd482e01b2c5f8}{write\+\_\+message}} = false
 \begin{DoxyCompactList}\small\item\em Used for displaying a messsage for a brief time. \end{DoxyCompactList}\item 
@@ -228,15 +226,19 @@ Definition at line 30 of file pokematf.\+cpp.
 
 
 \doxysubsection{Typedef Documentation}
-\mbox{\Hypertarget{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}\label{pokematf_8cpp_a25a3802a162dca10bf02eed5bed03dd9}} 
+\mbox{\Hypertarget{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}\label{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}} 
 \index{pokematf.cpp@{pokematf.cpp}!Pokemon\_info@{Pokemon\_info}}
 \index{Pokemon\_info@{Pokemon\_info}!pokematf.cpp@{pokematf.cpp}}
 \doxysubsubsection{\texorpdfstring{Pokemon\_info}{Pokemon\_info}}
-{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} =  struct \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}}\{ int \mbox{\hyperlink{log_8txt_afddb082b315fb35ab3b1bfb5ef27eb85}{health}}, \mbox{\hyperlink{log_8txt_ab26608e5d5697b96fbe8784d88fcec1f}{attack\+\_\+min}}, \mbox{\hyperlink{log_8txt_a66e720fec3d568a4e8cbf1b1156e7038}{attack\+\_\+max}}}
 
 
 
 Struct used for storing info about every Pokemon. 
+
+
+
+Definition at line 17 of file pokematf.\+cpp.
 
 \mbox{\Hypertarget{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}\label{pokematf_8cpp_ad9f5c899f1233a1243cd5f09bab3cfa8}} 
 \index{pokematf.cpp@{pokematf.cpp}!Position\_info@{Position\_info}}
@@ -279,11 +281,11 @@ Try to catch Pokemon with predetermined probability of success.
 
 Definition at line 587 of file pokematf.\+cpp.
 
-\mbox{\Hypertarget{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}\label{pokematf_8cpp_aefe35bb13f6c2882908bce26403501c9}} 
+\mbox{\Hypertarget{pokematf_8cpp_a3038d838a6af1fdd777c29cd541e1972}\label{pokematf_8cpp_a3038d838a6af1fdd777c29cd541e1972}} 
 \index{pokematf.cpp@{pokematf.cpp}!check\_collision@{check\_collision}}
 \index{check\_collision@{check\_collision}!pokematf.cpp@{pokematf.cpp}}
 \doxysubsubsection{\texorpdfstring{check\_collision()}{check\_collision()}}
-{\footnotesize\ttfamily static bool check\+\_\+collision (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static auto check\+\_\+collision (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption}) -\/$>$ bool\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -293,11 +295,11 @@ Checks collision between two objects using their coordinates, width and height. 
 
 Definition at line 919 of file pokematf.\+cpp.
 
-\mbox{\Hypertarget{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}\label{pokematf_8cpp_a6bc70030f9f8eec89f3794b0c7dd885f}} 
+\mbox{\Hypertarget{pokematf_8cpp_ad3213c0f8e09e21767084606821cb6c4}\label{pokematf_8cpp_ad3213c0f8e09e21767084606821cb6c4}} 
 \index{pokematf.cpp@{pokematf.cpp}!check\_proximity@{check\_proximity}}
 \index{check\_proximity@{check\_proximity}!pokematf.cpp@{pokematf.cpp}}
 \doxysubsubsection{\texorpdfstring{check\_proximity()}{check\_proximity()}}
-{\footnotesize\ttfamily static bool check\+\_\+proximity (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static auto check\+\_\+proximity (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{w1,  }\item[{float}]{h1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{w2,  }\item[{float}]{h2 }\end{DoxyParamCaption}) -\/$>$ bool\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -986,7 +988,7 @@ Definition at line 70 of file pokematf.\+cpp.
 \index{pokematf.cpp@{pokematf.cpp}!poke\_info@{poke\_info}}
 \index{poke\_info@{poke\_info}!pokematf.cpp@{pokematf.cpp}}
 \doxysubsubsection{\texorpdfstring{poke\_info}{poke\_info}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} poke\+\_\+info\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} poke\+\_\+info\mbox{[}50\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -1196,7 +1198,7 @@ Definition at line 44 of file pokematf.\+cpp.
 \index{pokematf.cpp@{pokematf.cpp}!wild\_pokemon\_stats@{wild\_pokemon\_stats}}
 \index{wild\_pokemon\_stats@{wild\_pokemon\_stats}!pokematf.cpp@{pokematf.cpp}}
 \doxysubsubsection{\texorpdfstring{wild\_pokemon\_stats}{wild\_pokemon\_stats}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structPokemon__info}{Pokemon\+\_\+info}} wild\+\_\+pokemon\+\_\+stats\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{pokematf_8cpp_af68ef26948f203367196d54e65ba4d32}{Pokemon\+\_\+info}} wild\+\_\+pokemon\+\_\+stats\hspace{0.3cm}{\ttfamily [static]}}
 
 
 

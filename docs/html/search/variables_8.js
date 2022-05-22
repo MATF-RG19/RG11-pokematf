@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['reserved1_202',['reserved1',['../d2/d4a/structBITMAPFILEHEADER.html#af0abaace0f58ffbc349c26b1f48af8e4',1,'BITMAPFILEHEADER']]],
-  ['reserved2_203',['reserved2',['../d2/d4a/structBITMAPFILEHEADER.html#a9733fd932f7d80f1d0b38df9b63c7c71',1,'BITMAPFILEHEADER']]],
-  ['running_204',['running',['../d9/dcf/pokematf_8cpp.html#a2f45113638a0b749a8a205d2cd7fb42b',1,'pokematf.cpp']]],
-  ['running_5ftime_205',['running_time',['../d9/dcf/pokematf_8cpp.html#a2f22f5a52b0f089cdd98e59545b98554',1,'pokematf.cpp']]]
+  ['offsetbits_244',['offsetbits',['../d2/d4a/structBITMAPFILEHEADER.html#ab15bfe2684163a03c6b9a9adbf78618d',1,'BITMAPFILEHEADER']]],
+  ['owned_5fpokemons_245',['owned_pokemons',['../d6/dd5/log_8txt.html#ab476a1af403e6a0928337f384024886b',1,'owned_pokemons():&#160;log.txt'],['../d9/dcf/pokematf_8cpp.html#a4a805ffb8a4412f083da3d96441b13e3',1,'owned_pokemons():&#160;pokematf.cpp']]]
 ];

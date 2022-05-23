@@ -18,7 +18,7 @@ using Pokemon_info = struct Pokemon_info {
   int health, attack_min, attack_max;
 };
 
-// GLOBAL VARIABLES
+// GLOBdAL VARIABLES
 
 //! Initial window width
 int window_width = 700;

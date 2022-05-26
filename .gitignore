@@ -37,3 +37,6 @@
 
 # Clang tidy log
 log.txt
+
+CMakeCache.txt
+CMakeFiles/

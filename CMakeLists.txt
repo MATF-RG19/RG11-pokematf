@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Pokemon)
+project(Pokemon.exe)
 
 set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 

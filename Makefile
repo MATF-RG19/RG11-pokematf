@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Pokemon
+# Target rules for targets named Pokemon.exe
 
 # Build rule for target.
-Pokemon: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Pokemon
-.PHONY : Pokemon
+Pokemon.exe: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Pokemon.exe
+.PHONY : Pokemon.exe
 
 # fast build rule for target.
-Pokemon/fast:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/build
-.PHONY : Pokemon/fast
+Pokemon.exe/fast:
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/build
+.PHONY : Pokemon.exe/fast
 
 image.o: image.cpp.o
 
@@ -129,7 +129,7 @@ image.o: image.cpp.o
 
 # target to build an object file
 image.cpp.o:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/image.cpp.o
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/image.cpp.o
 .PHONY : image.cpp.o
 
 image.i: image.cpp.i
@@ -138,7 +138,7 @@ image.i: image.cpp.i
 
 # target to preprocess a source file
 image.cpp.i:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/image.cpp.i
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/image.cpp.i
 .PHONY : image.cpp.i
 
 image.s: image.cpp.s
@@ -147,7 +147,7 @@ image.s: image.cpp.s
 
 # target to generate assembly for a file
 image.cpp.s:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/image.cpp.s
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/image.cpp.s
 .PHONY : image.cpp.s
 
 main.o: main.cpp.o
@@ -156,7 +156,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -165,7 +165,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -174,7 +174,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 pokematf.o: pokematf.cpp.o
@@ -183,7 +183,7 @@ pokematf.o: pokematf.cpp.o
 
 # target to build an object file
 pokematf.cpp.o:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/pokematf.cpp.o
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/pokematf.cpp.o
 .PHONY : pokematf.cpp.o
 
 pokematf.i: pokematf.cpp.i
@@ -192,7 +192,7 @@ pokematf.i: pokematf.cpp.i
 
 # target to preprocess a source file
 pokematf.cpp.i:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/pokematf.cpp.i
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/pokematf.cpp.i
 .PHONY : pokematf.cpp.i
 
 pokematf.s: pokematf.cpp.s
@@ -201,7 +201,7 @@ pokematf.s: pokematf.cpp.s
 
 # target to generate assembly for a file
 pokematf.cpp.s:
-	$(MAKE) -f CMakeFiles/Pokemon.dir/build.make CMakeFiles/Pokemon.dir/pokematf.cpp.s
+	$(MAKE) -f CMakeFiles/Pokemon.exe.dir/build.make CMakeFiles/Pokemon.exe.dir/pokematf.cpp.s
 .PHONY : pokematf.cpp.s
 
 # Help Target
@@ -212,7 +212,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... Pokemon"
+	@echo "... Pokemon.exe"
 	@echo "... image.o"
 	@echo "... image.i"
 	@echo "... image.s"

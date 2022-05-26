@@ -1,3 +1,3 @@
 /home/user/Desktop/RG11-pokematf/CMakeFiles/rebuild_cache.dir
 /home/user/Desktop/RG11-pokematf/CMakeFiles/edit_cache.dir
-/home/user/Desktop/RG11-pokematf/CMakeFiles/Pokemon.dir
+/home/user/Desktop/RG11-pokematf/CMakeFiles/Pokemon.exe.dir

@@ -7,46 +7,46 @@
 #IncludeRegexTransform: 
 
 /home/user/Desktop/RG11-pokematf/image.cpp
+image.h
+/home/user/Desktop/RG11-pokematf/image.h
 cassert
--
-cstdlib
 -
 cstdio
 -
-image.h
-/home/user/Desktop/RG11-pokematf/image.h
+cstdlib
+-
 
 /home/user/Desktop/RG11-pokematf/image.h
 
 /home/user/Desktop/RG11-pokematf/main.cpp
+pokematf.h
+/home/user/Desktop/RG11-pokematf/pokematf.h
 GL/glut.h
 -
 iostream
 -
-pokematf.h
-/home/user/Desktop/RG11-pokematf/pokematf.h
 
 /home/user/Desktop/RG11-pokematf/pokematf.cpp
-GL/glut.h
--
-iostream
--
 pokematf.h
 /home/user/Desktop/RG11-pokematf/pokematf.h
-unordered_set
--
-string
+GL/glut.h
 -
 deque
 -
+iostream
+-
+string
+-
+unordered_set
+-
 
 /home/user/Desktop/RG11-pokematf/pokematf.h
+image.h
+/home/user/Desktop/RG11-pokematf/image.h
+GL/freeglut.h
+-
 GL/glut.h
 -
 iostream
 -
-GL/freeglut.h
--
-image.h
-/home/user/Desktop/RG11-pokematf/image.h
 

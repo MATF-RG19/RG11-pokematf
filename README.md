@@ -29,3 +29,15 @@ Gameplay tips:
   - Restore health to your Pokemon with healing potions.
   
   - Change you favorite Pokemon while battling a wild one or while exploring the world.
+  
+  
+Additionally project was used to test various software development tools:
+ - CMake
+ - Valgrind/Callgrind
+ - ClangTidy
+ - GCov
+ - Doxygen
+ - ClangFormat
+ - Git hooks
+ - GDB
+ - Docker
